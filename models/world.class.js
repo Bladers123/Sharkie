@@ -3,7 +3,7 @@ class World {
     context;
     canvas;
 
-    character = new Charakter();
+    character;
 
     enemies = [
         new Enemy(),
@@ -19,20 +19,19 @@ class World {
         new BackgroundOject('../img/3. Background/Layers/1. Light/1.png', 0)
     ];
 
-    constructor(canvas) {
+    constructor(canvas, charakter) {
         this.context = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard;
+        this.character = charakter;
         this.draw();
     }
 
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.addObjectsToMap(this.backgroundObjects);
         this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);
-        
-
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
