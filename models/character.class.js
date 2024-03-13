@@ -22,19 +22,35 @@ class Character extends MovableObject {
         this.animationFrameId = null;
     }
 
-    animate() {
-        if (this.keyboard.right || this.keyboard.left || this.keyboard.up || this.keyboard.down) {
-            let index = this.currentImage % this.imagesWalking.length;
-            let path = this.imagesWalking[index];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+    move() {
+        switch (this.keyboard.right || this.keyboard.left || this.keyboard.up || this.keyboard.down) {
+            case this.keyboard.right:
+                this.positionX += this.speed;
+                break;
+            case this.keyboard.left:
+                this.positionX -= this.speed;
+                break;
+            case this.keyboard.up:
+                this.positionY -= this.speed;
+                break;
+            case this.keyboard.down:
+                this.positionY += this.speed;
+                break;
+            default:
+                break;
         }
-        this.animationFrameId = requestAnimationFrame(this.animate.bind(this));
+
+        let index = this.currentImage % this.imagesWalking.length;
+        let path = this.imagesWalking[index];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+
+        this.animationFrameId = requestAnimationFrame(this.move.bind(this));
     }
 
     startAnimation() {
         if (!this.animationFrameId) {
-            this.animate();
+            this.move();
         }
     }
 
@@ -44,4 +60,6 @@ class Character extends MovableObject {
             this.animationFrameId = null;
         }
     }
+
+
 }

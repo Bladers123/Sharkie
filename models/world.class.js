@@ -19,11 +19,11 @@ class World {
         new BackgroundOject('../img/3. Background/Layers/1. Light/1.png', 0)
     ];
 
-    constructor(canvas, charakter) {
+    constructor(canvas, character) {
         this.context = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
-        this.character = charakter;
+        this.character = character;
         this.draw();
     }
 
