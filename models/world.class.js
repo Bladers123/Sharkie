@@ -38,13 +38,31 @@ class World {
         });
     }
 
-    addObjectsToMap(objects){
+    addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
         });
     }
 
     addToMap(object) {
+        this.flipImage(object);
         this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
+        this.flipImageBack(object);
+    }
+
+    flipImage(object) {
+        if (object.otherDirection) {
+            this.context.save();
+            this.context.translate(object.width, 0);
+            this.context.scale(-1, 1);
+            object.positionX = object.positionX * - 1;
+        }
+    }
+
+    flipImageBack(object) {
+        if (object.otherDirection) {
+            object.positionX = object.positionX * - 1;
+            this.context.restore();
+        }
     }
 }

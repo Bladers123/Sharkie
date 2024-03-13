@@ -31,4 +31,10 @@ class Enemy extends MovableObject {
     spawnPoint(){
         this.positionX = 200 + Math.random() * 500;
     }
+
+    moveLeft() {
+        setInterval(() => {
+            this.positionX -= this.speed;
+        }, 1000 / 60);
+    }
 }

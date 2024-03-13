@@ -3,7 +3,7 @@ class Character extends MovableObject {
     height = 150;
     width = 150;
     positionY = 150;
-    imagesWalking = [
+    imagesOfSwimming = [
         '../img/1.Sharkie/3.Swim/1.png',
         '../img/1.Sharkie/3.Swim/2.png',
         '../img/1.Sharkie/3.Swim/3.png',
@@ -17,41 +17,23 @@ class Character extends MovableObject {
 
     constructor(keyboard) {
         super().loadImage('../img/1.Sharkie/1.IDLE/1.png');
-        this.loadImages(this.imagesWalking);
+        this.loadImages(this.imagesOfSwimming);
         this.keyboard = keyboard;
         this.animationFrameId = null;
     }
 
-    move() {
-        switch (this.keyboard.right || this.keyboard.left || this.keyboard.up || this.keyboard.down) {
-            case this.keyboard.right:
-                this.positionX += this.speed;
-                break;
-            case this.keyboard.left:
-                this.positionX -= this.speed;
-                break;
-            case this.keyboard.up:
-                this.positionY -= this.speed;
-                break;
-            case this.keyboard.down:
-                this.positionY += this.speed;
-                break;
-            default:
-                break;
-        }
-
-        let index = this.currentImage % this.imagesWalking.length;
-        let path = this.imagesWalking[index];
+    animation() {
+        this.move();
+        let index = this.currentImage % this.imagesOfSwimming.length;
+        let path = this.imagesOfSwimming[index];
         this.img = this.imageCache[path];
         this.currentImage++;
-
-        this.animationFrameId = requestAnimationFrame(this.move.bind(this));
+        this.animationFrameId = requestAnimationFrame(this.animation.bind(this));
     }
 
     startAnimation() {
-        if (!this.animationFrameId) {
-            this.move();
-        }
+        if (!this.animationFrameId)
+            this.animation();
     }
 
     stopAnimation() {
@@ -61,5 +43,22 @@ class Character extends MovableObject {
         }
     }
 
-
+    move() {
+        if (this.keyboard.right) {
+            this.positionX += this.speed;
+            this.otherDirection = false;
+        }
+        else if (this.keyboard.left) {
+            this.positionX -= this.speed;
+            this.otherDirection = true;
+        }
+        else if (this.keyboard.up)
+            this.positionY -= this.speed;
+        else if (this.keyboard.down)
+            this.positionY += this.speed;
+        else if (this.keyboard.right && this.keyboard.up) {
+            this.positionX += this.speed;
+            this.positionY -= this.speed;
+        }
+    }
 }
