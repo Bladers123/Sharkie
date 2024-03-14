@@ -3,6 +3,8 @@ class Character extends MovableObject {
     height = 150;
     width = 150;
     positionY = 150;
+    positionX = 0;
+
     imagesOfSwimming = [
         '../img/1.Sharkie/3.Swim/1.png',
         '../img/1.Sharkie/3.Swim/2.png',
@@ -20,7 +22,7 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfSwimming);
         this.keyboard = keyboard;
         this.animationFrameId = null;
-        this.positionX = canvas.width / 2 - this.width / 2;
+        console.log(this.positionX);
     }
 
     animation() {

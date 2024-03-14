@@ -25,6 +25,7 @@ class World {
         this.keyboard = keyboard;
         this.character = character;
         this.draw();
+        cameraOnCharacter();
     }
 
     draw() {
@@ -71,7 +72,6 @@ class World {
     }
 
     cameraOnCharacter() {
-        this.cameraX = -this.character.positionX + this.canvas.width / 2 - this.character.width / 2;
+        this.cameraX = -this.character.positionX;
     }
-
 }
