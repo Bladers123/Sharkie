@@ -25,7 +25,6 @@ class World {
         this.keyboard = keyboard;
         this.character = character;
         this.draw();
-        cameraOnCharacter();
     }
 
     draw() {
