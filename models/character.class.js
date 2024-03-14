@@ -20,6 +20,7 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfSwimming);
         this.keyboard = keyboard;
         this.animationFrameId = null;
+        this.positionX = canvas.width / 2 - this.width / 2;
     }
 
     animation() {
@@ -28,7 +29,7 @@ class Character extends MovableObject {
         let path = this.imagesOfSwimming[index];
         this.img = this.imageCache[path];
         this.currentImage++;
-        this.animationFrameId = requestAnimationFrame(this.animation.bind(this));
+        this.animationFrameId = requestAnimationFrame(this.animation.bind(this));    
     }
 
     startAnimation() {

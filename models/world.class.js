@@ -2,7 +2,7 @@ class World {
 
     context;
     canvas;
-
+    cameraX = 0;
     character;
 
     enemies = [
@@ -29,9 +29,13 @@ class World {
 
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.cameraOnCharacter();
+        this.context.translate(this.cameraX, 0);
         this.addObjectsToMap(this.backgroundObjects);
         this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);
+        this.context.translate(-this.cameraX, 0);
+
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -65,4 +69,9 @@ class World {
             this.context.restore();
         }
     }
+
+    cameraOnCharacter() {
+        this.cameraX = -this.character.positionX + this.canvas.width / 2 - this.character.width / 2;
+    }
+
 }
