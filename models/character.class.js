@@ -22,7 +22,6 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfSwimming);
         this.keyboard = keyboard;
         this.animationFrameId = null;
-        console.log(this.positionX);
     }
 
     animation() {
