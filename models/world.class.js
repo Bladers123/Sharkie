@@ -5,6 +5,7 @@ class World {
     cameraX = 0;
     character;
 
+    level = level1;
     enemies = level1.enemies;
     backgroundObjects = level1.backgroundObjects;
 
@@ -20,9 +21,9 @@ class World {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.cameraOnCharacter();
         this.context.translate(this.cameraX, 0);
-        this.addObjectsToMap(this.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.enemies);
         this.context.translate(-this.cameraX, 0);
 
         let self = this;
@@ -38,10 +39,13 @@ class World {
     }
 
     addToMap(object) {
-        this.flipImage(object);
-        this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
-        this.flipImageBack(object);
+        if (object.img && object.img.complete && object.img.naturalHeight !== 0) {
+            this.flipImage(object);
+            this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
+            this.flipImageBack(object);
+        }
     }
+    
 
     flipImage(object) {
         if (object.otherDirection) {

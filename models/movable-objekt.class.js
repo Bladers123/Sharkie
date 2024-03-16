@@ -21,4 +21,13 @@ class MovableObject {
             this.imageCache[path] = img;
         });
     }
+
+    playAnimation(imagesOfSwimming){
+        setInterval(() => {
+            let index = this.currentImage % imagesOfSwimming.length;
+            let path = imagesOfSwimming[index];
+            this.img = this.imageCache[path];
+            this.currentImage++;
+        }, 150);
+    }
 }
