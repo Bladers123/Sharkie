@@ -1,12 +1,5 @@
 class Character extends MovableObject {
 
-    height = 150;
-    width = 150;
-    positionY = 150;
-    positionX = 0;
-
-    level = level1;
-
     imagesOfMoving = [
         '../img/1.Sharkie/3.Swim/1.png',
         '../img/1.Sharkie/3.Swim/2.png',
@@ -37,9 +30,15 @@ class Character extends MovableObject {
         'img/1.Sharkie/1.IDLE/18.png'
     ];
 
+    height = 150;
+    width = 150;
+    positionY = 150;
+    positionX = 0;
 
     keyboard;
     animationFrameId;
+
+    level = level1;
 
     swimmingSound = new Audio('audio/fish-swimming.mp3');
 

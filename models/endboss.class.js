@@ -1,8 +1,5 @@
 class Endboss extends MovableObject {
 
-    width = 400;
-    height = 400;
-
     imagesOfSwimming = [
         'img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
         'img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
@@ -29,6 +26,9 @@ class Endboss extends MovableObject {
         'img/2.Enemy/3 Final Enemy/2.floating/13.png'
     ];
 
+    width = 400;
+    height = 400;
+
     constructor() {
         super().loadImage('../img/2.Enemy/3 Final Enemy/2.floating/1.png');
         this.loadImages(this.imagesOfSwimming);
@@ -37,8 +37,7 @@ class Endboss extends MovableObject {
     }
 
     spawnPoint() {
-        this.positionX = 250;
+        this.positionX = 2500;
         this.positionY = 0;
     }
-
 }

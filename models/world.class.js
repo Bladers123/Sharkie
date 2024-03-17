@@ -46,7 +46,6 @@ class World {
         }
     }
     
-
     flipImage(object) {
         if (object.otherDirection) {
             this.context.save();
