@@ -88,12 +88,12 @@ class Character extends MovableObject {
             this.positionY += this.speed * 2;
     }
 
-    startAnimation() {
+    startMovingAnimation() {
         if (!this.animationFrameId)
             this.animation();
     }
 
-    stopAni() {
+    stopMovingAnimation() {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;

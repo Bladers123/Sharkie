@@ -24,16 +24,13 @@ window.addEventListener('keydown', event => {
         case 'w':
             keyboard.up = true;
             break;
-        case 'Space':
-            keyboard.space = true;
-            break;
         default:
             break;
     }
 
     if (keyboard.left || keyboard.right || keyboard.up || keyboard.down) {
         character.isCharacterMoving = true;
-        character.startAnimation();
+        character.startMovingAnimation();
     }
 });
 
@@ -51,17 +48,13 @@ window.addEventListener('keyup', event => {
         case 'w':
             keyboard.up = false;
             break;
-        case 'Space':
-            keyboard.space = false; // Gehe davon aus, dass dies auch eine Bewegungstaste ist
-            break;
         default:
             break;
     }
 
-    // Überprüfen, ob keine Bewegungstasten mehr gedrückt sind
     if (!keyboard.left && !keyboard.right && !keyboard.up && !keyboard.down) {
         character.isCharacterMoving = false;
-        character.stopAni(); // Dies könnte optional sein, je nach gewünschtem Verhalten
+        character.stopMovingAnimation();
     }
 });
 
