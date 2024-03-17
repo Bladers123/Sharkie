@@ -74,19 +74,30 @@ class Character extends MovableObject {
     }
 
     move() {
+        let moved = false;
+    
         if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
             this.positionX += this.speed * 2;
             this.otherDirection = false;
+            moved = true;
         }
-        else if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
+        if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
             this.positionX -= this.speed * 2;
             this.otherDirection = true;
+            moved = true;
         }
-        else if (this.keyboard.up && this.positionY > this.level.levelEndUpY)
+        if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
             this.positionY -= this.speed * 2;
-        else if (this.keyboard.down && this.positionY < this.level.levelEndDownY)
+            moved = true;
+        }
+        if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
             this.positionY += this.speed * 2;
+            moved = true;
+        }
+    
+        this.isCharacterMoving = moved;
     }
+    
 
     startMovingAnimation() {
         if (!this.animationFrameId)
