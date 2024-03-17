@@ -23,7 +23,7 @@ class MovableObject {
         });
     }
 
-    playAnimation(imagesOfAnimation){
+    playAnimation(imagesOfAnimation) {
         this.stopAnimation();
         this.animationIntervalId = setInterval(() => {
             let index = this.currentImage % imagesOfAnimation.length;
@@ -32,12 +32,28 @@ class MovableObject {
             this.currentImage++;
         }, 150);
     }
-    
+
     stopAnimation() {
         if (this.animationIntervalId !== null) {
             clearInterval(this.animationIntervalId);
             this.animationIntervalId = null;
         }
     }
-    
+
+    drawFrame(context) {
+        if (this instanceof Character || this instanceof Enemy || this instanceof Endboss) {
+            context.beginPath();
+            context.lineWidth = "10";
+            context.strokeStyle = "blue";
+            context.rect(this.positionX, this.positionY, this.width, this.height);
+            context.stroke();
+        }
+    }
+
+    isColliding(object) {
+        return this.positionX + this.width > object.positionX &&
+            this.positionX < object.positionX + object.width &&
+            this.positionY < object.positionY + object.height &&
+            this.positionY + this.height > object.positionY;
+    }
 }

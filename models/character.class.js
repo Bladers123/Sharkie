@@ -34,7 +34,7 @@ class Character extends MovableObject {
     width = 150;
     positionY = 150;
     positionX = 0;
-    movementSpeed  = this.speed * 2;
+    movementSpeed  = this.speed * 3;
 
     keyboard;
 
