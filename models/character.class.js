@@ -34,6 +34,7 @@ class Character extends MovableObject {
     width = 150;
     positionY = 150;
     positionX = 0;
+    movementSpeed  = this.speed * 2;
 
     keyboard;
 
@@ -77,21 +78,21 @@ class Character extends MovableObject {
         let moved = false;
     
         if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
-            this.positionX += this.speed * 2;
+            this.positionX += this.movementSpeed;
             this.otherDirection = false;
             moved = true;
         }
         if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
-            this.positionX -= this.speed * 2;
+            this.positionX -= this.movementSpeed;
             this.otherDirection = true;
             moved = true;
         }
         if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
-            this.positionY -= this.speed * 2;
+            this.positionY -= this.movementSpeed;
             moved = true;
         }
         if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
-            this.positionY += this.speed * 2;
+            this.positionY += this.movementSpeed;
             moved = true;
         }
     
