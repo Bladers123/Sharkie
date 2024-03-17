@@ -37,7 +37,7 @@ class Character extends MovableObject {
 
     keyboard;
 
-    animationFrameId;
+    animationFrameId = null;
     isCharacterMoving = false;
     currentAnimation = "";
 
@@ -51,7 +51,6 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfStanding);
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
-        this.animationFrameId = null;
     }
 
     animation() {
