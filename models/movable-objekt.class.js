@@ -8,6 +8,7 @@ class MovableObject {
     currentImage = 0;
     speed = 5;
     otherDirection = false;
+    animationIntervalId;
 
     loadImage(path) {
         this.img = new Image();
@@ -22,12 +23,21 @@ class MovableObject {
         });
     }
 
-    playAnimation(imagesOfSwimming){
-        setInterval(() => {
-            let index = this.currentImage % imagesOfSwimming.length;
-            let path = imagesOfSwimming[index];
+    playAnimation(imagesOfAnimation){
+        this.stopAnimation();
+        this.animationIntervalId = setInterval(() => {
+            let index = this.currentImage % imagesOfAnimation.length;
+            let path = imagesOfAnimation[index];
             this.img = this.imageCache[path];
             this.currentImage++;
         }, 150);
     }
+    
+    stopAnimation() {
+        if (this.animationIntervalId !== null) {
+            clearInterval(this.animationIntervalId);
+            this.animationIntervalId = null;
+        }
+    }
+    
 }

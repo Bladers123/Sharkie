@@ -36,7 +36,10 @@ class Character extends MovableObject {
     positionX = 0;
 
     keyboard;
+
     animationFrameId;
+    isCharacterMoving = false;
+    currentAnimation = "";
 
     level = level1;
 
@@ -44,38 +47,46 @@ class Character extends MovableObject {
 
     constructor(keyboard) {
         super().loadImage('../img/1.Sharkie/1.IDLE/1.png');
-        this.loadImages(this.imagesOfMoving); 
-        this.playAnimation(this.imagesOfMoving);
+        this.loadImages(this.imagesOfMoving);
+        this.loadImages(this.imagesOfStanding);
+        this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
         this.animationFrameId = null;
     }
 
     animation() {
         this.move();
-        let index = this.currentImage % this.imagesOfMoving.length;
-        let path = this.imagesOfMoving[index];
-        this.img = this.imageCache[path];
-        this.currentImage++;
+        if (this.isCharacterMoving) {
+            if (this.currentAnimation !== "moving") {
+                this.playAnimation(this.imagesOfMoving);
+                this.currentlyAnimating = true;
+                this.currentAnimation = "moving";
+            }
+        } 
+        else {
+            if (this.currentAnimation !== "standing") {
+                this.playAnimation(this.imagesOfStanding);
+                this.currentlyAnimating = true;
+                this.currentAnimation = "standing";
+            }
+        }
+
         this.animationFrameId = requestAnimationFrame(this.animation.bind(this));
     }
 
     move() {
-        if (this.keyboard.right && this.positionX < this.level.levelEndX) {
+        if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
             this.positionX += this.speed * 2;
             this.otherDirection = false;
         }
-        else if (this.keyboard.left && this.positionX > 0) {
+        else if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
             this.positionX -= this.speed * 2;
             this.otherDirection = true;
         }
-        else if (this.keyboard.up)
+        else if (this.keyboard.up && this.positionY > this.level.levelEndUpY)
             this.positionY -= this.speed * 2;
-        else if (this.keyboard.down)
+        else if (this.keyboard.down && this.positionY < this.level.levelEndDownY)
             this.positionY += this.speed * 2;
-        else if (this.keyboard.right && this.keyboard.up) {
-            this.positionX += this.speed * 2;
-            this.positionY -= this.speed * 2;
-        }
     }
 
     startAnimation() {
@@ -83,10 +94,11 @@ class Character extends MovableObject {
             this.animation();
     }
 
-    stopAnimation() {
+    stopAni() {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
+            this.animation();
         }
     }
 }
