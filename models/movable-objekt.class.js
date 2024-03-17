@@ -9,6 +9,8 @@ class MovableObject {
     speed = 5;
     otherDirection = false;
     animationIntervalId;
+    life = 100;
+    lastHit;
 
     loadImage(path) {
         this.img = new Image();
@@ -55,5 +57,29 @@ class MovableObject {
             this.positionX < object.positionX + object.width &&
             this.positionY < object.positionY + object.height &&
             this.positionY + this.height > object.positionY;
+    }
+
+    damageTaken() {
+        this.life -= 5;
+        if (this.life < 0) {
+            this.life = 0;
+        }
+        else
+            this.lastHit = new Date().getTime();
+        console.log(this.life);
+    }
+
+    isHurt() {
+        if (this.life < 100) {
+            let timeSpan = new Date().getTime() - this.lastHit;
+            timeSpan = timeSpan / 1000;
+            return timeSpan < 1;
+        }
+        else
+            return false;
+    }
+
+    isDead() {
+        return this.life == 0;
     }
 }

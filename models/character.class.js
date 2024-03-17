@@ -30,11 +30,33 @@ class Character extends MovableObject {
         'img/1.Sharkie/1.IDLE/18.png'
     ];
 
+    imagesOfHurt = [
+        'img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
+        'img/1.Sharkie/5.Hurt/1.Poisoned/4.png'
+    ];
+
+    imagesOfDead = [
+        'img/1.Sharkie/6.dead/1.Poisoned/1.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/2.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/3.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/4.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/5.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/6.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/7.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/8.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/9.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/10.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/11.png',
+        'img/1.Sharkie/6.dead/1.Poisoned/12.png'
+    ];
+
     height = 150;
     width = 150;
     positionY = 150;
     positionX = 0;
-    movementSpeed  = this.speed * 3;
+    movementSpeed = this.speed * 3;
 
     keyboard;
 
@@ -50,23 +72,39 @@ class Character extends MovableObject {
         super().loadImage('../img/1.Sharkie/1.IDLE/1.png');
         this.loadImages(this.imagesOfMoving);
         this.loadImages(this.imagesOfStanding);
+        this.loadImages(this.imagesOfDead);
+        this.loadImages(this.imagesOfHurt);
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
+        this.checkState();
+    }
+
+    checkState() {
+        setInterval(() => {
+            if (this.isDead()) {
+                if (this.currentAnimation !== "dead") {
+                    this.playAnimation(this.imagesOfDead);
+                    this.currentAnimation = "dead";
+                }
+            } else if (this.isHurt()) {
+                if (this.currentAnimation !== "hurt") {
+                    this.playAnimation(this.imagesOfHurt);
+                    this.currentAnimation = "hurt";
+                }
+            }
+        }, 200);
     }
 
     animation() {
         this.move();
-        if (this.isCharacterMoving) {
+        if (!this.isDead() && this.isCharacterMoving) {
             if (this.currentAnimation !== "moving") {
                 this.playAnimation(this.imagesOfMoving);
-                this.currentlyAnimating = true;
                 this.currentAnimation = "moving";
             }
-        } 
-        else {
+        } else if (!this.isDead() && !this.isCharacterMoving && !this.isHurt()) {
             if (this.currentAnimation !== "standing") {
                 this.playAnimation(this.imagesOfStanding);
-                this.currentlyAnimating = true;
                 this.currentAnimation = "standing";
             }
         }
@@ -74,9 +112,11 @@ class Character extends MovableObject {
         this.animationFrameId = requestAnimationFrame(this.animation.bind(this));
     }
 
+
+
     move() {
         let moved = false;
-    
+
         if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
             this.positionX += this.movementSpeed;
             this.otherDirection = false;
@@ -95,10 +135,10 @@ class Character extends MovableObject {
             this.positionY += this.movementSpeed;
             moved = true;
         }
-    
+
         this.isCharacterMoving = moved;
     }
-    
+
 
     startMovingAnimation() {
         if (!this.animationFrameId)
