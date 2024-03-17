@@ -76,10 +76,10 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfHurt);
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
-        this.checkState();
+        this.checkStatesOfSharkie();
     }
 
-    checkState() {
+    checkStatesOfSharkie() {
         setInterval(() => {
             if (this.isDead()) {
                 if (this.currentAnimation !== "dead") {
@@ -91,65 +91,54 @@ class Character extends MovableObject {
                     this.playAnimation(this.imagesOfHurt);
                     this.currentAnimation = "hurt";
                 }
+            } else if (this.isCharacterMoving) {
+                if (this.currentAnimation !== "moving") {
+                    this.playAnimation(this.imagesOfMoving);
+                    this.currentAnimation = "moving";
+                }
+            } else {
+                if (this.currentAnimation !== "standing") {
+                    this.playAnimation(this.imagesOfStanding);
+                    this.currentAnimation = "standing";
+                }
             }
         }, 200);
     }
 
-    animation() {
-        this.move();
-        if (!this.isDead() && this.isCharacterMoving) {
-            if (this.currentAnimation !== "moving") {
-                this.playAnimation(this.imagesOfMoving);
-                this.currentAnimation = "moving";
-            }
-        } else if (!this.isDead() && !this.isCharacterMoving && !this.isHurt()) {
-            if (this.currentAnimation !== "standing") {
-                this.playAnimation(this.imagesOfStanding);
-                this.currentAnimation = "standing";
-            }
-        }
-
-        this.animationFrameId = requestAnimationFrame(this.animation.bind(this));
-    }
-
-
-
     move() {
-        let moved = false;
-
         if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
             this.positionX += this.movementSpeed;
             this.otherDirection = false;
-            moved = true;
+            this.isCharacterMoving = true;
         }
         if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
             this.positionX -= this.movementSpeed;
             this.otherDirection = true;
-            moved = true;
+            this.isCharacterMoving = true;
         }
         if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
             this.positionY -= this.movementSpeed;
-            moved = true;
+            this.isCharacterMoving = true;
         }
         if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
             this.positionY += this.movementSpeed;
-            moved = true;
+            this.isCharacterMoving = true;
         }
-
-        this.isCharacterMoving = moved;
+        
+        this.animationFrameId = requestAnimationFrame(this.move.bind(this));
     }
 
 
     startMovingAnimation() {
         if (!this.animationFrameId)
-            this.animation();
+            this.move();
     }
 
     stopMovingAnimation() {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
-            this.animation();
+            this.move();
         }
     }
 }
