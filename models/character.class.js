@@ -84,9 +84,13 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 if (this.currentAnimation !== "dead") {
                     this.playAnimation(this.imagesOfDead);
+                    setTimeout(() => {
+                         this.stopAnimation();
+                    }, 2000);
                     this.currentAnimation = "dead";
                 }
-            } else if (this.isHurt()) {
+            } 
+            else if (this.isHurt()) {
                 if (this.currentAnimation !== "hurt") {
                     this.playAnimation(this.imagesOfHurt);
                     this.currentAnimation = "hurt";
