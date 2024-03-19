@@ -4,6 +4,7 @@ class MovableObject extends DrawableObject {
     animationIntervalId;
     life = 100;
     lastHit;
+    damage = 5;
 
     playAnimation(imagesOfAnimation) {
         this.stopAnimation();
@@ -22,16 +23,6 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    drawFrame(context) {
-        if (this instanceof Character || this instanceof Enemy || this instanceof Endboss) {
-            context.beginPath();
-            context.lineWidth = "10";
-            context.strokeStyle = "blue";
-            context.rect(this.positionX, this.positionY, this.width, this.height);
-            context.stroke();
-        }
-    }
-
     isColliding(object) {
         return this.positionX + this.width > object.positionX &&
             this.positionX < object.positionX + object.width &&
@@ -40,7 +31,7 @@ class MovableObject extends DrawableObject {
     }
 
     damageTaken() {
-        this.life -= 5;
+        this.life -= this.damage;
         if (this.life < 0) {
             this.life = 0;
         }

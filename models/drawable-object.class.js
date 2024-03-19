@@ -19,4 +19,14 @@ class DrawableObject{
             this.imageCache[path] = img;
         });
     }
+
+    drawFrame(context) {
+        if (this instanceof Character || this instanceof Enemy || this instanceof Endboss) {
+            context.beginPath();
+            context.lineWidth = "10";
+            context.strokeStyle = "blue";
+            context.rect(this.positionX, this.positionY, this.width, this.height);
+            context.stroke();
+        }
+    }
 }

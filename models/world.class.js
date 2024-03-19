@@ -4,6 +4,7 @@ class World {
     canvas;
     cameraX = 0;
     character;
+    statusBar = new StatusBar();
 
     level = level1;
     enemies = level1.enemies;
@@ -23,6 +24,7 @@ class World {
             this.level.enemies.forEach(enemy => {
                 if (this.character.isColliding(enemy)) {
                     this.character.damageTaken();
+                    this.statusBar.setPercentage(this.character.life);
                 }
             });
         }, 200);
@@ -35,7 +37,9 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
+
         this.context.translate(-this.cameraX, 0);
+        this.addToMap(this.statusBar);
 
         let self = this;
         requestAnimationFrame(function () {
