@@ -5,6 +5,8 @@ class MovableObject extends DrawableObject {
     life = 100;
     lastHit;
     damage = 5;
+    speedY = 0;
+    acceleration = 2.5;
 
     playAnimation(imagesOfAnimation) {
         this.stopAnimation();
@@ -52,5 +54,21 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         return this.life == 0;
+    }
+
+    isAboveGround() {
+        if (this instanceof ThrowableObject)
+            return true;
+        else
+            return this.positionY < 180;
+    }
+
+    applyGravity() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.positionY -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
     }
 }

@@ -24,6 +24,9 @@ window.addEventListener('keydown', event => {
         case 'w':
             keyboard.up = true;
             break;
+        case 'e':
+            keyboard.fire = true;
+            break;
         default:
             break;
     }
@@ -47,6 +50,9 @@ window.addEventListener('keyup', event => {
             break;
         case 'w':
             keyboard.up = false;
+            break;
+        case 'e':
+            keyboard.fire = false;
             break;
         default:
             break;
