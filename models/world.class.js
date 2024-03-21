@@ -5,7 +5,10 @@ class World {
     cameraX = 0;
 
     character;
-    statusBar = new StatusBar();
+    lifeBar = new LifeBar();
+    coinBar = new CoinBar();
+    toxicBubbleBar = new ToxicBubbleBar();
+
     throwableObjects = [];
 
     level = level1;
@@ -40,7 +43,7 @@ class World {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
                 this.character.damageTaken();
-                this.statusBar.setPercentage(this.character.life);
+                this.lifeBar.setPercentage(this.character.life);
             }
         });
     }
@@ -97,7 +100,9 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
 
         this.context.translate(-this.cameraX, 0);
-        this.addToMap(this.statusBar);
+        this.addToMap(this.lifeBar);
+        this.addToMap(this.coinBar);
+        this.addToMap(this.toxicBubbleBar);
 
         let self = this;
         requestAnimationFrame(function () {
