@@ -1,5 +1,7 @@
 class ThrowableObject extends MovableObject{
 
+    damage = 50;
+
     constructor(positionX, positionY){
         super().loadImage('img/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
         this.positionX = positionX;

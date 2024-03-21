@@ -59,7 +59,6 @@ window.addEventListener('keyup', event => {
 });
 
 window.addEventListener('keypress', event => {
-    console.log(event);
     if (event.key === ' ') {
         keyboard.fire = true;
     }

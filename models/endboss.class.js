@@ -26,14 +26,18 @@ class Endboss extends MovableObject {
         'img/2.Enemy/3 Final Enemy/2.floating/13.png'
     ];
 
-    width = 400;
-    height = 400;
+    
+
 
     constructor() {
         super().loadImage('../img/2.Enemy/3 Final Enemy/2.floating/1.png');
+        console.log('test');
         this.loadImages(this.imagesOfSwimming);
         this.spawnPoint();
         this.playAnimation(this.imagesOfSwimming);
+         this.life = 500;
+         this.width = 400;
+         this.height = 400;
     }
 
     spawnPoint() {

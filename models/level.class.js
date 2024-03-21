@@ -1,5 +1,6 @@
 class Level{
     enemies;
+    endBoss;
     backgroundObjects;
     levelEndLeftX = 0;
     levelEndRightX = 720*3;
@@ -7,8 +8,9 @@ class Level{
     levelEndDownY = 320;
     
 
-    constructor(enemies, backgroundObjects){
+    constructor(enemies, backgroundObjects, endBoss){
         this.enemies = enemies;
         this.backgroundObjects = backgroundObjects;
+        this.endBoss = endBoss;
     }
-}
+} 

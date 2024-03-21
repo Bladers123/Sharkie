@@ -10,6 +10,7 @@ class World {
 
     level = level1;
     enemies = level1.enemies;
+    endBoss = level1.endBoss;
     backgroundObjects = level1.backgroundObjects;
 
     constructor(canvas, character) {
@@ -30,11 +31,51 @@ class World {
     }
 
     checkCollisions() {
+        this.checkCollisionCharacterWithEnemy();
+        this.checkCollisionBubbleWithEnemy();
+        this.checkCollisionBubbleWithEndboss();
+    }
+
+    checkCollisionCharacterWithEnemy() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
                 this.character.damageTaken();
                 this.statusBar.setPercentage(this.character.life);
             }
+        });
+    }
+
+    checkCollisionBubbleWithEnemy() {
+        this.throwableObjects.forEach(bubble => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bubble.isColliding(enemy)) {
+                    enemy.life -= bubble.damage;
+                    if (enemy.life <= 0) {
+                        this.level.enemies.splice(enemyIndex, 1);
+                    }
+                    let bubbleIndex = this.throwableObjects.indexOf(bubble);
+                    if (bubbleIndex > -1) {
+                        this.throwableObjects.splice(bubbleIndex, 1);
+                    }
+                }
+            });
+        });
+    }
+
+    checkCollisionBubbleWithEndboss() {
+        this.throwableObjects.forEach(bubble => {
+            this.level.endBoss.forEach((endBoss, enemyIndex) => {
+                if (bubble.isColliding(endBoss)) {
+                    endBoss.life -= bubble.damage;
+                    if (endBoss.life <= 0) {
+                        this.level.endBoss.splice(enemyIndex, 1);
+                    }
+                    let bubbleIndex = this.throwableObjects.indexOf(bubble);
+                    if (bubbleIndex > -1) {
+                        this.throwableObjects.splice(bubbleIndex, 1);
+                    }
+                }
+            });
         });
     }
 
@@ -51,6 +92,7 @@ class World {
         this.context.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
 
