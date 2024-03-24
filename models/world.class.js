@@ -17,6 +17,7 @@ class World {
     endBoss = level1.endBoss;
     backgroundObjects = level1.backgroundObjects;
     collectedObjects = level1.collectedObjects;
+    collectedAnimationObjects = level1.collectedAnimationObjects;
 
     constructor(canvas, character) {
         this.context = canvas.getContext('2d');
@@ -101,7 +102,8 @@ class World {
         this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.collectedObjects);
+        this.addObjectsToMap(this.level.collectedObjects);
+        this.addObjectsToMap(this.level.collectedAnimationObjects);
 
         this.context.translate(-this.cameraX, 0);
         this.addObjectToMap(this.lifeBar);
