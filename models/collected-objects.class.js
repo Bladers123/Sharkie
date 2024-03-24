@@ -4,13 +4,15 @@ class CollectedObject extends MovableObject {
     positionY;
     width;
     height;
+    type;
 
-    constructor(imagePath, positionX, positionY, width = 40, height = 40) {
+    constructor(imagePath, positionX, positionY, width, height, type) {
         super();
         this.loadImage(imagePath);
         this.positionX = positionX;
         this.positionY = positionY;
         this.width = width;
         this.height = height;
+        this.type = type;
     }
 }

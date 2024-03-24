@@ -9,7 +9,7 @@ class ToxicBubbleBar extends DrawableObject{
         'img/4. Marcadores/Purple/100_.png'
     ];
 
-    percentage;
+    percentage = 0;
 
     constructor() {
         super().loadImages(this.imagesOfToxicBubbleBar);
@@ -17,7 +17,7 @@ class ToxicBubbleBar extends DrawableObject{
         this.positionY = 80;
         this.width = 200;
         this.height = 50;
-        this.setPercentage(0);
+        this.setPercentage(this.percentage);
     }       
 
     setPercentage(percentage) {
@@ -39,5 +39,9 @@ class ToxicBubbleBar extends DrawableObject{
             return 1;
         else
             return 0;
+    }
+
+    increasePercentage(amount) {
+        this.setPercentage(Math.min(this.percentage + amount, 100));
     }
 }

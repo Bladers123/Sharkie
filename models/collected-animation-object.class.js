@@ -13,14 +13,16 @@ class CollectedAnimationObject extends MovableObject {
 
     positionX;
     positionY;
+    type;
 
-    constructor(positionX, positionY) {
+    constructor(positionX, positionY, type) {
         super();
         this.loadImages(this.imagesOfPoisons);
         this.positionX = positionX;
         this.positionY = positionY;
         this.width = 60;
         this.height = 60;
+        this.type = type;
         this.playAnimation(this.imagesOfPoisons);
     }
 }

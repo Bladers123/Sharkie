@@ -40,6 +40,8 @@ class World {
         this.checkCollisionCharacterWithEnemy();
         this.checkCollisionBubbleWithEnemy();
         this.checkCollisionBubbleWithEndboss();
+        this.checkCollisionCharacterWithCoinsAndPoisons();
+        this.checkCollisionCharacterWithAnimationPoisons();
     }
 
     checkCollisionCharacterWithEnemy() {
@@ -85,6 +87,40 @@ class World {
             });
         });
     }
+
+    checkCollisionCharacterWithCoinsAndPoisons() {
+        this.level.collectedObjects = this.level.collectedObjects.filter(collectedObject => {
+            if (this.character.isColliding(collectedObject)) {
+                if (collectedObject.type === 'coin') {
+                    this.coinBar.increasePercentage(9);
+                    //  console.log('coin getroffen', this.coinBar.percentage);
+                } else if (collectedObject.type === 'poison') {
+                    this.toxicBubbleBar.increasePercentage(25);
+                    // console.log('poison getroffen', this.toxicBubbleBar.percentage);
+                }
+                return false;
+            }
+            return true;
+        });
+    }
+
+    checkCollisionCharacterWithAnimationPoisons() {
+        this.level.collectedAnimationObjects = this.level.collectedAnimationObjects.filter(collectedObject => {
+            if (this.character.isColliding(collectedObject)) {
+                if (collectedObject.type === 'coin') {
+                    this.coinBar.increasePercentage(8);
+                    //console.log('coin getroffen', this.coinBar.percentage);
+                } else if (collectedObject.type === 'poison') {
+                    this.toxicBubbleBar.increasePercentage(25);
+                    //console.log('poison getroffen', this.toxicBubbleBar.percentage);
+                }
+                return false;
+            }
+            return true;
+        });
+    }
+
+
 
     checkThrowObjects() {
         if (this.keyboard.fire) {
