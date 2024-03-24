@@ -16,6 +16,7 @@ class World {
     enemies = level1.enemies;
     endBoss = level1.endBoss;
     backgroundObjects = level1.backgroundObjects;
+    collectedObjects = level1.collectedObjects;
 
     constructor(canvas, character) {
         this.context = canvas.getContext('2d');
@@ -96,15 +97,16 @@ class World {
         this.cameraOnCharacter();
         this.context.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
-        this.addToMap(this.character);
+        this.addObjectToMap(this.character);
         this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.collectedObjects);
 
         this.context.translate(-this.cameraX, 0);
-        this.addToMap(this.lifeBar);
-        this.addToMap(this.coinBar);
-        this.addToMap(this.toxicBubbleBar);
+        this.addObjectToMap(this.lifeBar);
+        this.addObjectToMap(this.coinBar);
+        this.addObjectToMap(this.toxicBubbleBar);
 
         let self = this;
         requestAnimationFrame(function () {
@@ -114,11 +116,11 @@ class World {
 
     addObjectsToMap(objects) {
         objects.forEach(object => {
-            this.addToMap(object);
+            this.addObjectToMap(object);
         });
     }
 
-    addToMap(object) {
+    addObjectToMap(object) {
         if (object.img && object.img.complete && object.img.naturalHeight !== 0) {
             this.flipImage(object);
             this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);

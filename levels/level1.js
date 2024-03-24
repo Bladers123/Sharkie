@@ -28,5 +28,19 @@ const level1 = new Level(
     ],
     [
         new Endboss()
+    ],
+    [
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 400, 120),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 450, 80),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 500, 40),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 550, 40),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 600, 80),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 650, 120),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1300, 320),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1350, 360),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1400, 400),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1450, 400),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1500, 360),
+         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1550, 320)    
     ]
 );
