@@ -1,6 +1,6 @@
 class Endboss extends MovableObject {
 
-    imagesOfSwimming = [
+    imagesOfSpawning = [
         'img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
         'img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
         'img/2.Enemy/3 Final Enemy/1.Introduce/3.png',
@@ -10,7 +10,10 @@ class Endboss extends MovableObject {
         'img/2.Enemy/3 Final Enemy/1.Introduce/7.png',
         'img/2.Enemy/3 Final Enemy/1.Introduce/8.png',
         'img/2.Enemy/3 Final Enemy/1.Introduce/9.png',
-        'img/2.Enemy/3 Final Enemy/1.Introduce/10.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/10.png'
+    ];
+
+    imagesOfSwimming = [
         'img/2.Enemy/3 Final Enemy/2.floating/1.png',
         'img/2.Enemy/3 Final Enemy/2.floating/2.png',
         'img/2.Enemy/3 Final Enemy/2.floating/3.png',
@@ -26,11 +29,14 @@ class Endboss extends MovableObject {
         'img/2.Enemy/3 Final Enemy/2.floating/13.png'
     ];
 
+    firstContactWithEndboss = false;
+
     constructor() {
-        super().loadImage('../img/2.Enemy/3 Final Enemy/2.floating/1.png');
+        super();
+        this.loadImages(this.imagesOfSpawning);
         this.loadImages(this.imagesOfSwimming);
         this.spawnPoint();
-        this.playAnimation(this.imagesOfSwimming);
+        this.bossSpawning();
         this.life = 500;
         this.width = 400;
         this.height = 400;
@@ -39,5 +45,20 @@ class Endboss extends MovableObject {
     spawnPoint() {
         this.positionX = 2500;
         this.positionY = 0;
+    }
+
+    bossSpawning() {
+        let animateFrame = () => {
+            let characterObj = getCharacter();
+            if (characterObj && characterObj.positionX > 2000 && !this.firstContactWithEndboss) {
+                this.playAnimation(this.imagesOfSpawning);
+                this.firstContactWithEndboss = true;
+                setTimeout(() => {
+                    this.playAnimation(this.imagesOfSwimming);
+                }, 1500);
+            }
+            requestAnimationFrame(animateFrame);
+        };
+        requestAnimationFrame(animateFrame);
     }
 }

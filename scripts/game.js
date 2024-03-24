@@ -1,3 +1,5 @@
+// game.js
+
 let canvas;
 let world;
 let keyboard;
@@ -8,6 +10,10 @@ function init() {
     keyboard = new Keyboard();
     character = new Character(keyboard);
     world = new World(canvas, character);
+}
+
+ function getCharacter() {
+    return character;
 }
 
 window.addEventListener('keydown', event => {
