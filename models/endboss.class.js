@@ -49,8 +49,8 @@ class Endboss extends MovableObject {
 
     bossSpawning() {
         let animateFrame = () => {
-            let characterObj = getCharacter();
-            if (characterObj && characterObj.positionX > 2000 && !this.firstContactWithEndboss) {
+            let character = getCharacter();
+            if (character && character.positionX > 2000 && !this.firstContactWithEndboss) {
                 this.playAnimation(this.imagesOfSpawning);
                 this.firstContactWithEndboss = true;
                 setTimeout(() => {
