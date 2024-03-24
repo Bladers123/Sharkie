@@ -3,7 +3,7 @@ class Level{
     endBoss;
     backgroundObjects;
     levelEndLeftX = 0;
-    levelEndRightX = 720*3;
+    levelEndRightX = 2740;
     levelEndUpY = -30;
     levelEndDownY = 320;
     

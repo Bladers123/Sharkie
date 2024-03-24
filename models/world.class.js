@@ -3,6 +3,7 @@ class World {
     context;
     canvas;
     cameraX = 0;
+    bossZoneReached = false;
 
     character;
     lifeBar = new LifeBar();
@@ -72,6 +73,7 @@ class World {
                     endBoss.life -= bubble.damage;
                     if (endBoss.life <= 0) {
                         this.level.endBoss.splice(enemyIndex, 1);
+                        endBoss.endBossIsDead = true;
                     }
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
@@ -142,6 +144,17 @@ class World {
     }
 
     cameraOnCharacter() {
-        this.cameraX = -this.character.positionX;
+        let cameraStartMovingRightX = this.canvas.width / 1.5;
+        let maxCameraX = -(this.level.levelEndRightX + 140 - this.canvas.width);
+        if (!this.bossZoneReached) {
+            if (this.character.positionX > cameraStartMovingRightX)
+                this.cameraX = Math.max(-(this.character.positionX - cameraStartMovingRightX), maxCameraX);
+
+            if (this.character.positionX > this.level.levelEndRightX) {
+                console.log('Boss Start:', this.character.positionX);
+                this.cameraX = -2160;
+                this.bossZoneReached = true;
+            }
+        }
     }
 }

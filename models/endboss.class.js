@@ -30,6 +30,10 @@ class Endboss extends MovableObject {
     ];
 
     firstContactWithEndboss = false;
+    endBossIsDead = false;
+
+    endBossBeginningMusic = new Audio('audio/bossfight.mp3');
+    endBossKilledMusic = new Audio('audio/win.mp3');
 
     constructor() {
         super();
@@ -38,27 +42,40 @@ class Endboss extends MovableObject {
         this.spawnPoint();
         this.bossSpawning();
         this.life = 500;
-        this.width = 400;
-        this.height = 400;
+        this.width = 200;
+        this.height = 200;
+        this.checkEndbossDead();
     }
 
     spawnPoint() {
-        this.positionX = 2500;
-        this.positionY = 0;
+        this.positionX = 2650;
+        this.positionY = 120;
     }
 
     bossSpawning() {
         let animateFrame = () => {
             let character = getCharacter();
-            if (character && character.positionX > 2000 && !this.firstContactWithEndboss) {
-                this.playAnimation(this.imagesOfSpawning);
-                this.firstContactWithEndboss = true;
+            if (character && character.positionX > 2740 && !this.firstContactWithEndboss) {
+                this.endBossBeginningMusic.play();
                 setTimeout(() => {
-                    this.playAnimation(this.imagesOfSwimming);
-                }, 1500);
+                    this.playAnimation(this.imagesOfSpawning);
+                    this.firstContactWithEndboss = true;
+                    setTimeout(() => {
+                        this.playAnimation(this.imagesOfSwimming);
+                    }, 1500);
+                }, 1000);
             }
             requestAnimationFrame(animateFrame);
         };
         requestAnimationFrame(animateFrame);
+    }
+
+    checkEndbossDead() {
+        setInterval(() => {
+            if (this.endBossIsDead) {
+                this.endBossBeginningMusic.pause();
+                this.endBossKilledMusic.play();
+            }
+        }, 200);
     }
 }
