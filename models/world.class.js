@@ -95,7 +95,7 @@ class World {
                     this.coinBar.increasePercentage(9);
                     //  console.log('coin getroffen', this.coinBar.percentage);
                 } else if (collectedObject.type === 'poison') {
-                    this.toxicBubbleBar.increasePercentage(25);
+                    this.toxicBubbleBar.increasePercentage(20);
                     // console.log('poison getroffen', this.toxicBubbleBar.percentage);
                 }
                 return false;
@@ -111,7 +111,7 @@ class World {
                     this.coinBar.increasePercentage(8);
                     //console.log('coin getroffen', this.coinBar.percentage);
                 } else if (collectedObject.type === 'poison') {
-                    this.toxicBubbleBar.increasePercentage(25);
+                    this.toxicBubbleBar.increasePercentage(20);
                     //console.log('poison getroffen', this.toxicBubbleBar.percentage);
                 }
                 return false;
@@ -189,9 +189,7 @@ class World {
         if (!this.bossZoneReached) {
             if (this.character.positionX > cameraStartMovingRightX)
                 this.cameraX = Math.max(-(this.character.positionX - cameraStartMovingRightX), maxCameraX);
-
             if (this.character.positionX > this.level.levelEndRightX) {
-                console.log('Boss Start:', this.character.positionX);
                 this.cameraX = -2160;
                 this.bossZoneReached = true;
             }

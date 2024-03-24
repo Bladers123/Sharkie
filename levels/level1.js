@@ -32,23 +32,24 @@ const level1 = new Level(
         new Endboss()
     ],
     [
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 400, 120, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 450, 80, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 500, 40, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 550, 40, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 600, 80, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 650, 120, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1300, 320, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1350, 360, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1400, 400, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1450, 400, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1500, 360, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1550, 320, 40, 40, 'coin'),
-         new CollectedObject('img/4. Marcadores/Posión/Dark - Left.png', 560, 380, 60, 60, 'poison'),
-         new CollectedObject('img/4. Marcadores/Posión/Dark - Right.png', 1750, 390, 60, 60, 'poison')     
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 400, 120, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 450, 80, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 500, 40, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 550, 40, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 600, 80, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 650, 120, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1300, 320, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1350, 360, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1400, 400, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1450, 400, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1500, 360, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/1. Coins/4.png', 1550, 320, 40, 40, 'coin'),
+        new CollectedObject('img/4. Marcadores/Posión/Dark - Left.png', 560, 380, 60, 60, 'poison'),
+        new CollectedObject('img/4. Marcadores/Posión/Dark - Right.png', 1750, 390, 60, 60, 'poison'),
     ],
     [
         new CollectedAnimationObject(520, 100, 'poison'),
-        new CollectedAnimationObject(1420, 300, 'poison')    
+        new CollectedAnimationObject(1420, 300, 'poison'),
+        new CollectedAnimationObject(975, 200, 'poison')
     ]
 )
