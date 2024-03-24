@@ -120,11 +120,11 @@ class World {
         });
     }
 
-
-
     checkThrowObjects() {
         if (this.keyboard.fire) {
-            let bubble = new ThrowableObject(this.character.positionX + 100, this.character.positionY + 100);
+            let xOffset = this.character.otherDirection ? -30 : 150;
+            let yOffset = 80;
+            let bubble = new ThrowableObject(this.character.positionX + xOffset, this.character.positionY + yOffset, this.character.otherDirection);
             this.throwableObjects.push(bubble);
         }
     }
@@ -184,7 +184,7 @@ class World {
     }
 
     cameraOnCharacter() {
-        let cameraStartMovingRightX = this.canvas.width / 1.5;
+        let cameraStartMovingRightX = this.canvas.width / 2.5;
         let maxCameraX = -(this.level.levelEndRightX + 140 - this.canvas.width);
         if (!this.bossZoneReached) {
             if (this.character.positionX > cameraStartMovingRightX)
