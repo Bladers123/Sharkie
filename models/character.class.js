@@ -88,6 +88,7 @@ class Character extends MovableObject {
     isAttacking = false;
     keyboard;
     mayMove = true;
+    bossZoneReached = false;
 
     animationFrameId = null;
     isCharacterMoving = false;
@@ -167,9 +168,11 @@ class Character extends MovableObject {
                 this.isCharacterMoving = true;
             }
             if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
-                this.positionX -= this.movementSpeed;
-                this.otherDirection = true;
-                this.isCharacterMoving = true;
+                if (!this.bossZoneReached || (this.bossZoneReached && this.positionX > 2140)) {
+                    this.positionX -= this.movementSpeed;
+                    this.otherDirection = true;
+                    this.isCharacterMoving = true;
+                }
             }
             if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
                 this.positionY -= this.movementSpeed;

@@ -27,7 +27,6 @@ class MovableObject extends DrawableObject {
         }, 150);
     }
 
-
     stopAnimation() {
         if (this.animationIntervalId !== null) {
             clearInterval(this.animationIntervalId);

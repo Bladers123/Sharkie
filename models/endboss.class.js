@@ -54,16 +54,13 @@ class Endboss extends MovableObject {
 
     bossSpawning() {
         let animateFrame = () => {
-            let character = getCharacter();
-            if (character) {
-                console.log(character.positionX);
-            }
-            
+            let character = getCharacter();   
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
               //  this.endBossBeginningMusic.play();
                 setTimeout(() => {
                     this.playAnimation(this.imagesOfSpawning);
                     this.firstContactWithEndboss = true;
+                    character.bossZoneReached = true;
                     setTimeout(() => {
                         this.playAnimation(this.imagesOfSwimming);
                     }, 1500);
