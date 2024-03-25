@@ -8,15 +8,22 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
 
-    playAnimation(imagesOfAnimation) {
+    playAnimation(imagesOfAnimation, repeatLastFour = false, runOnce = false) {
         this.stopAnimation();
+        let index = 0;
         this.animationIntervalId = setInterval(() => {
-            let index = this.currentImage % imagesOfAnimation.length;
-            let path = imagesOfAnimation[index];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            if (index < imagesOfAnimation.length) {
+                let path = imagesOfAnimation[index];
+                this.img = this.imageCache[path];
+                index++;
+            }
+            else if (repeatLastFour)
+                index = imagesOfAnimation.length - 4;
+            else if (runOnce)
+                this.stopAnimation();
         }, 150);
     }
+
 
     stopAnimation() {
         if (this.animationIntervalId !== null) {

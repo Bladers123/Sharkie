@@ -52,11 +52,29 @@ class Character extends MovableObject {
         'img/1.Sharkie/6.dead/1.Poisoned/12.png'
     ];
 
+    imagesOfLongStanding = [
+        'img/1.Sharkie/2.Long_IDLE/i1.png',
+        'img/1.Sharkie/2.Long_IDLE/i2.png',
+        'img/1.Sharkie/2.Long_IDLE/i3.png',
+        'img/1.Sharkie/2.Long_IDLE/i4.png',
+        'img/1.Sharkie/2.Long_IDLE/i5.png',
+        'img/1.Sharkie/2.Long_IDLE/i6.png',
+        'img/1.Sharkie/2.Long_IDLE/i7.png',
+        'img/1.Sharkie/2.Long_IDLE/i8.png',
+        'img/1.Sharkie/2.Long_IDLE/i9.png',
+        'img/1.Sharkie/2.Long_IDLE/i10.png',
+        'img/1.Sharkie/2.Long_IDLE/i11.png',
+        'img/1.Sharkie/2.Long_IDLE/i12.png',
+        'img/1.Sharkie/2.Long_IDLE/i13.png',
+        'img/1.Sharkie/2.Long_IDLE/i14.png'
+    ];
+
     height = 150;
     width = 150;
     positionY = 150;
     positionX = 0;
     movementSpeed = this.speed * 3;
+    isGameOver = false;
 
     keyboard;
 
@@ -74,40 +92,56 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfStanding);
         this.loadImages(this.imagesOfDead);
         this.loadImages(this.imagesOfHurt);
+        this.loadImages(this.imagesOfLongStanding);
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
         this.checkStatesOfSharkie();
     }
 
     checkStatesOfSharkie() {
+        let standingTimeoutId = null; 
         setInterval(() => {
-            if (this.isDead()) {
-                if (this.currentAnimation !== "dead") {
-                    this.playAnimation(this.imagesOfDead);
-                    setTimeout(() => {
-                         this.stopAnimation();
-                    }, 2000);
-                    this.currentAnimation = "dead";
+            if (!this.isGameOver) {
+                if (this.isDead()) {
+                    if (this.currentAnimation !== "dead") {
+                        this.playAnimation(this.imagesOfDead, false, true);
+                        setTimeout(() => {
+                            this.stopAnimation();
+                        }, 2000);
+                        this.currentAnimation = "dead";
+                        this.isGameOver = true;
+                        clearTimeout(standingTimeoutId);
+                    }
                 }
-            } 
-            else if (this.isHurt()) {
-                if (this.currentAnimation !== "hurt") {
-                    this.playAnimation(this.imagesOfHurt);
-                    this.currentAnimation = "hurt";
-                }
-            } else if (this.isCharacterMoving) {
-                if (this.currentAnimation !== "moving") {
-                    this.playAnimation(this.imagesOfMoving);
-                    this.currentAnimation = "moving";
-                }
-            } else {
-                if (this.currentAnimation !== "standing") {
+                else if (this.isHurt()) {
+                    if (this.currentAnimation !== "hurt") {
+                        this.playAnimation(this.imagesOfHurt, false, false);
+                        this.currentAnimation = "hurt";
+                        clearTimeout(standingTimeoutId);
+                    }
+                } else if (this.isCharacterMoving) {
+                    if (this.currentAnimation !== "moving") {
+                        this.playAnimation(this.imagesOfMoving, false, false);
+                        this.currentAnimation = "moving";
+                        clearTimeout(standingTimeoutId);
+                    }
+                } else if (this.currentAnimation !== "standing") {
                     this.playAnimation(this.imagesOfStanding);
                     this.currentAnimation = "standing";
+                    clearTimeout(standingTimeoutId);
+                    standingTimeoutId = setTimeout(() => {
+                        if (!this.isCharacterMoving && !this.isDead() && !this.isHurt()) {
+                            this.playAnimation(this.imagesOfLongStanding, true, false);
+                        }
+                    }, 5000); 
                 }
             }
-        }, 200);
+        }, 16);
     }
+    
+
+  
+    
 
     move() {
         if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
@@ -128,7 +162,7 @@ class Character extends MovableObject {
             this.positionY += this.movementSpeed;
             this.isCharacterMoving = true;
         }
-        
+
         this.animationFrameId = requestAnimationFrame(this.move.bind(this));
     }
 
