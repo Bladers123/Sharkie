@@ -55,7 +55,7 @@ window.addEventListener('keyup', event => {
             keyboard.up = false;
             break;
         default:
-            break;
+            break;  
     }
 
     if (!keyboard.left && !keyboard.right && !keyboard.up && !keyboard.down) {
@@ -64,12 +64,14 @@ window.addEventListener('keyup', event => {
     }
 });
 
-window.addEventListener('keypress', event => {
+window.addEventListener('keypress', (event) => {
     if (event.key === ' ') {
         keyboard.fire = true;
+        character.initiateAttack();
     }
-    else
-        keyboard.fire = false;
 });
+
+
+
 
 

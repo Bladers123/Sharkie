@@ -85,7 +85,7 @@ class Character extends MovableObject {
     positionX = 0;
     movementSpeed = this.speed * 3;
     isGameOver = false;
-
+    isAttacking = false;
     keyboard;
 
     animationFrameId = null;
@@ -111,7 +111,7 @@ class Character extends MovableObject {
     }
 
     checkStatesOfSharkie() {
-        let standingTimeoutId = null; 
+        let standingTimeoutId = null;
         setInterval(() => {
             if (!this.isGameOver) {
                 if (this.isDead()) {
@@ -127,7 +127,7 @@ class Character extends MovableObject {
                 }
                 else if (this.isHurt()) {
                     if (this.currentAnimation !== "hurt") {
-                        this.playAnimation(this.imagesOfHurt, false, false);
+                        this.playAnimation(this.imagesOfHurt, false, true);
                         this.currentAnimation = "hurt";
                         clearTimeout(standingTimeoutId);
                     }
@@ -137,7 +137,14 @@ class Character extends MovableObject {
                         this.currentAnimation = "moving";
                         clearTimeout(standingTimeoutId);
                     }
-                } else if (this.currentAnimation !== "standing") {
+                } else if (this.isAttacking) {
+                    if (this.currentAnimation !== "attacking") {
+                        this.currentAnimation = "attacking";
+                        clearTimeout(standingTimeoutId);
+                    }
+                }
+
+                else if (this.currentAnimation !== "standing") {
                     this.playAnimation(this.imagesOfStanding);
                     this.currentAnimation = "standing";
                     clearTimeout(standingTimeoutId);
@@ -145,7 +152,7 @@ class Character extends MovableObject {
                         if (!this.isCharacterMoving && !this.isDead() && !this.isHurt()) {
                             this.playAnimation(this.imagesOfLongStanding, true, false);
                         }
-                    }, 5000); 
+                    }, 5000);
                 }
             }
         }, 16);
@@ -185,6 +192,29 @@ class Character extends MovableObject {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
             this.move();
+        }
+    }
+
+    initiateAttack() {
+        if (!this.isAttacking && !this.isGameOver) {
+            this.isAttacking = true;
+            this.playAnimation(this.imagesOfAttackWithBubble, false, false);
+            this.currentAnimation = "attacking";
+    
+            setTimeout(() => {
+                this.shootBubble();
+                this.isAttacking = false;
+                this.playAnimation(this.imagesOfStanding, false, false);
+                this.currentAnimation = "standing";
+            }, 1000);
+        }
+    }
+
+    shootBubble() {
+        if (!this.isGameOver) {
+            let xOffset = this.otherDirection ? -30 : this.width;
+            let bubble = new ThrowableObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection);
+            world.throwableObjects.push(bubble);
         }
     }
 }

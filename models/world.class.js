@@ -122,12 +122,11 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.fire) {
-            let xOffset = this.character.otherDirection ? -30 : 150;
-            let yOffset = 80;
-            let bubble = new ThrowableObject(this.character.positionX + xOffset, this.character.positionY + yOffset, this.character.otherDirection);
-            this.throwableObjects.push(bubble);
+            this.character.initiateAttack(); // Initiiere den Angriff des Charakters
+            this.keyboard.fire = false; // Verhindert kontinuierliche Schüsse bei gedrückter Taste
         }
     }
+    
 
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
