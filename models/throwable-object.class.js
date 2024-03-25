@@ -2,9 +2,13 @@ class ThrowableObject extends MovableObject {
     damage = 50;
     firedDirection = "";
     otherDirection;
+    type;
 
-    constructor(positionX, positionY, otherDirection) {
-        super().loadImage('img/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
+    constructor(positionX, positionY, otherDirection, type = 'normal') {
+        super();
+        this.type = type;
+        let bubbleImage = type === 'poison' ? 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png' : 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png';
+        this.loadImage(bubbleImage);
         this.positionX = positionX;
         this.positionY = positionY;
         this.width = 40;

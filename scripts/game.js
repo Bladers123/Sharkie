@@ -67,10 +67,13 @@ window.addEventListener('keyup', event => {
 window.addEventListener('keypress', (event) => {
     if (event.key === ' ') {
         keyboard.fire = true;
-        character.initiateAttack();
+        character.initiateAttack('normal');
+    }
+    else if (event.key === 'e') {
+        keyboard.fire = true;
+        character.initiateAttack('poison');
     }
 });
-
 
 
 

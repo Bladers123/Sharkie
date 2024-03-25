@@ -152,7 +152,7 @@ class Character extends MovableObject {
                         if (!this.isCharacterMoving && !this.isDead() && !this.isHurt()) {
                             this.playAnimation(this.imagesOfLongStanding, true, false);
                         }
-                    }, 5000);
+                    }, 8000);
                 }
             }
         }, 16);
@@ -195,26 +195,32 @@ class Character extends MovableObject {
         }
     }
 
-    initiateAttack() {
+    initiateAttack(type = 'normal') {
         if (!this.isAttacking && !this.isGameOver) {
             this.isAttacking = true;
-            this.playAnimation(this.imagesOfAttackWithBubble, false, false);
-            this.currentAnimation = "attacking";
-    
+            // Entscheidung basierend auf dem Typ
+            if (type === 'poison') {
+                console.log('Poison attack');
+                // Hier könntest du eine andere Animation oder Logik für die Giftattacke hinzufügen
+            } else {
+                console.log('Normal attack');
+            }
+            this.playAnimation(this.imagesOfAttackWithBubble, false, false); // Eventuell eine spezifische Animation für den Angriffstyp
             setTimeout(() => {
-                this.shootBubble();
+                this.shootBubble(type);
                 this.isAttacking = false;
-                this.playAnimation(this.imagesOfStanding, false, false);
-                this.currentAnimation = "standing";
-            }, 1000);
+            }, 1000); // Angenommen, die Angriffsanimation dauert 1 Sekunde
         }
     }
+    
 
-    shootBubble() {
+    shootBubble(type = 'normal') {
         if (!this.isGameOver) {
             let xOffset = this.otherDirection ? -30 : this.width;
-            let bubble = new ThrowableObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection);
+            // Entscheide basierend auf dem Typ, welche Art von Bubble erzeugt werden soll
+            let bubble = new ThrowableObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type);
             world.throwableObjects.push(bubble);
         }
     }
+    
 }
