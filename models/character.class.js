@@ -69,6 +69,16 @@ class Character extends MovableObject {
         'img/1.Sharkie/2.Long_IDLE/i14.png'
     ];
 
+    imagesOfAttackWithBubble = [
+        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/1.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/2.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/3.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/4.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/5.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/6.png',
+        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/7.png'
+    ];
+
     height = 150;
     width = 150;
     positionY = 150;
@@ -87,12 +97,14 @@ class Character extends MovableObject {
     swimmingSound = new Audio('audio/fish-swimming.mp3');
 
     constructor(keyboard) {
-        super().loadImage('../img/1.Sharkie/1.IDLE/1.png');
+        super();
         this.loadImages(this.imagesOfMoving);
         this.loadImages(this.imagesOfStanding);
         this.loadImages(this.imagesOfDead);
         this.loadImages(this.imagesOfHurt);
         this.loadImages(this.imagesOfLongStanding);
+        this.loadImages(this.imagesOfAttackWithBubble);
+
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
         this.checkStatesOfSharkie();
@@ -138,10 +150,6 @@ class Character extends MovableObject {
             }
         }, 16);
     }
-    
-
-  
-    
 
     move() {
         if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
