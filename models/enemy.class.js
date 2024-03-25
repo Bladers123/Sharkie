@@ -15,7 +15,7 @@ class Enemy extends MovableObject {
         super().loadImage('../img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.imagesOfSwimming);
         this.spawnPoint();
-        this.playAnimation(this.imagesOfSwimming);
+        this.playAnimation(this.imagesOfSwimming, false, false);
         this.moveLeft(this.imagesOfSwimming); 
         this.speed = 0.15 + Math.random(); 
     }

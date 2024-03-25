@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     damage = 5;
     speedY = 0;
     acceleration = 2.5;
+    totalLife = 100;
 
     playAnimation(imagesOfAnimation, repeatLastFour = false, runOnce = false) {
         this.stopAnimation();
@@ -21,8 +22,11 @@ class MovableObject extends DrawableObject {
                 index = imagesOfAnimation.length - 4;
             else if (runOnce)
                 this.stopAnimation();
+            else
+                index = 0;
         }, 150);
     }
+
 
     stopAnimation() {
         if (this.animationIntervalId !== null) {
@@ -48,7 +52,7 @@ class MovableObject extends DrawableObject {
     }
 
     isHurt() {
-        if (this.life < 100) {
+        if (this.life < this.totalLife) {
             let timeSpan = new Date().getTime() - this.lastHit;
             timeSpan = timeSpan / 1000;
             return timeSpan < 1;

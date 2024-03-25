@@ -83,7 +83,6 @@ class Character extends MovableObject {
     width = 150;
     positionY = 150;
     positionX = 0;
-    life = 100000;
     movementSpeed = this.speed * 3;
     isGameOver = false;
     isAttacking = false;
@@ -128,6 +127,7 @@ class Character extends MovableObject {
                     }
                 }
                 else if (this.isHurt()) {
+                    console.log('verletzt');
                     if (this.currentAnimation !== "hurt") {
                         this.playAnimation(this.imagesOfHurt, false, true);
                         this.currentAnimation = "hurt";
