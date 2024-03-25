@@ -83,7 +83,7 @@ class Character extends MovableObject {
     width = 150;
     positionY = 150;
     positionX = 0;
-    movementSpeed = this.speed * 3;
+    movementSpeed = 5;
     isGameOver = false;
     isAttacking = false;
     keyboard;
@@ -127,7 +127,6 @@ class Character extends MovableObject {
                     }
                 }
                 else if (this.isHurt()) {
-                    console.log('verletzt');
                     if (this.currentAnimation !== "hurt") {
                         this.playAnimation(this.imagesOfHurt, false, true);
                         this.currentAnimation = "hurt";

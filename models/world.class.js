@@ -183,7 +183,7 @@ class World {
         if (!this.bossZoneReached) {
             if (this.character.positionX > cameraStartMovingRightX)
                 this.cameraX = Math.max(-(this.character.positionX - cameraStartMovingRightX), maxCameraX);
-            if (this.character.positionX > this.level.levelEndRightX) {
+            if (this.character.positionX > 2500) {
                 this.cameraX = -2160;
                 this.bossZoneReached = true;
             }
