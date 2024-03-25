@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-    damage = 50;
+    damage;
     firedDirection = "";
     otherDirection;
     type;
@@ -7,6 +7,7 @@ class ThrowableObject extends MovableObject {
     constructor(positionX, positionY, otherDirection, type = 'normal') {
         super();
         this.type = type;
+        this.damage = type === 'poison' ? 50 * 3 : 50; 
         let bubbleImage = type === 'poison' ? 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png' : 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png';
         this.loadImage(bubbleImage);
         this.positionX = positionX;

@@ -26,6 +26,11 @@ class ToxicBubbleBar extends DrawableObject{
         this.img = this.imageCache[imagePath];
     }
 
+    decreasePercentage(amount) {
+        this.setPercentage(Math.max(this.percentage - amount, 0));
+    }
+    
+
     getImageIndex() {
         if (this.percentage == 100)
             return 5;

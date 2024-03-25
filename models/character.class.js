@@ -194,24 +194,34 @@ class Character extends MovableObject {
             this.move();
         }
     }
-
-    initiateAttack(type = 'normal') {
+    initiateAttack(type) {
         if (!this.isAttacking && !this.isGameOver) {
-            this.isAttacking = true;
-            // Entscheidung basierend auf dem Typ
-            if (type === 'poison') {
+            if (type === 'poison' && world.toxicBubbleBar.percentage > 0) {
+                // Genug Munition für eine Poison Bubble
+                this.isAttacking = true;
                 console.log('Poison attack');
-                // Hier könntest du eine andere Animation oder Logik für die Giftattacke hinzufügen
-            } else {
+                this.playAnimation(this.imagesOfAttackWithBubble, false, false); // Angenommen, du hast eine spezifische Animation für Poison Attacks
+                setTimeout(() => {
+                    this.shootBubble(type);
+                    this.isAttacking = false;
+                    // Verbrauche einen Teil der Munition für die Poison Bubble
+                    world.toxicBubbleBar.decreasePercentage(20); // Nehmen wir an, jede Poison Bubble verbraucht 20% der Energie
+                }, 1000); // Dauer der Angriffsanimation
+            } else if (type === 'normal') {
+                // Normale Bubble Attacke
+                this.isAttacking = true;
                 console.log('Normal attack');
+                this.playAnimation(this.imagesOfAttackWithBubble, false, false);
+                setTimeout(() => {
+                    this.shootBubble(type);
+                    this.isAttacking = false;
+                }, 1000);
+            } else {
+                console.log('Nicht genug Munition für eine Poison Bubble');
             }
-            this.playAnimation(this.imagesOfAttackWithBubble, false, false); // Eventuell eine spezifische Animation für den Angriffstyp
-            setTimeout(() => {
-                this.shootBubble(type);
-                this.isAttacking = false;
-            }, 1000); // Angenommen, die Angriffsanimation dauert 1 Sekunde
         }
     }
+    
     
 
     shootBubble(type = 'normal') {
