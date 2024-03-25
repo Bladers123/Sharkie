@@ -160,23 +160,25 @@ class Character extends MovableObject {
     }
 
     move() {
-        if (this.mayMove && this.keyboard.right && this.positionX < this.level.levelEndRightX) {
-            this.positionX += this.movementSpeed;
-            this.otherDirection = false;
-            this.isCharacterMoving = true;
-        }
-        if (this.mayMove && this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
-            this.positionX -= this.movementSpeed;
-            this.otherDirection = true;
-            this.isCharacterMoving = true;
-        }
-        if (this.mayMove && this.keyboard.up && this.positionY > this.level.levelEndUpY) {
-            this.positionY -= this.movementSpeed;
-            this.isCharacterMoving = true;
-        }
-        if (this.mayMove && this.keyboard.down && this.positionY < this.level.levelEndDownY) {
-            this.positionY += this.movementSpeed;
-            this.isCharacterMoving = true;
+        if (!this.isGameOver && this.mayMove) {
+            if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
+                this.positionX += this.movementSpeed;
+                this.otherDirection = false;
+                this.isCharacterMoving = true;
+            }
+            if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
+                this.positionX -= this.movementSpeed;
+                this.otherDirection = true;
+                this.isCharacterMoving = true;
+            }
+            if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
+                this.positionY -= this.movementSpeed;
+                this.isCharacterMoving = true;
+            }
+            if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
+                this.positionY += this.movementSpeed;
+                this.isCharacterMoving = true;
+            }
         }
 
         this.animationFrameId = requestAnimationFrame(this.move.bind(this));
