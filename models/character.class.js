@@ -83,10 +83,12 @@ class Character extends MovableObject {
     width = 150;
     positionY = 150;
     positionX = 0;
+    life = 100000;
     movementSpeed = this.speed * 3;
     isGameOver = false;
     isAttacking = false;
     keyboard;
+    mayMove = true;
 
     animationFrameId = null;
     isCharacterMoving = false;
@@ -159,21 +161,21 @@ class Character extends MovableObject {
     }
 
     move() {
-        if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
+        if (this.mayMove && this.keyboard.right && this.positionX < this.level.levelEndRightX) {
             this.positionX += this.movementSpeed;
             this.otherDirection = false;
             this.isCharacterMoving = true;
         }
-        if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
+        if (this.mayMove && this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
             this.positionX -= this.movementSpeed;
             this.otherDirection = true;
             this.isCharacterMoving = true;
         }
-        if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
+        if (this.mayMove && this.keyboard.up && this.positionY > this.level.levelEndUpY) {
             this.positionY -= this.movementSpeed;
             this.isCharacterMoving = true;
         }
-        if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
+        if (this.mayMove && this.keyboard.down && this.positionY < this.level.levelEndDownY) {
             this.positionY += this.movementSpeed;
             this.isCharacterMoving = true;
         }
@@ -195,42 +197,43 @@ class Character extends MovableObject {
         }
     }
     initiateAttack(type) {
-        if (!this.isAttacking && !this.isGameOver) {
+        if (!this.isAttacking && !this.isGameOver && this.mayMove) {
+            this.mayMove = false;
             if (type === 'poison' && world.toxicBubbleBar.percentage > 0) {
-                // Genug Munition für eine Poison Bubble
                 this.isAttacking = true;
                 console.log('Poison attack');
-                this.playAnimation(this.imagesOfAttackWithBubble, false, false); // Angenommen, du hast eine spezifische Animation für Poison Attacks
+                this.playAnimation(this.imagesOfAttackWithBubble, false, false);
                 setTimeout(() => {
                     this.shootBubble(type);
                     this.isAttacking = false;
-                    // Verbrauche einen Teil der Munition für die Poison Bubble
-                    world.toxicBubbleBar.decreasePercentage(20); // Nehmen wir an, jede Poison Bubble verbraucht 20% der Energie
-                }, 1000); // Dauer der Angriffsanimation
+                    world.toxicBubbleBar.decreasePercentage(20);
+                    this.mayMove = true;
+                }, 1000);
             } else if (type === 'normal') {
-                // Normale Bubble Attacke
+
                 this.isAttacking = true;
                 console.log('Normal attack');
                 this.playAnimation(this.imagesOfAttackWithBubble, false, false);
                 setTimeout(() => {
                     this.shootBubble(type);
                     this.isAttacking = false;
+                    this.mayMove = true;
                 }, 1000);
             } else {
                 console.log('Nicht genug Munition für eine Poison Bubble');
+                this.mayMove = true;
             }
         }
     }
-    
-    
+
+
 
     shootBubble(type = 'normal') {
         if (!this.isGameOver) {
             let xOffset = this.otherDirection ? -30 : this.width;
-            // Entscheide basierend auf dem Typ, welche Art von Bubble erzeugt werden soll
             let bubble = new ThrowableObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type);
             world.throwableObjects.push(bubble);
         }
     }
-    
+
 }

@@ -93,10 +93,8 @@ class World {
             if (this.character.isColliding(collectedObject)) {
                 if (collectedObject.type === 'coin') {
                     this.coinBar.increasePercentage(9);
-                    //  console.log('coin getroffen', this.coinBar.percentage);
                 } else if (collectedObject.type === 'poison') {
                     this.toxicBubbleBar.increasePercentage(20);
-                    // console.log('poison getroffen', this.toxicBubbleBar.percentage);
                 }
                 return false;
             }
@@ -109,10 +107,8 @@ class World {
             if (this.character.isColliding(collectedObject)) {
                 if (collectedObject.type === 'coin') {
                     this.coinBar.increasePercentage(8);
-                    //console.log('coin getroffen', this.coinBar.percentage);
                 } else if (collectedObject.type === 'poison') {
                     this.toxicBubbleBar.increasePercentage(20);
-                    //console.log('poison getroffen', this.toxicBubbleBar.percentage);
                 }
                 return false;
             }
@@ -122,8 +118,8 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.fire) {
-            this.character.initiateAttack(); // Initiiere den Angriff des Charakters
-            this.keyboard.fire = false; // Verhindert kontinuierliche Schüsse bei gedrückter Taste
+            this.character.initiateAttack(); 
+            this.keyboard.fire = false;
         }
     }
 
