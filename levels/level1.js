@@ -2,9 +2,29 @@
 
 const level1 = new Level(
     [
-        new Enemy(),
-        new Enemy(),
-        new Enemy(),
+        new Enemy(200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+        new Enemy(100 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+        new Enemy(200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+        new Enemy(300 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+        new Enemy(400 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+        new Enemy(500 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+        new Enemy(600, 400, 'jelly-normal'),
+        new Enemy(800, 400,'jelly-normal'),
+        new Enemy(1000, 400,'jelly-normal'),
+        new Enemy(700, 400,'jelly-transition'),
+        new Enemy(900, 400,'jelly-transition'),
+        new Enemy(1100, 400,'jelly-transition'),
+        new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+        new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+        new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+        new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+        new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+        new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+        new Enemy(1000 + Math.random() * 500, 100 + Math.random() * 200, 'puffer-follow'),
+        new Enemy(2200 + Math.random() * 500, 300 + Math.random() * 200, 'puffer-follow'),
+        new Enemy(1600, 200, 'jelly-dangerous'),
+        new Enemy(1700, 100,'jelly-dangerous'),
+        new Enemy(1800, 300,'jelly-dangerous')
     ],
     [
         new BackgroundObject('../img/3. Background/Layers/5. Water/D1.png', 0),
