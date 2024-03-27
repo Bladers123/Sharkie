@@ -55,11 +55,11 @@ class World {
 
     checkCollisionBubbleWithEnemy() {
         this.throwableObjects.forEach(bubble => {
-            this.level.enemies.forEach((enemy, enemyIndex) => {
+            this.level.enemies.forEach(enemy => {
                 if (bubble.isColliding(enemy)) {
                     enemy.life -= bubble.damage;
-                    if (enemy.life <= 0) {
-                        this.level.enemies.splice(enemyIndex, 1);
+                    if (enemy.life <= 0 && !enemy.isDying) {
+                        enemy.die();
                     }
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
@@ -68,6 +68,7 @@ class World {
                 }
             });
         });
+        this.level.enemies = this.level.enemies.filter(enemy => !enemy.isRemoved);
     }
 
     checkCollisionBubbleWithEndboss() {
