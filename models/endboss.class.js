@@ -56,7 +56,7 @@ class Endboss extends MovableObject {
         let animateFrame = () => {
             let character = getCharacter();   
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
-              //  this.endBossBeginningMusic.play();
+                this.endBossBeginningMusic.play();
                 setTimeout(() => {
                     this.playAnimation(this.imagesOfSpawning);
                     this.firstContactWithEndboss = true;
@@ -74,8 +74,8 @@ class Endboss extends MovableObject {
     checkEndbossDead() {
         setInterval(() => {
             if (this.endBossIsDead) {
-             //   this.endBossBeginningMusic.pause();
-              //  this.endBossKilledMusic.play();
+                this.endBossBeginningMusic.pause();
+                this.endBossKilledMusic.play();
             }
         }, 200);
     }

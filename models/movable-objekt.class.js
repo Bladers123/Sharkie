@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
     animationIntervalId;
     life = 100;
     lastHit;
-    damage = 5;
+    damage = 1;
     speedY = 0;
     acceleration = 2.5;
     totalLife = 100;

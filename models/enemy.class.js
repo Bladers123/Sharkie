@@ -54,6 +54,46 @@ class Enemy extends MovableObject {
         'img/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/3.bubbleswim4.png'
     ];
 
+    imagesOfDyingNormalPuffer = [
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 2 (can animate by going up).png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 3 (can animate by going up).png',
+    ];
+
+    imagesOfDyingTransitionPuffer = [
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.3.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/2.2.png'
+    ];
+
+    imagesOfDyingNormalJelly = [
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L1.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L2.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L3.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Lila/L4.png',
+    ];
+
+    imagesOfDyingTransitionJelly = [
+        'img/2.Enemy/2 Jelly fish/Dead/green/g1.png',
+        'img/2.Enemy/2 Jelly fish/Dead/green/g2.png',
+        'img/2.Enemy/2 Jelly fish/Dead/green/g3.png',
+        'img/2.Enemy/2 Jelly fish/Dead/green/g4.png'
+    ];
+
+    imagesOfDyingDangerousJelly = [
+        'img/2.Enemy/2 Jelly fish/Dead/Pink/P1.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Pink/P2.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Pink/P3.png',
+        'img/2.Enemy/2 Jelly fish/Dead/Pink/P4.png'
+    ];
+
+    imagesOfDyingFollowingCharacter = [
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.3.png',
+        'img/2.Enemy/1.Puffer fish (3 color options)/4.DIE/3.2.png'
+    ];
+
+
     height = 80;
     width = 80;
     direction;
