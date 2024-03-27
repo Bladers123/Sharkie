@@ -48,12 +48,10 @@ class Endboss extends MovableObject {
         this.setVolume(0.05);
     }
 
-    // Methode zum Setzen der Lautstärke
     setVolume(volumeLevel) {
         this.endBossBeginningMusic.volume = volumeLevel;
         this.endBossKilledMusic.volume = volumeLevel;
     }
-
 
     spawnPoint() {
         this.positionX = 2650;
@@ -65,14 +63,12 @@ class Endboss extends MovableObject {
             let character = getCharacter();
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
                 this.endBossBeginningMusic.play();
+                this.playAnimation(this.imagesOfSpawning, false, true);
+                this.firstContactWithEndboss = true;
+                character.bossZoneReached = true;
                 setTimeout(() => {
-                    this.playAnimation(this.imagesOfSpawning);
-                    this.firstContactWithEndboss = true;
-                    character.bossZoneReached = true;
-                    setTimeout(() => {
-                        this.playAnimation(this.imagesOfSwimming);
-                    }, 1500);
-                }, 1000);
+                    this.playAnimation(this.imagesOfSwimming, false, false);
+                }, 1500);
             }
             requestAnimationFrame(animateFrame);
         };
