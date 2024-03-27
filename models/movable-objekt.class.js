@@ -8,6 +8,8 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     totalLife = 100;
+    isDying;
+    isRemoved;
 
     playAnimation(imagesOfAnimation, repeatLastFour = false, runOnce = false) {
         this.stopAnimation();
@@ -33,6 +35,8 @@ class MovableObject extends DrawableObject {
             this.animationIntervalId = null;
         }
     }
+
+  
 
     isColliding(object) {
         return this.positionX + this.width > object.positionX &&

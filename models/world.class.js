@@ -76,9 +76,10 @@ class World {
             this.level.endBoss.forEach((endBoss, enemyIndex) => {
                 if (bubble.isColliding(endBoss)) {
                     endBoss.life -= bubble.damage;
-                    if (endBoss.life <= 0) {
-                        this.level.endBoss.splice(enemyIndex, 1);
+                    if (endBoss.life <= 0  && !endBoss.isDying) {
                         endBoss.endBossIsDead = true;
+                       // endBoss.die();
+                        this.level.endBoss.splice(enemyIndex, 1);
                     }
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {

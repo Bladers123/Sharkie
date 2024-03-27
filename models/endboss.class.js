@@ -29,6 +29,15 @@ class Endboss extends MovableObject {
         'img/2.Enemy/3 Final Enemy/2.floating/13.png'
     ];
 
+    imagesOfAttack = [
+        'img/2.Enemy/3 Final Enemy/Attack/1.png',
+        'img/2.Enemy/3 Final Enemy/Attack/2.png',
+        'img/2.Enemy/3 Final Enemy/Attack/3.png',
+        'img/2.Enemy/3 Final Enemy/Attack/4.png',
+        'img/2.Enemy/3 Final Enemy/Attack/5.png',
+        'img/2.Enemy/3 Final Enemy/Attack/6.png'
+    ];
+
     firstContactWithEndboss = false;
     endBossIsDead = false;
 
@@ -39,6 +48,7 @@ class Endboss extends MovableObject {
         super();
         this.loadImages(this.imagesOfSpawning);
         this.loadImages(this.imagesOfSwimming);
+        this.loadImages(this.imagesOfAttack);
         this.spawnPoint();
         this.bossSpawning();
         this.life = 500;
@@ -80,6 +90,7 @@ class Endboss extends MovableObject {
             if (this.endBossIsDead) {
                 this.endBossBeginningMusic.pause();
                 this.endBossKilledMusic.play();
+                //this.playAnimation(this.imagesOfAttack, false, true);
             }
         }, 200);
     }
