@@ -45,7 +45,15 @@ class Endboss extends MovableObject {
         this.width = 200;
         this.height = 200;
         this.checkEndbossDead();
+        this.setVolume(0.05);
     }
+
+    // Methode zum Setzen der Lautstärke
+    setVolume(volumeLevel) {
+        this.endBossBeginningMusic.volume = volumeLevel;
+        this.endBossKilledMusic.volume = volumeLevel;
+    }
+
 
     spawnPoint() {
         this.positionX = 2650;
@@ -54,7 +62,7 @@ class Endboss extends MovableObject {
 
     bossSpawning() {
         let animateFrame = () => {
-            let character = getCharacter();   
+            let character = getCharacter();
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
                 this.endBossBeginningMusic.play();
                 setTimeout(() => {
