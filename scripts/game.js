@@ -79,7 +79,24 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('fullscreen').addEventListener('click', function () {
         canvas.requestFullscreen();
     });
+
+    document.getElementById('introductions').addEventListener('click', function () {
+        let introductionsContainer = document.getElementById('introductions-container');
+        introductionsContainer.innerHTML = getIntroductionsTemplate();
+        introductionsContainer.classList.toggle('display-block');
+        canvas.classList.toggle('display-none');
+    });
 });
+
+function getIntroductionsTemplate() {
+    return /*html*/`
+    <div class="introductions-content">
+        <img class="introductions-images" src="img/6.Botones/Key/D key.png" alt="d-key">
+        <img class="introductions-images" src="img/6.Botones/Key/Space Bar key.png" alt="space-key">
+        <img class="introductions-images" src="img/6.Botones/Key/arrow keys.png" alt="arrow-keys">
+    </div>
+    `;
+}
 
 
 

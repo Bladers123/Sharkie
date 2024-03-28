@@ -1,24 +1,63 @@
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-canvas{
-    background-color: black;
-    position: relative;
+.game-section{
+    width: 720px;
+    height: 480px;
 }
 
-.fullscreen {
-    position: absolute;
-    right: 0; 
-    bottom: 0; 
-    z-index: 1000;
+canvas{
+    border: 2px solid grey;
+    border-radius: 25px;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 720px;
+    border: 2px solid grey;
+    border-radius: 25px;
+    background-color: rgb(171, 171, 188);
+}
+
+.introductions {
     cursor: pointer;
-    width: auto;
+    width: 128px;
     height: auto;
 }
 
-.game-container{
-    position: relative;
+.fullscreen {
+    cursor: pointer;
+    width: 256px;
+    height: auto;
+}
+
+.introductions-container {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(141, 222, 175);
+    border: 2px solid grey;
+    border-radius: 25px;
+}
+
+.introductions-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.introductions-images {
+    width: 180px;
+    height: auto;
+}
+
+.display-none {
+    display: none;
+}
+.display-block{
+    display: block;
 }
