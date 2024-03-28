@@ -12,7 +12,7 @@ function init() {
     world = new World(canvas, character);
 }
 
- function getCharacter() {
+function getCharacter() {
     return character;
 }
 
@@ -55,7 +55,7 @@ window.addEventListener('keyup', event => {
             keyboard.up = false;
             break;
         default:
-            break;  
+            break;
     }
 
     if (!keyboard.left && !keyboard.right && !keyboard.up && !keyboard.down) {
@@ -75,6 +75,11 @@ window.addEventListener('keypress', (event) => {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('fullscreen').addEventListener('click', function () {
+        canvas.requestFullscreen();
+    });
+});
 
 
 

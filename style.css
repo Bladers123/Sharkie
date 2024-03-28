@@ -6,4 +6,19 @@ body{
 
 canvas{
     background-color: black;
+    position: relative;
+}
+
+.fullscreen {
+    position: absolute;
+    right: 0; 
+    bottom: 0; 
+    z-index: 1000;
+    cursor: pointer;
+    width: auto;
+    height: auto;
+}
+
+.game-container{
+    position: relative;
 }
