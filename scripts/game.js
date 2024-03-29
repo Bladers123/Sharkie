@@ -75,16 +75,24 @@ window.addEventListener('keypress', (event) => {
     }
 });
 
+
+// todoooooooo
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('fullscreen').addEventListener('click', function () {
-        canvas.requestFullscreen();
-    });
+
+    document.getElementById('fullscreen').addEventListener('click', () => canvas.requestFullscreen());
 
     document.getElementById('introductions').addEventListener('click', function () {
         let introductionsContainer = document.getElementById('introductions-container');
         introductionsContainer.innerHTML = getIntroductionsTemplate();
         introductionsContainer.classList.toggle('display-block');
-        canvas.classList.toggle('display-none');
+        canvas.classList.add('display-none');
+        document.getElementById('startscreen-container').classList.add('display-none');
+    });
+
+    document.getElementById('startscreen').addEventListener('click', function () {
+        document.getElementById('startscreen-container').classList.toggle('display-none');
+        canvas.classList.toggle('display-block');     
+        document.getElementById('fullscreen').classList.toggle('disabled-image');
     });
 });
 
