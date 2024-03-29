@@ -2,21 +2,30 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: cursive;
 }
 
-.game-section{
+h1 {
+    font-size: 56px;
+}
+
+h2 {
+    font-size: 32px;
+}
+
+.game-section {
     width: 720px;
     height: 480px;
 }
 
-canvas{
+canvas {
     border: 2px solid grey;
     border-radius: 25px;
 }
 
 .menu {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 720px;
     border: 2px solid grey;
@@ -27,13 +36,11 @@ canvas{
 .introductions {
     cursor: pointer;
     width: 128px;
-    height: auto;
 }
 
 .fullscreen {
     cursor: pointer;
     width: 256px;
-    height: auto;
 }
 
 .introductions-container {
@@ -44,20 +51,48 @@ canvas{
     border-radius: 25px;
 }
 
-.introductions-content{
+.introductions-content {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
+    margin: 0 32px;
 }
 
-.introductions-images {
-    width: 180px;
+.introductions-move-with-arrows-img {
+    width: 120px;
     height: auto;
+}
+
+.introductions-attack-with-d-img {
+    width: 120px;
+    height: auto
+}
+
+.introductions-attack-with-space-img {
+    width: 200px;
+    height: auto;
+}
+
+.move {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.attack {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .display-none {
     display: none;
 }
-.display-block{
+
+.display-block {
     display: block;
 }
