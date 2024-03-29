@@ -75,19 +75,20 @@ window.addEventListener('keypress', (event) => {
     }
 });
 
-
 document.addEventListener('DOMContentLoaded', function () {
     let fullscreenButton = document.getElementById('fullscreen');
     let introductionsButton = document.getElementById('introductions');
     let startButton = document.getElementById('startscreen');
+    let tryAgainButton = document.getElementById('try-again');
     let introductionsContainer = document.getElementById('introductions-container');
     let startscreenContainer = document.getElementById('startscreen-container');
+    let winContainer = document.getElementById('win-container');
     let inGame = false;
+    introductionsContainer.innerHTML = getIntroductionsTemplate();
 
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
 
     introductionsButton.addEventListener('click', function () {
-        introductionsContainer.innerHTML = getIntroductionsTemplate();
         if (inGame) {
             canvas.classList.toggle('display-block');
             introductionsContainer.classList.toggle('display-block');
@@ -104,11 +105,11 @@ document.addEventListener('DOMContentLoaded', function () {
         canvas.classList.toggle('display-block');
         inGame = true;
     });
+
+    tryAgainButton.addEventListener('click', function () {
+        // starte neues Spiel
+    });
 });
-
-
-
-
 
 function getIntroductionsTemplate() {
     return /*html*/`

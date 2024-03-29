@@ -110,6 +110,26 @@ canvas {
     width: 100%;
 }
 
+.win-container{
+    background-image: url('img/6.Botones/Tittles/You win/Mesa de trabajo 1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    border: 2px solid grey;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.try-again{
+    width: 256px;
+    opacity: 0.8;
+    margin-top: 250px;
+    cursor: pointer;
+ }
+
 .display-none {
     display: none;
 }

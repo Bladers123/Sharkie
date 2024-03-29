@@ -80,6 +80,8 @@ class World {
                         endBoss.endBossIsDead = true;
                        // endBoss.die();
                         this.level.endBoss.splice(enemyIndex, 1);
+                        this.canvas.classList.toggle('display-block');
+                        document.getElementById('win-container').classList.add('display-block');
                     }
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
