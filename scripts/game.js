@@ -7,6 +7,9 @@ let character;
 
 function init() {
     canvas = document.getElementById('canvas');
+}
+
+function createWorld() {
     keyboard = new Keyboard();
     character = new Character(keyboard);
     world = new World(canvas, character);
@@ -104,10 +107,15 @@ document.addEventListener('DOMContentLoaded', function () {
         fullscreenButton.classList.toggle('disabled-image');
         canvas.classList.toggle('display-block');
         inGame = true;
+        initLevel();
+        createWorld();     
     });
 
     tryAgainButton.addEventListener('click', function () {
-        // starte neues Spiel
+        winContainer.classList.add('display-none');
+        canvas.classList.remove('display-none');
+        initLevel();
+        createWorld();   
     });
 });
 

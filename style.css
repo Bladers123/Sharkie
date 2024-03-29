@@ -18,7 +18,7 @@ h2 {
     height: 480px;
 }
 
-.startscreen{
+.startscreen {
     background-image: url('img/3. Background/Mesa de trabajo 1.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -29,14 +29,14 @@ h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
 
-.start-img{
-   width: 256px;
-   opacity: 0.8;
-   margin-top: 250px;
-   cursor: pointer;
+.start-img {
+    width: 256px;
+    opacity: 0.8;
+    margin-top: 250px;
+    cursor: pointer;
 }
 
 canvas {
@@ -110,7 +110,7 @@ canvas {
     width: 100%;
 }
 
-.win-container{
+.win-container {
     background-image: url('img/6.Botones/Tittles/You win/Mesa de trabajo 1.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -123,12 +123,12 @@ canvas {
     justify-content: center;
 }
 
-.try-again{
+.try-again {
     width: 256px;
     opacity: 0.8;
     margin-top: 250px;
     cursor: pointer;
- }
+}
 
 .display-none {
     display: none;
@@ -140,5 +140,4 @@ canvas {
 
 .disabled-image {
     pointer-events: none;
-  }
-  
+}

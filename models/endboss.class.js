@@ -55,7 +55,7 @@ class Endboss extends MovableObject {
         this.width = 200;
         this.height = 200;
         this.checkEndbossDead();
-        //this.setVolume(0.05);
+        this.setVolume(0.05);
     }
 
     setVolume(volumeLevel) {
