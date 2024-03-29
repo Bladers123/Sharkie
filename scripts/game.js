@@ -76,25 +76,39 @@ window.addEventListener('keypress', (event) => {
 });
 
 
-// todoooooooo
 document.addEventListener('DOMContentLoaded', function () {
+    let fullscreenButton = document.getElementById('fullscreen');
+    let introductionsButton = document.getElementById('introductions');
+    let startButton = document.getElementById('startscreen');
+    let introductionsContainer = document.getElementById('introductions-container');
+    let startscreenContainer = document.getElementById('startscreen-container');
+    let inGame = false;
 
-    document.getElementById('fullscreen').addEventListener('click', () => canvas.requestFullscreen());
+    fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
 
-    document.getElementById('introductions').addEventListener('click', function () {
-        let introductionsContainer = document.getElementById('introductions-container');
+    introductionsButton.addEventListener('click', function () {
         introductionsContainer.innerHTML = getIntroductionsTemplate();
-        introductionsContainer.classList.toggle('display-block');
-        canvas.classList.add('display-none');
-        document.getElementById('startscreen-container').classList.add('display-none');
+        if (inGame) {
+            canvas.classList.toggle('display-block');
+            introductionsContainer.classList.toggle('display-block');
+        }
+        else if (!inGame) {
+            startscreenContainer.classList.toggle('display-none');
+            introductionsContainer.classList.toggle('display-block');
+        }
     });
 
-    document.getElementById('startscreen').addEventListener('click', function () {
-        document.getElementById('startscreen-container').classList.toggle('display-none');
-        canvas.classList.toggle('display-block');     
-        document.getElementById('fullscreen').classList.toggle('disabled-image');
+    startButton.addEventListener('click', function () {
+        startscreenContainer.classList.add('display-none');
+        fullscreenButton.classList.toggle('disabled-image');
+        canvas.classList.toggle('display-block');
+        inGame = true;
     });
 });
+
+
+
+
 
 function getIntroductionsTemplate() {
     return /*html*/`
