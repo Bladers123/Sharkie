@@ -89,6 +89,7 @@ class Character extends MovableObject {
     keyboard;
     mayMove = true;
     bossZoneReached = false;
+    life  = 5;
 
     animationFrameId = null;
     isCharacterMoving = false;

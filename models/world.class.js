@@ -27,7 +27,23 @@ class World {
         this.draw();
         this.checkCollisions();
         this.fire();
+        this.checkIsGameOver();
     }
+
+    checkIsGameOver() {
+        setInterval(() => {
+            if (this.character.isGameOver) {
+                let gameOverContainer = document.getElementById('game-over-container');
+                if (gameOverContainer) {
+                    gameOverContainer.classList.remove('display-none');
+                    
+                    this.character.isGameOver = false;
+                }
+
+            }
+        }, 200);
+    }
+
 
     fire() {
         setInterval(() => {
@@ -79,7 +95,7 @@ class World {
                     if (endBoss.life <= 0 && !endBoss.isDying) {
                         endBoss.endBossIsDead = true;
                         // endBoss.die();
-                        
+
                         //this.level.endBoss.splice(enemyIndex, 1);
                         this.canvas.classList.toggle('display-block');
                         document.getElementById('win-container').classList.remove('display-none');
