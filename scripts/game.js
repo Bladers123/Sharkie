@@ -83,16 +83,20 @@ document.addEventListener('DOMContentLoaded', function () {
     let introductionsButton = document.getElementById('introductions');
     let startButton = document.getElementById('startscreen');
     let tryAgainButton = document.getElementById('try-again');
+    let tryAgainButtonInGameOverContainer = document.getElementById('try-again-in-game-over-container');
     let introductionsContainer = document.getElementById('introductions-container');
     let startscreenContainer = document.getElementById('startscreen-container');
     let winContainer = document.getElementById('win-container');
+    let gameOverContainer = document.getElementById('game-over-container');
     let inGame = false;
     introductionsContainer.innerHTML = getIntroductionsTemplate();
     
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
     introductionsButton.addEventListener('click', () => onIntroductionsButton(inGame, introductionsContainer, startscreenContainer));
     startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas, inGame));
-    tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas));
+    tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
+    tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
+
 });
 
 function onIntroductionsButton(inGame, introductionsContainer, startscreenContainer) {
@@ -115,8 +119,9 @@ function onStartButton(startscreenContainer, fullscreenButton, canvas, inGame) {
     createWorld();
 }
 
-function onTryAgainButton(winContainer, canvas) {
+function onTryAgainButton(winContainer, canvas, gameOverContainer) {
     winContainer.classList.add('display-none');
+    gameOverContainer.classList.add('display-none');
     canvas.classList.remove('display-none');
     initLevel();
     createWorld();

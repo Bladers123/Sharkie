@@ -31,13 +31,15 @@ class World {
     }
 
     checkIsGameOver() {
+        let gameOver = true
         setInterval(() => {
-            if (this.character.isGameOver) {
+            if (this.character.isGameOver && gameOver) {
                 let gameOverContainer = document.getElementById('game-over-container');
                 if (gameOverContainer) {
                     gameOverContainer.classList.remove('display-none');
-                    
-                    this.character.isGameOver = false;
+                    this.canvas.classList.remove('display-block');
+                    this.canvas.classList.add('display-none');
+                    gameOver = false;
                 }
 
             }
