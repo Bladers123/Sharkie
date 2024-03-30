@@ -5,7 +5,6 @@ let world;
 let keyboard;
 let character;
 
-
 function init() {
     canvas = document.getElementById('canvas');
 }
@@ -79,6 +78,23 @@ window.addEventListener('keypress', (event) => {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    let fullscreenButton = document.getElementById('fullscreen');
+    let introductionsButton = document.getElementById('introductions');
+    let startButton = document.getElementById('startscreen');
+    let tryAgainButton = document.getElementById('try-again');
+    let introductionsContainer = document.getElementById('introductions-container');
+    let startscreenContainer = document.getElementById('startscreen-container');
+    let winContainer = document.getElementById('win-container');
+    let inGame = false;
+    introductionsContainer.innerHTML = getIntroductionsTemplate();
+    
+    fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
+    introductionsButton.addEventListener('click', () => onIntroductionsButton(inGame, introductionsContainer, startscreenContainer));
+    startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas, inGame));
+    tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas));
+});
+
 function onIntroductionsButton(inGame, introductionsContainer, startscreenContainer) {
     if (inGame) {
         canvas.classList.toggle('display-block');
@@ -105,23 +121,6 @@ function onTryAgainButton(winContainer, canvas) {
     initLevel();
     createWorld();
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    let fullscreenButton = document.getElementById('fullscreen');
-    let introductionsButton = document.getElementById('introductions');
-    let startButton = document.getElementById('startscreen');
-    let tryAgainButton = document.getElementById('try-again');
-    let introductionsContainer = document.getElementById('introductions-container');
-    let startscreenContainer = document.getElementById('startscreen-container');
-    let winContainer = document.getElementById('win-container');
-    let inGame = false;
-    introductionsContainer.innerHTML = getIntroductionsTemplate();
-    
-    fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
-    introductionsButton.addEventListener('click', () => onIntroductionsButton(inGame, introductionsContainer, startscreenContainer));
-    startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas, inGame));
-    tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas));
-});
 
 function getIntroductionsTemplate() {
     return /*html*/`
