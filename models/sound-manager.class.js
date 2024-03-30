@@ -30,4 +30,18 @@ class SoundManager {
             this.stop(name);
         }
     }
+
+     setVolume(name, volume) {
+        if (this.sounds[name]) {
+            this.sounds[name].volume = volume;
+        }
+    }
+
+    setVolumeForAll(volume) {
+        for (let name in this.sounds) {
+            if (this.sounds.hasOwnProperty(name)) {
+                this.sounds[name].volume = volume;
+            }
+        }
+    }
 }

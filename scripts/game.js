@@ -8,15 +8,16 @@ let soundManager;
 
 function init() {
     canvas = document.getElementById('canvas');
+    soundManager = new SoundManager();
+    soundManager.addSound('bossfight', 'audio/bossfight.mp3');
+    soundManager.addSound('win', 'audio/win.mp3');
 }
 
 function createWorld() {
     keyboard = new Keyboard();
-    soundManager = new SoundManager();
     character = new Character(keyboard);
     world = new World(canvas, character);
-    soundManager.addSound('bossfight', 'audio/bossfight.mp3');
-    soundManager.addSound('win', 'audio/win.mp3');
+    
 }
 
 function getCharacter() {
