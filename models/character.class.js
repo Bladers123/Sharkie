@@ -126,6 +126,7 @@ class Character extends MovableObject {
                         this.currentAnimation = "dead";
                         this.isGameOver = true;
                         clearTimeout(standingTimeoutId);
+                        console.log('Sharkie ist gestorben');
                     }
                 }
                 else if (this.isHurt()) {

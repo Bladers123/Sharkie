@@ -16,8 +16,7 @@ function init() {
 function createWorld() {
     keyboard = new Keyboard();
     character = new Character(keyboard);
-    world = new World(canvas, character);
-    
+    world = new World(canvas, character);  
 }
 
 function getCharacter() {

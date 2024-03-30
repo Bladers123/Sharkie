@@ -78,7 +78,7 @@ class Endboss extends MovableObject {
         };
         requestAnimationFrame(animateFrame);
 
-        this.firstContactWithEndboss = false;
+       // this.firstContactWithEndboss = false;
     }
 
     checkEndbossDead() {
@@ -87,6 +87,7 @@ class Endboss extends MovableObject {
                 soundManager.stop('bossfight');
                 soundManager.play('win');
                 this.endBossIsDead = false;
+                world.endBossDefeated = true;
                 //this.playAnimation(this.imagesOfAttack, false, true);
 
                 setTimeout(() => {

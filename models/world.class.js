@@ -4,6 +4,7 @@ class World {
     canvas;
     cameraX = 0;
     bossZoneReached = false;
+    endBossDefeated = false;
 
     character;
     lifeBar = new LifeBar();

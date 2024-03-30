@@ -34,9 +34,7 @@ class MovableObject extends DrawableObject {
             clearInterval(this.animationIntervalId);
             this.animationIntervalId = null;
         }
-    }
-
-  
+    }  
 
     isColliding(object) {
         return this.positionX + this.width > object.positionX &&
@@ -46,13 +44,19 @@ class MovableObject extends DrawableObject {
     }
 
     damageTaken() {
-        this.life -= this.damage;
-        if (this.life < 0) {
-            this.life = 0;
+        console.log(world.endBossDefeated);
+        if (!world.endBossDefeated) { // Angenommen, endBossDefeated ist ein Status in der World-Klasse
+            this.life -= this.damage;
+            if (this.life < 0) {
+                this.life = 0;
+            } else {
+                this.lastHit = new Date().getTime();
+            }
         }
         else
-            this.lastHit = new Date().getTime();
+        console.log(world.endBossDefeated);
     }
+    
 
     isHurt() {
         if (this.life < this.totalLife) {
