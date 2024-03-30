@@ -4,6 +4,7 @@ let canvas;
 let world;
 let keyboard;
 let character;
+let soundManager;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -11,8 +12,11 @@ function init() {
 
 function createWorld() {
     keyboard = new Keyboard();
+    soundManager = new SoundManager();
     character = new Character(keyboard);
     world = new World(canvas, character);
+    soundManager.addSound('bossfight', 'audio/bossfight.mp3');
+    soundManager.addSound('win', 'audio/win.mp3');
 }
 
 function getCharacter() {
@@ -123,6 +127,7 @@ function onTryAgainButton(winContainer, canvas, gameOverContainer) {
     winContainer.classList.add('display-none');
     gameOverContainer.classList.add('display-none');
     canvas.classList.remove('display-none');
+    soundManager.stopAll();
     initLevel();
     createWorld();
 }

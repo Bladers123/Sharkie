@@ -46,7 +46,6 @@ class World {
         }, 1);
     }
 
-
     fire() {
         setInterval(() => {
             this.checkCollisions();
@@ -98,8 +97,11 @@ class World {
                         endBoss.endBossIsDead = true;
                         // endBoss.die();
 
+
                         //this.level.endBoss.splice(enemyIndex, 1);
-                        this.canvas.classList.toggle('display-block');
+
+                        this.canvas.classList.add('display-none');
+
                         document.getElementById('win-container').classList.remove('display-none');
 
                     }

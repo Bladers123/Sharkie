@@ -41,9 +41,6 @@ class Endboss extends MovableObject {
     firstContactWithEndboss = false;
     endBossIsDead = false;
 
-    endBossBeginningMusic = new Audio('audio/bossfight.mp3');
-    endBossKilledMusic = new Audio('audio/win.mp3');
-
     constructor() {
         super();
         this.loadImages(this.imagesOfSpawning);
@@ -55,14 +52,9 @@ class Endboss extends MovableObject {
         this.width = 200;
         this.height = 200;
         this.checkEndbossDead();
-        this.setVolume(0.1);
-        this.endBossKilledMusic.loop = false;
     }
 
-    setVolume(volumeLevel) {
-        this.endBossBeginningMusic.volume = volumeLevel;
-        this.endBossKilledMusic.volume = volumeLevel;
-    }
+
 
     spawnPoint() {
         this.positionX = 2650;
@@ -73,7 +65,8 @@ class Endboss extends MovableObject {
         let animateFrame = () => {
             let character = getCharacter();
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
-                this.endBossBeginningMusic.play();
+                //this.endBossBeginningMusic.play();
+                soundManager.play('bossfight', false);
                 this.playAnimation(this.imagesOfSpawning, false, true);
                 this.firstContactWithEndboss = true;
                 character.bossZoneReached = true;
@@ -84,20 +77,20 @@ class Endboss extends MovableObject {
             requestAnimationFrame(animateFrame);
         };
         requestAnimationFrame(animateFrame);
+
+        this.firstContactWithEndboss = false;
     }
 
     checkEndbossDead() {
         setInterval(() => {
             if (this.endBossIsDead) {
-                this.endBossBeginningMusic.pause();
-                this.endBossBeginningMusic.currentTime = 0;
-                this.endBossKilledMusic.play();
+                soundManager.stop('bossfight');
+                soundManager.play('win');
                 this.endBossIsDead = false;
                 //this.playAnimation(this.imagesOfAttack, false, true);
-               
+
                 setTimeout(() => {
-                    this.endBossKilledMusic.pause();
-                    this.endBossKilledMusic.currentTime = 0;
+                
                 }, 4000);
             }
         }, 200);
