@@ -113,7 +113,7 @@ function onIntroductionsButton(inGame, introductionsContainer, startscreenContai
 function onStartButton(startscreenContainer, fullscreenButton, canvas, inGame) {
     startscreenContainer.classList.add('display-none');
     fullscreenButton.classList.toggle('disabled-image');
-    canvas.classList.toggle('display-block');
+    canvas.classList.remove('display-none');
     inGame = true;
     initLevel();
     createWorld();

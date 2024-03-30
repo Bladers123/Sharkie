@@ -34,6 +34,7 @@ class World {
         let gameOver = true
         setInterval(() => {
             if (this.character.isGameOver && gameOver) {
+                console.log('spiel zu ende');
                 let gameOverContainer = document.getElementById('game-over-container');
                 if (gameOverContainer) {
                     gameOverContainer.classList.remove('display-none');
@@ -41,9 +42,8 @@ class World {
                     this.canvas.classList.add('display-none');
                     gameOver = false;
                 }
-
             }
-        }, 200);
+        }, 1);
     }
 
 
