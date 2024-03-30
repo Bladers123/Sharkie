@@ -79,6 +79,33 @@ window.addEventListener('keypress', (event) => {
     }
 });
 
+function onIntroductionsButton(inGame, introductionsContainer, startscreenContainer) {
+    if (inGame) {
+        canvas.classList.toggle('display-block');
+        introductionsContainer.classList.toggle('display-block');
+    }
+    else if (!inGame) {
+        startscreenContainer.classList.toggle('display-none');
+        introductionsContainer.classList.toggle('display-block');
+    }
+}
+
+function onStartButton(startscreenContainer, fullscreenButton, canvas, inGame) {
+    startscreenContainer.classList.add('display-none');
+    fullscreenButton.classList.toggle('disabled-image');
+    canvas.classList.toggle('display-block');
+    inGame = true;
+    initLevel();
+    createWorld();
+}
+
+function onTryAgainButton(winContainer, canvas) {
+    winContainer.classList.add('display-none');
+    canvas.classList.remove('display-none');
+    initLevel();
+    createWorld();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     let fullscreenButton = document.getElementById('fullscreen');
     let introductionsButton = document.getElementById('introductions');
@@ -89,35 +116,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let winContainer = document.getElementById('win-container');
     let inGame = false;
     introductionsContainer.innerHTML = getIntroductionsTemplate();
-
+    
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
-
-    introductionsButton.addEventListener('click', function () {
-        if (inGame) {
-            canvas.classList.toggle('display-block');
-            introductionsContainer.classList.toggle('display-block');
-        }
-        else if (!inGame) {
-            startscreenContainer.classList.toggle('display-none');
-            introductionsContainer.classList.toggle('display-block');
-        }
-    });
-
-    startButton.addEventListener('click', function () {
-        startscreenContainer.classList.add('display-none');
-        fullscreenButton.classList.toggle('disabled-image');
-        canvas.classList.toggle('display-block');
-        inGame = true;
-        initLevel();
-        createWorld();
-    });
-
-    tryAgainButton.addEventListener('click', function () {
-        winContainer.classList.add('display-none');
-        canvas.classList.remove('display-none');
-        initLevel();
-        createWorld();
-    });
+    introductionsButton.addEventListener('click', () => onIntroductionsButton(inGame, introductionsContainer, startscreenContainer));
+    startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas, inGame));
+    tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas));
 });
 
 function getIntroductionsTemplate() {
