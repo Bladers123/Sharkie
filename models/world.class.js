@@ -90,17 +90,11 @@ class World {
 
     checkCollisionBubbleWithEndboss() {
         this.throwableObjects.forEach(bubble => {
-            this.level.endBoss.forEach((endBoss, enemyIndex) => {
+            this.level.endBoss.forEach((endBoss) => {
                 if (bubble.isColliding(endBoss)) {
                     endBoss.life -= bubble.damage;
                     if (endBoss.life <= 0 && !endBoss.isDying) {
-                        endBoss.endBossIsDead = true;
-                     
-                        //this.level.endBoss.splice(enemyIndex, 1);
-                        this.canvas.classList.add('display-none');
-
-                        document.getElementById('win-container').classList.remove('display-none');
-
+                        endBoss.die();
                     }
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
@@ -110,6 +104,7 @@ class World {
             });
         });
     }
+    
 
     checkCollisionCharacterWithCoinsAndPoisons() {
         this.level.collectedObjects = this.level.collectedObjects.filter(collectedObject => {

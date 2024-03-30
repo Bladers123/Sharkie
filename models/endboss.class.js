@@ -45,7 +45,7 @@ class Endboss extends MovableObject {
         'img/2.Enemy/3 Final Enemy/Hurt/4.png',
     ];
 
-    imagesOfDead = [
+    imagesOfDyingNormalEndBoss = [
         'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png',
         'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png',
         'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png',
@@ -62,13 +62,12 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesOfSwimming);
         this.loadImages(this.imagesOfAttack);
         this.loadImages(this.imagesOfHurt);
-        this.loadImages(this.imagesOfDead);
+        this.loadImages(this.imagesOfDyingNormalEndBoss);
         this.spawnPoint();
         this.bossSpawning();
         this.life = 50;
         this.width = 200;
         this.height = 200;
-        this.checkEndbossDead();
     }
 
     spawnPoint() {
@@ -93,14 +92,17 @@ class Endboss extends MovableObject {
         requestAnimationFrame(animateFrame);
     }
 
-    checkEndbossDead() {
-        setInterval(() => {
-            if (this.endBossIsDead) {
+    die() {
+        if (!this.isDying) {
+            this.isDying = true;
+            this.playAnimation(this.imagesOfDyingNormalEndBoss, false, true);
+            setTimeout(() => {
                 soundManager.stop('bossfight');
                 soundManager.play('win');
-                this.endBossIsDead = false;
+                document.getElementById('win-container').classList.remove('display-none');
+                canvas.classList.add('display-none');
                 world.endBossDefeated = true;
-            }
-        }, 200);
+            }, 1200);
+        }
     }
 }
