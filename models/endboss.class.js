@@ -85,11 +85,18 @@ class Endboss extends MovableObject {
                 character.bossZoneReached = true;
                 setTimeout(() => {
                     this.playAnimation(this.imagesOfSwimming, false, false);
+                    this.startAttackInterval();
                 }, 1500);
             }
             requestAnimationFrame(animateFrame);
         };
         requestAnimationFrame(animateFrame);
+    }
+
+    startAttackInterval() {
+        this.attackInterval = setInterval(() => {
+            this.attack();
+        }, 5000);
     }
 
     die() {
@@ -103,6 +110,7 @@ class Endboss extends MovableObject {
                 canvas.classList.add('display-none');
                 world.endBossDefeated = true;
             }, 1200);
+            clearInterval(this.attackInterval);
         }
     }
 
@@ -111,21 +119,27 @@ class Endboss extends MovableObject {
             this.life -= damage;
             if (this.life > 0) {
                 console.log("Endboss getroffen, aktuelle Lebenspunkte: ", this.life);
-                // Spiele die "verletzt" Animation ab
                 this.playAnimation(this.imagesOfHurt, false, true);
                 setTimeout(() => {
-                    // Gehe zurück zur Schwimm- oder Angriffsanimation, je nach Zustand des Endbosses
-                    if (!this.firstContactWithEndboss) {
+                    if (!this.firstContactWithEndboss)
                         this.playAnimation(this.imagesOfSpawning, false, false);
-                    } else {
+                    else
                         this.playAnimation(this.imagesOfSwimming, false, false);
-                    }
-                }, 1200); // Die Dauer sollte die Länge der "verletzt" Animation widerspiegeln
-            } else {
-                // Wenn der Endboss 0 Lebenspunkte erreicht, stirbt er
-                this.die();
+                }, 2000);
             }
+            else
+                this.die();
         }
     }
-    
+
+    attack() {
+        if (!this.isDying && !this.endBossIsDead) {
+            console.log("Endboss greift an!");
+            this.playAnimation(this.imagesOfAttack, false, true);
+            setTimeout(() => {
+                this.playAnimation(this.imagesOfSwimming, false, false);
+            }, 1500);
+        }
+    }
+
 }
