@@ -51,11 +51,12 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesOfAttack);
         this.spawnPoint();
         this.bossSpawning();
-        this.life = 500;
+        this.life = 50;
         this.width = 200;
         this.height = 200;
         this.checkEndbossDead();
-        this.setVolume(0.05);
+        this.setVolume(0.1);
+        this.endBossKilledMusic.loop = false;
     }
 
     setVolume(volumeLevel) {
@@ -89,8 +90,15 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.endBossIsDead) {
                 this.endBossBeginningMusic.pause();
+                this.endBossBeginningMusic.currentTime = 0;
                 this.endBossKilledMusic.play();
+                this.endBossIsDead = false;
                 //this.playAnimation(this.imagesOfAttack, false, true);
+               
+                setTimeout(() => {
+                    this.endBossKilledMusic.pause();
+                    this.endBossKilledMusic.currentTime = 0;
+                }, 4000);
             }
         }, 200);
     }

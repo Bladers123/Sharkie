@@ -76,13 +76,14 @@ class World {
             this.level.endBoss.forEach((endBoss, enemyIndex) => {
                 if (bubble.isColliding(endBoss)) {
                     endBoss.life -= bubble.damage;
-                    if (endBoss.life <= 0  && !endBoss.isDying) {
+                    if (endBoss.life <= 0 && !endBoss.isDying) {
                         endBoss.endBossIsDead = true;
-                       // endBoss.die();
-                        this.level.endBoss.splice(enemyIndex, 1);
+                        // endBoss.die();
+                        
+                        //this.level.endBoss.splice(enemyIndex, 1);
                         this.canvas.classList.toggle('display-block');
                         document.getElementById('win-container').classList.remove('display-none');
-                       
+
                     }
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
@@ -123,7 +124,7 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.fire) {
-            this.character.initiateAttack(); 
+            this.character.initiateAttack();
             this.keyboard.fire = false;
         }
     }

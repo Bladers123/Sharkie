@@ -126,8 +126,9 @@ canvas {
 .try-again {
     width: 256px;
     opacity: 0.8;
-    margin-top: 250px;
+    margin-top: 300px;
     cursor: pointer;
+    margin-left: 271px;
 }
 
 .display-none {

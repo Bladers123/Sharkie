@@ -5,6 +5,7 @@ let world;
 let keyboard;
 let character;
 
+
 function init() {
     canvas = document.getElementById('canvas');
 }
@@ -108,14 +109,14 @@ document.addEventListener('DOMContentLoaded', function () {
         canvas.classList.toggle('display-block');
         inGame = true;
         initLevel();
-        createWorld();     
+        createWorld();
     });
 
     tryAgainButton.addEventListener('click', function () {
         winContainer.classList.add('display-none');
         canvas.classList.remove('display-none');
         initLevel();
-        createWorld();   
+        createWorld();
     });
 });
 
