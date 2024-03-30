@@ -38,6 +38,21 @@ class Endboss extends MovableObject {
         'img/2.Enemy/3 Final Enemy/Attack/6.png'
     ];
 
+    imagesOfHurt = [
+        'img/2.Enemy/3 Final Enemy/Hurt/1.png',
+        'img/2.Enemy/3 Final Enemy/Hurt/2.png',
+        'img/2.Enemy/3 Final Enemy/Hurt/3.png',
+        'img/2.Enemy/3 Final Enemy/Hurt/4.png',
+    ];
+
+    imagesOfDead = [
+        'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png',
+        'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png',
+        'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png',
+        'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png',
+        'img/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png'
+    ];
+
     firstContactWithEndboss = false;
     endBossIsDead = false;
 
@@ -46,6 +61,8 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesOfSpawning);
         this.loadImages(this.imagesOfSwimming);
         this.loadImages(this.imagesOfAttack);
+        this.loadImages(this.imagesOfHurt);
+        this.loadImages(this.imagesOfDead);
         this.spawnPoint();
         this.bossSpawning();
         this.life = 50;
@@ -53,8 +70,6 @@ class Endboss extends MovableObject {
         this.height = 200;
         this.checkEndbossDead();
     }
-
-
 
     spawnPoint() {
         this.positionX = 2650;
@@ -65,7 +80,6 @@ class Endboss extends MovableObject {
         let animateFrame = () => {
             let character = getCharacter();
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
-                //this.endBossBeginningMusic.play();
                 soundManager.play('bossfight', false);
                 this.playAnimation(this.imagesOfSpawning, false, true);
                 this.firstContactWithEndboss = true;
@@ -86,11 +100,6 @@ class Endboss extends MovableObject {
                 soundManager.play('win');
                 this.endBossIsDead = false;
                 world.endBossDefeated = true;
-                //this.playAnimation(this.imagesOfAttack, false, true);
-
-                setTimeout(() => {
-                
-                }, 4000);
             }
         }, 200);
     }

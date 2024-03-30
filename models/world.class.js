@@ -95,11 +95,8 @@ class World {
                     endBoss.life -= bubble.damage;
                     if (endBoss.life <= 0 && !endBoss.isDying) {
                         endBoss.endBossIsDead = true;
-                        // endBoss.die();
-
-
+                     
                         //this.level.endBoss.splice(enemyIndex, 1);
-
                         this.canvas.classList.add('display-none');
 
                         document.getElementById('win-container').classList.remove('display-none');
