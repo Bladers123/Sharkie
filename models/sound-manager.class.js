@@ -4,8 +4,8 @@ class SoundManager {
         this.sounds = {};
     }
 
-    addSound(name, src) {
-        const audio = new Audio(src);
+    addSound(name, path) {
+        const audio = new Audio(path);
         this.sounds[name] = audio;
     }
 
@@ -26,22 +26,19 @@ class SoundManager {
     }
 
     stopAll() {
-        for (let name in this.sounds) {
+        for (let name in this.sounds)
             this.stop(name);
-        }
     }
 
-     setVolume(name, volume) {
-        if (this.sounds[name]) {
+    setVolume(name, volume) {
+        if (this.sounds[name])
             this.sounds[name].volume = volume;
-        }
     }
 
     setVolumeForAll(volume) {
         for (let name in this.sounds) {
-            if (this.sounds.hasOwnProperty(name)) {
+            if (this.sounds.hasOwnProperty(name))
                 this.sounds[name].volume = volume;
-            }
         }
     }
 }
