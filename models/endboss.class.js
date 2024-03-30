@@ -77,8 +77,6 @@ class Endboss extends MovableObject {
             requestAnimationFrame(animateFrame);
         };
         requestAnimationFrame(animateFrame);
-
-       // this.firstContactWithEndboss = false;
     }
 
     checkEndbossDead() {

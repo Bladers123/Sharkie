@@ -44,8 +44,7 @@ class MovableObject extends DrawableObject {
     }
 
     damageTaken() {
-        console.log(world.endBossDefeated);
-        if (!world.endBossDefeated) { // Angenommen, endBossDefeated ist ein Status in der World-Klasse
+        if (!world.endBossDefeated) {
             this.life -= this.damage;
             if (this.life < 0) {
                 this.life = 0;
@@ -53,8 +52,6 @@ class MovableObject extends DrawableObject {
                 this.lastHit = new Date().getTime();
             }
         }
-        else
-        console.log(world.endBossDefeated);
     }
     
 

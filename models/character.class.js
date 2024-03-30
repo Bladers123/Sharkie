@@ -89,7 +89,7 @@ class Character extends MovableObject {
     keyboard;
     mayMove = true;
     bossZoneReached = false;
-    life  = 100;
+    life = 100;
 
     animationFrameId = null;
     isCharacterMoving = false;
@@ -126,7 +126,6 @@ class Character extends MovableObject {
                         this.currentAnimation = "dead";
                         this.isGameOver = true;
                         clearTimeout(standingTimeoutId);
-                        console.log('Sharkie ist gestorben');
                     }
                 }
                 else if (this.isHurt()) {
@@ -135,19 +134,20 @@ class Character extends MovableObject {
                         this.currentAnimation = "hurt";
                         clearTimeout(standingTimeoutId);
                     }
-                } else if (this.isCharacterMoving) {
+                } 
+                else if (this.isCharacterMoving) {
                     if (this.currentAnimation !== "moving") {
                         this.playAnimation(this.imagesOfMoving, false, false);
                         this.currentAnimation = "moving";
                         clearTimeout(standingTimeoutId);
                     }
-                } else if (this.isAttacking) {
+                } 
+                else if (this.isAttacking) {
                     if (this.currentAnimation !== "attacking") {
                         this.currentAnimation = "attacking";
                         clearTimeout(standingTimeoutId);
                     }
                 }
-
                 else if (this.currentAnimation !== "standing") {
                     this.playAnimation(this.imagesOfStanding);
                     this.currentAnimation = "standing";
@@ -207,7 +207,6 @@ class Character extends MovableObject {
             this.mayMove = false;
             if (type === 'poison' && world.toxicBubbleBar.percentage > 0) {
                 this.isAttacking = true;
-                console.log('Poison attack');
                 this.playAnimation(this.imagesOfAttackWithBubble, false, false);
                 setTimeout(() => {
                     this.shootBubble(type);
@@ -215,20 +214,18 @@ class Character extends MovableObject {
                     world.toxicBubbleBar.decreasePercentage(20);
                     this.mayMove = true;
                 }, 1000);
-            } else if (type === 'normal') {
-
+            }
+            else if (type === 'normal') {
                 this.isAttacking = true;
-                console.log('Normal attack');
                 this.playAnimation(this.imagesOfAttackWithBubble, false, false);
                 setTimeout(() => {
                     this.shootBubble(type);
                     this.isAttacking = false;
                     this.mayMove = true;
                 }, 1000);
-            } else {
-                console.log('Nicht genug Munition für eine Poison Bubble');
-                this.mayMove = true;
             }
+            else
+                this.mayMove = true;
         }
     }
 
