@@ -92,17 +92,15 @@ class World {
         this.throwableObjects.forEach(bubble => {
             this.level.endBoss.forEach((endBoss) => {
                 if (bubble.isColliding(endBoss)) {
-                    endBoss.hit(bubble.damage); // Rufe die hit Methode mit dem Schadenswert des Projektils auf
+                    endBoss.hit(bubble.damage); 
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
-                        this.throwableObjects.splice(bubbleIndex, 1); // Entferne das Projektil, nachdem es den Endboss getroffen hat
+                        this.throwableObjects.splice(bubbleIndex, 1); 
                     }
                 }
             });
         });
     }
-    
-    
 
     checkCollisionCharacterWithCoinsAndPoisons() {
         this.level.collectedObjects = this.level.collectedObjects.filter(collectedObject => {
