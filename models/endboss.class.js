@@ -65,7 +65,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesOfDyingNormalEndBoss);
         this.spawnPoint();
         this.bossSpawning();
-        this.life = 50;
+        this.life = 200;
         this.width = 200;
         this.height = 200;
     }
@@ -105,4 +105,27 @@ class Endboss extends MovableObject {
             }, 1200);
         }
     }
+
+    hit(damage) {
+        if (!this.isDying) {
+            this.life -= damage;
+            if (this.life > 0) {
+                console.log("Endboss getroffen, aktuelle Lebenspunkte: ", this.life);
+                // Spiele die "verletzt" Animation ab
+                this.playAnimation(this.imagesOfHurt, false, true);
+                setTimeout(() => {
+                    // Gehe zurück zur Schwimm- oder Angriffsanimation, je nach Zustand des Endbosses
+                    if (!this.firstContactWithEndboss) {
+                        this.playAnimation(this.imagesOfSpawning, false, false);
+                    } else {
+                        this.playAnimation(this.imagesOfSwimming, false, false);
+                    }
+                }, 1200); // Die Dauer sollte die Länge der "verletzt" Animation widerspiegeln
+            } else {
+                // Wenn der Endboss 0 Lebenspunkte erreicht, stirbt er
+                this.die();
+            }
+        }
+    }
+    
 }

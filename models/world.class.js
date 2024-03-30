@@ -92,18 +92,16 @@ class World {
         this.throwableObjects.forEach(bubble => {
             this.level.endBoss.forEach((endBoss) => {
                 if (bubble.isColliding(endBoss)) {
-                    endBoss.life -= bubble.damage;
-                    if (endBoss.life <= 0 && !endBoss.isDying) {
-                        endBoss.die();
-                    }
+                    endBoss.hit(bubble.damage); // Rufe die hit Methode mit dem Schadenswert des Projektils auf
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
-                        this.throwableObjects.splice(bubbleIndex, 1);
+                        this.throwableObjects.splice(bubbleIndex, 1); // Entferne das Projektil, nachdem es den Endboss getroffen hat
                     }
                 }
             });
         });
     }
+    
     
 
     checkCollisionCharacterWithCoinsAndPoisons() {
