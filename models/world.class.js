@@ -170,7 +170,7 @@ class World {
         if (object.img && object.img.complete && object.img.naturalHeight !== 0) {
             this.flipImage(object);
             this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
-            object.drawFrame(this.context);
+           // object.drawFrame(this.context);
             this.flipImageBack(object);
         }
     }

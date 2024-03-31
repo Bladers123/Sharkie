@@ -60,6 +60,11 @@ canvas {
     width: 128px;
 }
 
+.volume{
+    cursor: pointer;
+    width: 72px;
+}
+
 .fullscreen {
     cursor: pointer;
     width: 256px;

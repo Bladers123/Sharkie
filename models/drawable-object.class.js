@@ -23,7 +23,7 @@ class DrawableObject{
     drawFrame(context) {
         if (this instanceof Character || this instanceof Enemy || this instanceof Endboss) {
             context.beginPath();
-            context.lineWidth = "10";
+            context.lineWidth = "5";
             context.strokeStyle = "blue";
             context.rect(this.positionX, this.positionY, this.width, this.height);
             context.stroke();
