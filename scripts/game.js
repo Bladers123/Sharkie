@@ -151,6 +151,19 @@ function onToggleVolumeButton() {
     }
 }
 
+function setVolumeOfSlider() {
+    const volume = parseFloat(document.getElementById('volume1').value);
+    soundManager.setVolumeForAll(volume);
+    if (volume === 0) {
+        document.getElementById('volume').src = "img/Additional/mute.png";
+        isMuted = true;
+    }
+    else {
+        document.getElementById('volume').src = "img/Additional/volume.png";
+        isMuted = false;
+    }
+}
+
 function getIntroductionsTemplate() {
     return /*html*/`
     <div class="introductions-content">
@@ -168,19 +181,6 @@ function getIntroductionsTemplate() {
         </div>
     </div>
     `;
-}
-
-function setVolumeOfSlider() {
-    const volume = parseFloat(document.getElementById('volume1').value);
-    soundManager.setVolumeForAll(volume);
-    if (volume === 0) {
-        document.getElementById('volume').src = "img/Additional/mute.png";
-        isMuted = true;
-    }
-    else {
-        document.getElementById('volume').src = "img/Additional/volume.png";
-        isMuted = false;
-    }
 }
 
 
