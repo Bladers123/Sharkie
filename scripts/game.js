@@ -5,6 +5,8 @@ let world;
 let keyboard;
 let character;
 let soundManager;
+let isMuted = false;
+let oldVolume;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -16,7 +18,7 @@ function init() {
 function createWorld() {
     keyboard = new Keyboard();
     character = new Character(keyboard);
-    world = new World(canvas, character);  
+    world = new World(canvas, character);
 }
 
 function getCharacter() {
@@ -88,19 +90,20 @@ document.addEventListener('DOMContentLoaded', function () {
     let startButton = document.getElementById('startscreen');
     let tryAgainButton = document.getElementById('try-again');
     let tryAgainButtonInGameOverContainer = document.getElementById('try-again-in-game-over-container');
+    let toggleVolumeButton = document.getElementById('volume');
     let introductionsContainer = document.getElementById('introductions-container');
     let startscreenContainer = document.getElementById('startscreen-container');
     let winContainer = document.getElementById('win-container');
     let gameOverContainer = document.getElementById('game-over-container');
     let inGame = false;
     introductionsContainer.innerHTML = getIntroductionsTemplate();
-    
+
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
     introductionsButton.addEventListener('click', () => onIntroductionsButton(inGame, introductionsContainer, startscreenContainer));
     startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas, inGame));
     tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
-
+    toggleVolumeButton.addEventListener('click', () => onToggleVolumeButton());
 });
 
 function onIntroductionsButton(inGame, introductionsContainer, startscreenContainer) {
@@ -132,6 +135,22 @@ function onTryAgainButton(winContainer, canvas, gameOverContainer) {
     createWorld();
 }
 
+function onToggleVolumeButton() {
+    let volumeSlider = document.getElementById('volume1');
+    if (!isMuted) {
+        soundManager.setVolumeForAll(0);
+        oldVolume = parseFloat(volumeSlider.value);
+        isMuted = true;
+        volumeSlider.value = 0;
+        document.getElementById('volume').src = "img/Additional/mute.png";
+    } else {
+        soundManager.setVolumeForAll(oldVolume);
+        isMuted = false;
+        volumeSlider.value = oldVolume;
+        document.getElementById('volume').src = "img/Additional/volume.png";
+    }
+}
+
 function getIntroductionsTemplate() {
     return /*html*/`
     <div class="introductions-content">
@@ -149,6 +168,19 @@ function getIntroductionsTemplate() {
         </div>
     </div>
     `;
+}
+
+function setVolumeOfSlider() {
+    const volume = parseFloat(document.getElementById('volume1').value);
+    soundManager.setVolumeForAll(volume);
+    if (volume === 0) {
+        document.getElementById('volume').src = "img/Additional/mute.png";
+        isMuted = true;
+    }
+    else {
+        document.getElementById('volume').src = "img/Additional/volume.png";
+        isMuted = false;
+    }
 }
 
 

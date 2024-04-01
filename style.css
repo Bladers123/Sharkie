@@ -65,6 +65,10 @@ canvas {
     width: 72px;
 }
 
+.volume-slider{
+    cursor: pointer;
+}
+
 .fullscreen {
     cursor: pointer;
     width: 256px;
