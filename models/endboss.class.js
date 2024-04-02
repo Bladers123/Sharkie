@@ -110,6 +110,7 @@ class Endboss extends MovableObject {
                 soundManager.stop('bossfight');
                 soundManager.play('win');
                 document.getElementById('win-container').classList.remove('display-none');
+                canvas.classList.remove('display-block');
                 canvas.classList.add('display-none');
                 
             }, 1200);
