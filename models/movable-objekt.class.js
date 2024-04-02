@@ -91,7 +91,7 @@ class MovableObject extends DrawableObject {
             let followSpeed = 0.05;
             let inertia = 0.1;
             setInterval(() => {
-                if (this.immobilized)
+                if (this.immobilized || world.endBossDefeated)
                     return;
                 let charPos = getCharacter().positionX;
                 let fishPos = this.positionX;

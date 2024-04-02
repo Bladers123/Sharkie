@@ -66,7 +66,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesOfDyingNormalEndBoss);
         this.spawnPoint();
         this.bossSpawning();
-        this.life = 2000;
+        this.life = 200;
         this.width = 200;
         this.height = 200;
     }
@@ -105,12 +105,13 @@ class Endboss extends MovableObject {
         if (!this.isDying) {
             this.isDying = true;
             this.playAnimation(this.imagesOfDyingNormalEndBoss, false, true);
+            world.endBossDefeated = true;
             setTimeout(() => {
                 soundManager.stop('bossfight');
                 soundManager.play('win');
                 document.getElementById('win-container').classList.remove('display-none');
                 canvas.classList.add('display-none');
-                world.endBossDefeated = true;
+                
             }, 1200);
             clearInterval(this.attackInterval);
         }
