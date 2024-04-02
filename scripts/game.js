@@ -8,6 +8,7 @@ let soundManager;
 let isMuted = false;
 let oldVolume;
 let inGame = false;
+let gameWin = false;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -96,40 +97,61 @@ document.addEventListener('DOMContentLoaded', function () {
     let startscreenContainer = document.getElementById('startscreen-container');
     let winContainer = document.getElementById('win-container');
     let gameOverContainer = document.getElementById('game-over-container');
-   
+
     introductionsContainer.innerHTML = getIntroductionsTemplate();
 
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
-    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer));
+    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer));
     startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas));
     tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     toggleVolumeButton.addEventListener('click', () => onToggleVolumeButton());
 });
 
-function onIntroductionsButton(introductionsContainer, startscreenContainer) {
+function onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer) {
     const areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
-    if (inGame) {
-        if (areIntroductionsVisible) {
-            console.log('hier?', areIntroductionsVisible);
-            introductionsContainer.classList.remove('display-block');
-            canvas.classList.add('display-block');
+    // Behandelt den Fall, wenn das Spiel noch läuft oder vor dem Start
+    if (!gameWin) {
+        if (inGame) {
+            if (areIntroductionsVisible) {
+                introductionsContainer.classList.remove('display-block');
+                canvas.classList.add('display-block');
+            } else {
+                introductionsContainer.classList.add('display-block');
+                canvas.classList.remove('display-block');
+                canvas.classList.add('display-none');
+            }
         } else {
-            console.log('Einführung soll angezeigt werden');
-            introductionsContainer.classList.add('display-block');
-            canvas.classList.remove('display-block');
-            canvas.classList.add('display-none');
+            if (areIntroductionsVisible) {
+                introductionsContainer.classList.remove('display-block');
+                startscreenContainer.classList.remove('display-none');
+            } else {
+                introductionsContainer.classList.add('display-block');
+                startscreenContainer.classList.add('display-none');
+            }
         }
     } else {
+        // Behandelt den Fall, wenn das Spiel gewonnen wurde
+        console.log(areIntroductionsVisible);
         if (areIntroductionsVisible) {
             introductionsContainer.classList.remove('display-block');
-            startscreenContainer.classList.remove('display-none');
+            introductionsContainer.classList.add('display-none');
+            // Hier musst du entscheiden, was nach dem Ausblenden der Einführungen angezeigt werden soll
+            // Beispiel: Zeige den Win-Container oder kehre zum Startbildschirm zurück
+            // Hier als Beispiel wieder den Win-Container anzeigen
+            winContainer.classList.remove('display-none');
         } else {
             introductionsContainer.classList.add('display-block');
+            introductionsContainer.classList.remove('display-none');
+            // Stelle sicher, dass sowohl der Win-Container als auch andere nicht relevante Elemente ausgeblendet werden
+            winContainer.classList.remove('display-block');
+            winContainer.classList.add('display-none');
             startscreenContainer.classList.add('display-none');
+            canvas.classList.add('display-none');
         }
     }
 }
+
 
 function onStartButton(startscreenContainer, fullscreenButton, canvas) {
     startscreenContainer.classList.add('display-none');
@@ -142,6 +164,7 @@ function onStartButton(startscreenContainer, fullscreenButton, canvas) {
 
 function onTryAgainButton(winContainer, canvas, gameOverContainer) {
     winContainer.classList.add('display-none');
+    winContainer.classList.remove('display-block');
     gameOverContainer.classList.add('display-none');
     canvas.classList.remove('display-none');
     soundManager.stopAll();

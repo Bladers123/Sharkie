@@ -112,7 +112,7 @@ class Endboss extends MovableObject {
                 document.getElementById('win-container').classList.remove('display-none');
                 canvas.classList.remove('display-block');
                 canvas.classList.add('display-none');
-                
+                gameWin = true;
             }, 1200);
             clearInterval(this.attackInterval);
         }
