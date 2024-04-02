@@ -37,12 +37,14 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    isColliding(object) {
-        return this.positionX + this.width > object.positionX &&
-            this.positionX < object.positionX + object.width &&
-            this.positionY < object.positionY + object.height &&
-            this.positionY + this.height > object.positionY;
+    isColliding(other) {
+        return this.positionX < other.positionX + other.width &&
+               this.positionX + this.width > other.positionX &&
+               this.positionY < other.positionY + other.height &&
+               this.positionY + this.height > other.positionY;
     }
+    
+    
 
     damageTaken() {
         if (!world.endBossDefeated) {

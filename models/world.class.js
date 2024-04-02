@@ -15,7 +15,7 @@ class World {
 
     level = level1;
     enemies = level1.enemies;
-    endBoss = level1.endBoss;
+    endBosses = level1.endBoss;
     backgroundObjects = level1.backgroundObjects;
     collectedObjects = level1.collectedObjects;
     collectedAnimationObjects = level1.collectedAnimationObjects;
@@ -54,12 +54,27 @@ class World {
     }
 
     checkCollisions() {
+        this.checkCollisionCharacterWithEndboss();
         this.checkCollisionCharacterWithEnemy();
         this.checkCollisionBubbleWithEnemy();
         this.checkCollisionBubbleWithEndboss();
         this.checkCollisionCharacterWithCoinsAndPoisons();
         this.checkCollisionCharacterWithAnimationPoisons();
     }
+ 
+    checkCollisionCharacterWithEndboss() {
+        this.level.endBoss.forEach(endBoss => {
+            if (endBoss && !endBoss.isDying && !endBoss.endBossIsDead) {
+                console.log('Der Boss ist noch nicht tot.');
+                if (this.character.isColliding(endBoss)) {
+                    console.log('Der Charakter nimmt Schaden vom Boss.');
+                    this.character.damageTaken();
+                }
+            }
+        });
+    }
+    
+
 
     checkCollisionCharacterWithEnemy() {
         this.level.enemies.forEach(enemy => {
@@ -92,10 +107,10 @@ class World {
         this.throwableObjects.forEach(bubble => {
             this.level.endBoss.forEach((endBoss) => {
                 if (bubble.isColliding(endBoss)) {
-                    endBoss.hit(bubble.damage); 
+                    endBoss.hit(bubble.damage);
                     let bubbleIndex = this.throwableObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
-                        this.throwableObjects.splice(bubbleIndex, 1); 
+                        this.throwableObjects.splice(bubbleIndex, 1);
                     }
                 }
             });
@@ -170,7 +185,7 @@ class World {
         if (object.img && object.img.complete && object.img.naturalHeight !== 0) {
             this.flipImage(object);
             this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
-           // object.drawFrame(this.context);
+            // object.drawFrame(this.context);
             this.flipImageBack(object);
         }
     }
