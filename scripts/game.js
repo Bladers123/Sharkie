@@ -7,6 +7,7 @@ let character;
 let soundManager;
 let isMuted = false;
 let oldVolume;
+let inGame = false;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -95,29 +96,42 @@ document.addEventListener('DOMContentLoaded', function () {
     let startscreenContainer = document.getElementById('startscreen-container');
     let winContainer = document.getElementById('win-container');
     let gameOverContainer = document.getElementById('game-over-container');
-    let inGame = false;
+   
     introductionsContainer.innerHTML = getIntroductionsTemplate();
 
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
-    introductionsButton.addEventListener('click', () => onIntroductionsButton(inGame, introductionsContainer, startscreenContainer));
-    startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas, inGame));
+    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer));
+    startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas));
     tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     toggleVolumeButton.addEventListener('click', () => onToggleVolumeButton());
 });
 
-function onIntroductionsButton(inGame, introductionsContainer, startscreenContainer) {
+function onIntroductionsButton(introductionsContainer, startscreenContainer) {
+    const areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
     if (inGame) {
-        canvas.classList.toggle('display-block');
-        introductionsContainer.classList.toggle('display-block');
-    }
-    else if (!inGame) {
-        startscreenContainer.classList.toggle('display-none');
-        introductionsContainer.classList.toggle('display-block');
+        if (areIntroductionsVisible) {
+            console.log('hier?', areIntroductionsVisible);
+            introductionsContainer.classList.remove('display-block');
+            canvas.classList.add('display-block');
+        } else {
+            console.log('Einführung soll angezeigt werden');
+            introductionsContainer.classList.add('display-block');
+            canvas.classList.remove('display-block');
+            canvas.classList.add('display-none');
+        }
+    } else {
+        if (areIntroductionsVisible) {
+            introductionsContainer.classList.remove('display-block');
+            startscreenContainer.classList.remove('display-none');
+        } else {
+            introductionsContainer.classList.add('display-block');
+            startscreenContainer.classList.add('display-none');
+        }
     }
 }
 
-function onStartButton(startscreenContainer, fullscreenButton, canvas, inGame) {
+function onStartButton(startscreenContainer, fullscreenButton, canvas) {
     startscreenContainer.classList.add('display-none');
     fullscreenButton.classList.toggle('disabled-image');
     canvas.classList.remove('display-none');
