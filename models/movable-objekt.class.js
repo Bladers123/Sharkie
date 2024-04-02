@@ -10,6 +10,7 @@ class MovableObject extends DrawableObject {
     totalLife = 100;
     isDying;
     isRemoved;
+    immobilized = false;
 
     playAnimation(imagesOfAnimation, repeatLastFour = false, runOnce = false) {
         this.stopAnimation();
@@ -34,7 +35,7 @@ class MovableObject extends DrawableObject {
             clearInterval(this.animationIntervalId);
             this.animationIntervalId = null;
         }
-    }  
+    }
 
     isColliding(object) {
         return this.positionX + this.width > object.positionX &&
@@ -53,7 +54,7 @@ class MovableObject extends DrawableObject {
             }
         }
     }
-    
+
 
     isHurt() {
         if (this.life < this.totalLife) {
@@ -84,4 +85,23 @@ class MovableObject extends DrawableObject {
             }
         }, 1000 / 25);
     }
+
+    moveToCharacter() {
+        if (getCharacter()) {
+            let followSpeed = 0.05;
+            let inertia = 0.1;
+            setInterval(() => {
+                if (this.immobilized)
+                    return;
+                let charPos = getCharacter().positionX;
+                let fishPos = this.positionX;
+                this.otherDirection = charPos > fishPos;
+                let diffX = charPos - fishPos;
+                let diffY = getCharacter().positionY - this.positionY;
+                this.positionX += diffX * followSpeed * inertia;
+                this.positionY += diffY * followSpeed * inertia;
+            }, 1000 / 60);
+        }
+    }
+
 }

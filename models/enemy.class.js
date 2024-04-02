@@ -249,26 +249,4 @@ class Enemy extends MovableObject {
             }
         }, 1000 / 60);
     }
-
-    moveToCharacter() {
-        if (getCharacter()) {
-            let followSpeed = 0.05;
-            let inertia = 0.1;
-            setInterval(() => {
-                let charPos = getCharacter().positionX;
-                let fishPos = this.positionX;
-
-                this.otherDirection = charPos > fishPos;
-
-                let diffX = charPos - fishPos;
-                let diffY = getCharacter().positionY - this.positionY;
-
-                this.positionX += diffX * followSpeed * inertia;
-                this.positionY += diffY * followSpeed * inertia;
-
-            }, 1000 / 60);
-        }
-    }
-
-
 }
