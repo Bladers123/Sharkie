@@ -110,6 +110,7 @@ class Character extends MovableObject {
     bossZoneReached = false;
     life = 100;
     lastDamageSource = 'normal';
+    isInvincible = false;
 
     animationFrameId = null;
     isCharacterMoving = false;
@@ -132,6 +133,14 @@ class Character extends MovableObject {
         this.keyboard = keyboard;
         this.checkStatesOfSharkie();
     }
+
+    becomeInvincible(duration) {
+        this.isInvincible = true;
+        setTimeout(() => {
+            this.isInvincible = false;
+        }, duration);
+    }
+
 
     checkStatesOfSharkie() {
         let standingTimeoutId = null;

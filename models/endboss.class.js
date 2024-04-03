@@ -83,6 +83,7 @@ class Endboss extends MovableObject {
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
                 soundManager.stop('background');
                 soundManager.play('bossfight', true);
+                character.becomeInvincible(1000);
                 this.playAnimation(this.imagesOfSpawning, false, true);
                 this.firstContactWithEndboss = true;
                 character.bossZoneReached = true;
@@ -115,6 +116,7 @@ class Endboss extends MovableObject {
                 canvas.classList.remove('display-block');
                 canvas.classList.add('display-none');
                 gameWin = true;
+                character.becomeInvincible(5000);
             }, 1200);
             clearInterval(this.attackInterval);
         }

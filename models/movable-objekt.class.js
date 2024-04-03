@@ -47,6 +47,10 @@ class MovableObject extends DrawableObject {
     
 
     damageTaken(damage) {
+        if (this.isInvincible) {
+            console.log("Charakter ist unverwundbar und nimmt keinen Schaden.");
+            return; // Ignoriere Schaden, wenn unverwundbar
+        }
         if (world && !world.endBossDefeated) {
             this.life -= damage;
             if (this.life < 0) {
