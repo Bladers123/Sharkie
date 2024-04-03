@@ -35,15 +35,17 @@ class World {
         let gameOver = true
         setInterval(() => {
             if (this.character.isGameOver && gameOver) {
-                let gameOverContainer = document.getElementById('game-over-container');
-                if (gameOverContainer) {
-                    gameOverContainer.classList.remove('display-none');
-                    this.canvas.classList.remove('display-block');
-                    this.canvas.classList.add('display-none');
-                    gameOver = false;
-                }
+                setTimeout(() => {
+                    let gameOverContainer = document.getElementById('game-over-container');
+                    if (gameOverContainer) {
+                        gameOverContainer.classList.remove('display-none');
+                        this.canvas.classList.remove('display-block');
+                        this.canvas.classList.add('display-none');
+                        gameOver = false;
+                    }
+                }, 2000);
             }
-        }, 1);
+        }, 10);
     }
 
     fire() {
@@ -61,23 +63,28 @@ class World {
         this.checkCollisionCharacterWithCoinsAndPoisons();
         this.checkCollisionCharacterWithAnimationPoisons();
     }
- 
+
     checkCollisionCharacterWithEndboss() {
         this.level.endBoss.forEach(endBoss => {
             if (endBoss && !endBoss.isDying && !endBoss.endBossIsDead) {
                 if (this.character.isColliding(endBoss)) {
-                    this.character.damageTaken();
+                    this.character.lastDamageSource = 'normal';
+                    this.character.damageTaken(endBoss.damage);
+                    this.lifeBar.setPercentage(this.character.life);
                 }
             }
         });
     }
-    
-
 
     checkCollisionCharacterWithEnemy() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
-                this.character.damageTaken();
+                if (enemy.type.startsWith('jelly')) {
+                    this.character.lastDamageSource = 'electric';
+                } else {
+                    this.character.lastDamageSource = 'normal';
+                }
+                this.character.damageTaken(enemy.damage);
                 this.lifeBar.setPercentage(this.character.life);
             }
         });

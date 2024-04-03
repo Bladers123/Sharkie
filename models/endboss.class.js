@@ -69,6 +69,7 @@ class Endboss extends MovableObject {
         this.life = 20;
         this.width = 200;
         this.height = 200;
+        this.damage = 5;
     }
 
     spawnPoint() {

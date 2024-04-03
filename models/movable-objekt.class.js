@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
     animationIntervalId;
     life = 100;
     lastHit;
-    damage = 1;
+    damage;
     speedY = 0;
     acceleration = 2.5;
     totalLife = 100;
@@ -46,9 +46,9 @@ class MovableObject extends DrawableObject {
     
     
 
-    damageTaken() {
-        if (!world.endBossDefeated) {
-            this.life -= this.damage;
+    damageTaken(damage) {
+        if (world && !world.endBossDefeated) {
+            this.life -= damage;
             if (this.life < 0) {
                 this.life = 0;
             } else {
@@ -56,6 +56,7 @@ class MovableObject extends DrawableObject {
             }
         }
     }
+    
 
 
     isHurt() {

@@ -95,7 +95,7 @@ class Character extends MovableObject {
         'img/1.Sharkie/6.dead/2.Electro_shock/7.png',
         'img/1.Sharkie/6.dead/2.Electro_shock/8.png',
         'img/1.Sharkie/6.dead/2.Electro_shock/9.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/10.png'        
+        'img/1.Sharkie/6.dead/2.Electro_shock/10.png'
     ];
 
     height = 150;
@@ -109,6 +109,7 @@ class Character extends MovableObject {
     mayMove = true;
     bossZoneReached = false;
     life = 100;
+    lastDamageSource = 'normal';
 
     animationFrameId = null;
     isCharacterMoving = false;
@@ -124,6 +125,8 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfHurt);
         this.loadImages(this.imagesOfLongStanding);
         this.loadImages(this.imagesOfAttackWithBubble);
+        this.loadImages(this.imagesOfHurtWithElectric);
+        this.loadImages(this.imagesOfDeadWithElectric);
 
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
@@ -136,10 +139,12 @@ class Character extends MovableObject {
             if (!this.isGameOver) {
                 if (this.isDead()) {
                     if (this.currentAnimation !== "dead") {
-                        this.playAnimation(this.imagesOfDead, false, true);
-                        setTimeout(() => {
-                            this.stopAnimation();
-                        }, 2000);
+                        let animationToPlay;
+                        if (this.lastDamageSource === 'electric')
+                            animationToPlay = this.imagesOfDeadWithElectric;
+                        else
+                            animationToPlay = this.imagesOfDead;
+                        this.playAnimation(animationToPlay, false, true);
                         this.currentAnimation = "dead";
                         this.isGameOver = true;
                         clearTimeout(standingTimeoutId);
@@ -147,18 +152,25 @@ class Character extends MovableObject {
                 }
                 else if (this.isHurt()) {
                     if (this.currentAnimation !== "hurt") {
-                        this.playAnimation(this.imagesOfHurt, false, true);
+                        let animationToPlay;
+                        if (this.lastDamageSource === 'electric') {
+                            animationToPlay = this.imagesOfHurtWithElectric;
+                        } else {
+                            animationToPlay = this.imagesOfHurt;
+                        }
+                        this.playAnimation(animationToPlay, false, true);
                         this.currentAnimation = "hurt";
                         clearTimeout(standingTimeoutId);
                     }
-                } 
+                }
+
                 else if (this.isCharacterMoving) {
                     if (this.currentAnimation !== "moving") {
                         this.playAnimation(this.imagesOfMoving, false, false);
                         this.currentAnimation = "moving";
                         clearTimeout(standingTimeoutId);
                     }
-                } 
+                }
                 else if (this.isAttacking) {
                     if (this.currentAnimation !== "attacking") {
                         this.currentAnimation = "attacking";
