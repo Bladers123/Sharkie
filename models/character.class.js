@@ -79,6 +79,25 @@ class Character extends MovableObject {
         'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/7.png'
     ];
 
+    imagesOfHurtWithElectric = [
+        'img/1.Sharkie/5.Hurt/2.Electric shock/1.png',
+        'img/1.Sharkie/5.Hurt/2.Electric shock/2.png',
+        'img/1.Sharkie/5.Hurt/2.Electric shock/3.png'
+    ];
+
+    imagesOfDeadWithElectric = [
+        'img/1.Sharkie/6.dead/2.Electro_shock/1.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/2.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/3.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/4.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/5.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/6.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/7.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/8.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/9.png',
+        'img/1.Sharkie/6.dead/2.Electro_shock/10.png'        
+    ];
+
     height = 150;
     width = 150;
     positionY = 150;
@@ -96,8 +115,6 @@ class Character extends MovableObject {
     currentAnimation = "";
 
     level = level1;
-
-    swimmingSound = new Audio('audio/fish-swimming.mp3');
 
     constructor(keyboard) {
         super();
