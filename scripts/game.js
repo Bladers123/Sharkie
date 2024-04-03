@@ -29,16 +29,16 @@ function getCharacter() {
 
 window.addEventListener('keydown', event => {
     switch (event.key) {
-        case 'a':
+        case 'ArrowLeft':
             keyboard.left = true;
             break;
-        case 's':
+        case 'ArrowDown':
             keyboard.down = true;
             break;
-        case 'd':
+        case 'ArrowRight':
             keyboard.right = true;
             break;
-        case 'w':
+        case 'ArrowUp':
             keyboard.up = true;
             break;
         default:
@@ -52,17 +52,18 @@ window.addEventListener('keydown', event => {
 });
 
 window.addEventListener('keyup', event => {
+    console.log(event.key);
     switch (event.key) {
-        case 'a':
+        case 'ArrowLeft':
             keyboard.left = false;
             break;
-        case 's':
+        case 'ArrowDown':
             keyboard.down = false;
             break;
-        case 'd':
+        case 'ArrowRight':
             keyboard.right = false;
             break;
-        case 'w':
+        case 'ArrowUp':
             keyboard.up = false;
             break;
         default:
@@ -78,13 +79,18 @@ window.addEventListener('keyup', event => {
 window.addEventListener('keypress', (event) => {
     if (event.key === ' ') {
         keyboard.fire = true;
-        character.initiateAttack('normal');
+        character.initiateAttack('melee');
     }
-    else if (event.key === 'e') {
+    else if (event.key === 'd') {
         keyboard.fire = true;
-        character.initiateAttack('poison');
+        if (world.toxicBubbleBar && world.toxicBubbleBar.percentage > 0) {
+            character.initiateAttack('poison');
+        } else {
+            character.initiateAttack('normal');
+        }
     }
 });
+
 
 document.addEventListener('DOMContentLoaded', function () {
     let fullscreenButton = document.getElementById('fullscreen');
