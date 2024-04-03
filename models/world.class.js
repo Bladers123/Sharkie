@@ -38,10 +38,15 @@ class World {
                 setTimeout(() => {
                     let gameOverContainer = document.getElementById('game-over-container');
                     if (gameOverContainer) {
+                        gameOverContainer.classList.add('disabled-image');
                         gameOverContainer.classList.remove('display-none');
                         this.canvas.classList.remove('display-block');
                         this.canvas.classList.add('display-none');
                         gameOver = false;
+                        soundManager.play('gameover', false);
+                        setTimeout(() => {
+                            gameOverContainer.classList.remove('disabled-image');
+                        }, 3000);
                     }
                 }, 2000);
             }

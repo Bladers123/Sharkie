@@ -18,6 +18,7 @@ function init() {
     soundManager.addSound('background', 'audio/background.mp3');
     soundManager.addSound('coin', 'audio/coin.mp3');
     soundManager.addSound('potion', 'audio/potion.mp3');
+    soundManager.addSound('gameover', 'audio/gameover.wav');
 }
 
 function createWorld() {

@@ -145,13 +145,17 @@ canvas {
     width: 256px;
     opacity: 0.8;
     cursor: pointer;
+    animation-name: spinAndMove;
+    animation-duration: 4s;
+    animation-iteration-count: 1; 
+    animation-fill-mode: forwards; 
 }
 
 .game-over-container{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    flex-direction: column;
+    flex-direction: column; 
     background-image: url('img/3. Background/Mesa de trabajo 1.png');
     background-repeat: no-repeat;
     background-size: cover;
@@ -179,3 +183,24 @@ canvas {
 .disabled-image {
     pointer-events: none;
 }
+
+@keyframes spinAndMove {
+    from {
+        transform: translateX(-200px) rotate(0deg);
+    }
+    to {
+        transform: translateX(50%) rotate(360deg);
+    }
+}
+
+/* @keyframes spinAndMove {
+    0% {
+        transform: translateX(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateX(50%) rotate(360deg);
+    }
+    100% {
+        transform: translateX(0%) rotate(0deg);
+    }
+} */
