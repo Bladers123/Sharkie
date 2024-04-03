@@ -65,9 +65,7 @@ class World {
     checkCollisionCharacterWithEndboss() {
         this.level.endBoss.forEach(endBoss => {
             if (endBoss && !endBoss.isDying && !endBoss.endBossIsDead) {
-                console.log('Der Boss ist noch nicht tot.');
                 if (this.character.isColliding(endBoss)) {
-                    console.log('Der Charakter nimmt Schaden vom Boss.');
                     this.character.damageTaken();
                 }
             }

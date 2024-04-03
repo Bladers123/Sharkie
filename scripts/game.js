@@ -109,41 +109,39 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer) {
-    const areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
-    // Behandelt den Fall, wenn das Spiel noch läuft oder vor dem Start
+    let areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
     if (!gameWin) {
         if (inGame) {
             if (areIntroductionsVisible) {
                 introductionsContainer.classList.remove('display-block');
                 canvas.classList.add('display-block');
-            } else {
+            }
+            else {
                 introductionsContainer.classList.add('display-block');
                 canvas.classList.remove('display-block');
                 canvas.classList.add('display-none');
             }
-        } else {
+        }
+        else {
             if (areIntroductionsVisible) {
                 introductionsContainer.classList.remove('display-block');
                 startscreenContainer.classList.remove('display-none');
-            } else {
+            }
+            else {
                 introductionsContainer.classList.add('display-block');
                 startscreenContainer.classList.add('display-none');
             }
         }
-    } else {
-        // Behandelt den Fall, wenn das Spiel gewonnen wurde
-        console.log(areIntroductionsVisible);
+    }
+    else {
         if (areIntroductionsVisible) {
             introductionsContainer.classList.remove('display-block');
             introductionsContainer.classList.add('display-none');
-            // Hier musst du entscheiden, was nach dem Ausblenden der Einführungen angezeigt werden soll
-            // Beispiel: Zeige den Win-Container oder kehre zum Startbildschirm zurück
-            // Hier als Beispiel wieder den Win-Container anzeigen
             winContainer.classList.remove('display-none');
-        } else {
+        }
+        else {
             introductionsContainer.classList.add('display-block');
             introductionsContainer.classList.remove('display-none');
-            // Stelle sicher, dass sowohl der Win-Container als auch andere nicht relevante Elemente ausgeblendet werden
             winContainer.classList.remove('display-block');
             winContainer.classList.add('display-none');
             startscreenContainer.classList.add('display-none');
@@ -167,6 +165,8 @@ function onTryAgainButton(winContainer, canvas, gameOverContainer) {
     winContainer.classList.remove('display-block');
     gameOverContainer.classList.add('display-none');
     canvas.classList.remove('display-none');
+    gameWin = false;
+    world.endBossDefeated = false;
     soundManager.stopAll();
     initLevel();
     createWorld();

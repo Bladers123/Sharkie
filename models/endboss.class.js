@@ -66,7 +66,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesOfDyingNormalEndBoss);
         this.spawnPoint();
         this.bossSpawning();
-        this.life = 200;
+        this.life = 20;
         this.width = 200;
         this.height = 200;
     }
@@ -122,7 +122,6 @@ class Endboss extends MovableObject {
         if (!this.isDying) {
             this.life -= damage;
             if (this.life > 0) {
-                console.log("Endboss getroffen, aktuelle Lebenspunkte: ", this.life);
                 this.immobilized = true; 
                 this.playAnimation(this.imagesOfHurt, false, true);
                 setTimeout(() => {
@@ -141,7 +140,6 @@ class Endboss extends MovableObject {
 
     attack() {
         if (!this.isDying && !this.endBossIsDead && !this.immobilized) {
-            console.log("Endboss greift an!");
             this.playAnimation(this.imagesOfAttack, false, true);
             setTimeout(() => {
                 this.playAnimation(this.imagesOfSwimming, false, false);
