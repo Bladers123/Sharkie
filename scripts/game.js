@@ -15,6 +15,9 @@ function init() {
     soundManager = new SoundManager();
     soundManager.addSound('bossfight', 'audio/bossfight.mp3');
     soundManager.addSound('win', 'audio/win.mp3');
+    soundManager.addSound('background', 'audio/background.mp3');
+    soundManager.addSound('coin', 'audio/coin.mp3');
+    soundManager.addSound('potion', 'audio/potion.mp3');
 }
 
 function createWorld() {
@@ -163,6 +166,7 @@ function onStartButton(startscreenContainer, fullscreenButton, canvas) {
     inGame = true;
     initLevel();
     createWorld();
+    soundManager.play('background', true);
 }
 
 function onTryAgainButton(winContainer, canvas, gameOverContainer) {

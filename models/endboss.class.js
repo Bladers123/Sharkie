@@ -66,7 +66,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.imagesOfDyingNormalEndBoss);
         this.spawnPoint();
         this.bossSpawning();
-        this.life = 20;
+        this.life = 400;
         this.width = 200;
         this.height = 200;
         this.damage = 5;
@@ -81,7 +81,8 @@ class Endboss extends MovableObject {
         let animateFrame = () => {
             let character = getCharacter();
             if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
-                soundManager.play('bossfight', false);
+                soundManager.stop('background');
+                soundManager.play('bossfight', true);
                 this.playAnimation(this.imagesOfSpawning, false, true);
                 this.firstContactWithEndboss = true;
                 character.bossZoneReached = true;
@@ -109,7 +110,7 @@ class Endboss extends MovableObject {
             world.endBossDefeated = true;
             setTimeout(() => {
                 soundManager.stop('bossfight');
-                soundManager.play('win');
+                soundManager.play('win', false);
                 document.getElementById('win-container').classList.remove('display-none');
                 canvas.classList.remove('display-block');
                 canvas.classList.add('display-none');

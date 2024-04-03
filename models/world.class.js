@@ -127,8 +127,10 @@ class World {
             if (this.character.isColliding(collectedObject)) {
                 if (collectedObject.type === 'coin') {
                     this.coinBar.increasePercentage(9);
+                    soundManager.play('coin', true);
                 } else if (collectedObject.type === 'poison') {
                     this.toxicBubbleBar.increasePercentage(20);
+                    soundManager.play('potion', false);
                 }
                 return false;
             }
@@ -141,8 +143,10 @@ class World {
             if (this.character.isColliding(collectedObject)) {
                 if (collectedObject.type === 'coin') {
                     this.coinBar.increasePercentage(8);
+                    soundManager.play('coin', false);
                 } else if (collectedObject.type === 'poison') {
                     this.toxicBubbleBar.increasePercentage(20);
+                    soundManager.play('potion', false);
                 }
                 return false;
             }
