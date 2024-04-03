@@ -26,6 +26,7 @@ function createWorld() {
     character = new Character(keyboard);
     character.becomeInvincible(1000);
     world = new World(canvas, character);
+    soundManager.play('background', true);
 }
 
 function getCharacter() {
@@ -168,7 +169,6 @@ function onStartButton(startscreenContainer, fullscreenButton, canvas) {
     inGame = true;
     initLevel();
     createWorld();
-    soundManager.play('background', true);
 }
 
 function onTryAgainButton(winContainer, canvas, gameOverContainer) {

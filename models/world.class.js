@@ -35,6 +35,7 @@ class World {
         let gameOver = true
         setInterval(() => {
             if (this.character.isGameOver && gameOver) {
+                
                 setTimeout(() => {
                     let gameOverContainer = document.getElementById('game-over-container');
                     if (gameOverContainer) {
@@ -43,6 +44,7 @@ class World {
                         this.canvas.classList.remove('display-block');
                         this.canvas.classList.add('display-none');
                         gameOver = false;
+                        soundManager.stop('background');
                         soundManager.play('gameover', false);
                         setTimeout(() => {
                             gameOverContainer.classList.remove('disabled-image');
