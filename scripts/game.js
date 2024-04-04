@@ -122,29 +122,21 @@ document.addEventListener('DOMContentLoaded', function () {
 function onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer) {
     let areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
     if (!gameWin) {
-        console.log('1');
         if (inGame) {
-            console.log('2');
             if (areIntroductionsVisible && !character.isGameOver) {
-                console.log('3');
                 introductionsContainer.classList.remove('display-block');
                 canvas.classList.add('display-block');
             }
             else {
-                console.log('4');
                 if (character.isGameOver) {
-                    console.log('6');
                     if (areIntroductionsVisible) {
-                        console.log('7');
                         gameOverContainer.classList.remove('display-none');
                         introductionsContainer.classList.remove('display-block')
                     }
                     else {
-                        console.log('8');
                         gameOverContainer.classList.add('display-none');
                         introductionsContainer.classList.add('display-block')
                     }
-
                 }
                 else {
                     introductionsContainer.classList.add('display-block');
@@ -154,7 +146,6 @@ function onIntroductionsButton(introductionsContainer, startscreenContainer, win
             }
         }
         else {
-            console.log('5');
             if (areIntroductionsVisible) {
                 introductionsContainer.classList.remove('display-block');
                 startscreenContainer.classList.remove('display-none');
