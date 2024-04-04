@@ -192,15 +192,3 @@ canvas {
         transform: translateX(50%) rotate(360deg);
     }
 }
-
-/* @keyframes spinAndMove {
-    0% {
-        transform: translateX(0px) rotate(0deg);
-    }
-    50% {
-        transform: translateX(50%) rotate(360deg);
-    }
-    100% {
-        transform: translateX(0%) rotate(0deg);
-    }
-} */

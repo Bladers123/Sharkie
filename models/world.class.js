@@ -35,11 +35,12 @@ class World {
         let gameOver = true
         setInterval(() => {
             if (this.character.isGameOver && gameOver) {
-                
                 setTimeout(() => {
                     let gameOverContainer = document.getElementById('game-over-container');
+                    let introductionButton = document.getElementById('introductions');
                     if (gameOverContainer) {
                         gameOverContainer.classList.add('disabled-image');
+                        introductionButton.classList.add('disabled-image');
                         gameOverContainer.classList.remove('display-none');
                         this.canvas.classList.remove('display-block');
                         this.canvas.classList.add('display-none');
@@ -48,6 +49,7 @@ class World {
                         soundManager.play('gameover', false);
                         setTimeout(() => {
                             gameOverContainer.classList.remove('disabled-image');
+                            introductionButton.classList.remove('disabled-image');
                         }, 3000);
                     }
                 }, 2000);

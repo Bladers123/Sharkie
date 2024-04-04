@@ -112,28 +112,49 @@ document.addEventListener('DOMContentLoaded', function () {
     introductionsContainer.innerHTML = getIntroductionsTemplate();
 
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
-    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer));
+    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer));
     startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas));
     tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     toggleVolumeButton.addEventListener('click', () => onToggleVolumeButton());
 });
 
-function onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer) {
+function onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer) {
     let areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
     if (!gameWin) {
+        console.log('1');
         if (inGame) {
-            if (areIntroductionsVisible) {
+            console.log('2');
+            if (areIntroductionsVisible && !character.isGameOver) {
+                console.log('3');
                 introductionsContainer.classList.remove('display-block');
                 canvas.classList.add('display-block');
             }
             else {
-                introductionsContainer.classList.add('display-block');
-                canvas.classList.remove('display-block');
-                canvas.classList.add('display-none');
+                console.log('4');
+                if (character.isGameOver) {
+                    console.log('6');
+                    if (areIntroductionsVisible) {
+                        console.log('7');
+                        gameOverContainer.classList.remove('display-none');
+                        introductionsContainer.classList.remove('display-block')
+                    }
+                    else {
+                        console.log('8');
+                        gameOverContainer.classList.add('display-none');
+                        introductionsContainer.classList.add('display-block')
+                    }
+
+                }
+                else {
+                    introductionsContainer.classList.add('display-block');
+                    canvas.classList.remove('display-block');
+                    canvas.classList.add('display-none');
+                }
             }
         }
         else {
+            console.log('5');
             if (areIntroductionsVisible) {
                 introductionsContainer.classList.remove('display-block');
                 startscreenContainer.classList.remove('display-none');
