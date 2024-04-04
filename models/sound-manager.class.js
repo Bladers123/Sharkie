@@ -22,25 +22,29 @@ class SoundManager {
             for (let sound of pool) {
                 if (sound.paused) {
                     sound.loop = loop;
-                    sound.play();
+                    sound.play().then(() => {}).catch(error => {
+                        console.log("Folgender Fehler in play(): ", error);
+                    });
                     break;
                 }
             }
         }
     }
+    
 
     stop(name) {
         const pool = this.soundPools[name];
         if (pool) {
             for (let sound of pool) {
                 sound.pause();
-                sound.currentTime = 0; 
+                sound.currentTime = 0;
             }
         }
     }
 
     stopAll() {
-        for (let name in this.soundPools) {
+        try {
+           for (let name in this.soundPools) {
             if (this.soundPools.hasOwnProperty(name)) {
                 const pool = this.soundPools[name];
                 for (let sound of pool) {
@@ -48,9 +52,12 @@ class SoundManager {
                     sound.currentTime = 0;
                 }
             }
+        } 
+        } catch (error) {
+            console.log("Folgender Fehler in stopAll(): ", error);
         }
     }
-    
+
 
     setVolume(name, volume) {
         const pool = this.soundPools[name];
@@ -60,7 +67,7 @@ class SoundManager {
             }
         }
     }
-    
+
 
     setVolumeForAll(volume) {
         for (let name in this.soundPools) {
@@ -72,5 +79,5 @@ class SoundManager {
             }
         }
     }
-    
+
 }

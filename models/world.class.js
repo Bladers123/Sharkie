@@ -32,7 +32,7 @@ class World {
     }
 
     checkIsGameOver() {
-        let gameOver = true
+        let gameOver = true;
         setInterval(() => {
             if (this.character.isGameOver && gameOver) {
                 setTimeout(() => {
@@ -46,6 +46,7 @@ class World {
                         this.canvas.classList.add('display-none');
                         gameOver = false;
                         soundManager.stop('background');
+                        soundManager.stop('bossfight');
                         soundManager.play('gameover', false);
                         setTimeout(() => {
                             gameOverContainer.classList.remove('disabled-image');
