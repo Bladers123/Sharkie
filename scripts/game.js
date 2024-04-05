@@ -24,7 +24,6 @@ function init() {
 function createWorld() {
     keyboard = new Keyboard();
     character = new Character(keyboard);
-    character.becomeInvincible(1000);
     world = new World(canvas, character);
     soundManager.play('background', true);
 }
