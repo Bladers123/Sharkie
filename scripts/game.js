@@ -51,6 +51,7 @@ window.addEventListener('keydown', event => {
     }
 
     if (keyboard.left || keyboard.right || keyboard.up || keyboard.down) {
+        event.preventDefault();
         character.isCharacterMoving = true;
         character.startMovingAnimation();
     }
