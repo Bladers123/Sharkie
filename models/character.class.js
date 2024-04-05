@@ -128,7 +128,6 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfAttackWithBubble);
         this.loadImages(this.imagesOfHurtWithElectric);
         this.loadImages(this.imagesOfDeadWithElectric);
-
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
         this.checkStatesOfSharkie();
@@ -240,6 +239,7 @@ class Character extends MovableObject {
             this.move();
         }
     }
+    
     initiateAttack(type) {
         if (!this.isAttacking && !this.isGameOver && this.mayMove) {
             this.mayMove = false;
@@ -266,8 +266,6 @@ class Character extends MovableObject {
                 this.mayMove = true;
         }
     }
-
-
 
     shootBubble(type = 'normal') {
         if (!this.isGameOver) {

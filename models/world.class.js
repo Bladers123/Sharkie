@@ -138,7 +138,8 @@ class World {
                 if (collectedObject.type === 'coin') {
                     this.coinBar.increasePercentage(9);
                     soundManager.play('coin', true);
-                } else if (collectedObject.type === 'poison') {
+                } 
+                else if (collectedObject.type === 'poison') {
                     this.toxicBubbleBar.increasePercentage(20);
                     soundManager.play('potion', false);
                 }
