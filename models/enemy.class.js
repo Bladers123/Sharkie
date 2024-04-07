@@ -124,10 +124,11 @@ class Enemy extends MovableObject {
 
     die() {
         if (!this.isDying) {
+            this.immobilized = true;
             this.isDying = true;
             let dyingAnimation = this.selectDyingAnimation();
             this.playAnimation(dyingAnimation, false, true);
-            setTimeout(() => {
+            setTimeout(() => {     
                 this.isRemoved = true;
             }, 700);
         }
@@ -224,6 +225,9 @@ class Enemy extends MovableObject {
 
     moveLeft() {
         const intervalId = setInterval(() => {
+            if (this.immobilized) {
+                return;
+            }
             this.positionX -= this.speed;
         }, 1000 / 60);
         this.addMovementInterval(intervalId);
@@ -232,6 +236,9 @@ class Enemy extends MovableObject {
     moveUpAndDown() {
         this.direction = 1;
         const intervalId = setInterval(() => {
+            if (this.immobilized) {
+                return;
+            }
             this.positionY += this.speed * this.direction;
             if (this.positionY <= 0)
                 this.direction = 1;
@@ -245,6 +252,9 @@ class Enemy extends MovableObject {
         let verticalSpeed = 0;
         let maxVerticalSpeed = 2;
         const intervalId = setInterval(() => {
+            if (this.immobilized) {
+                return;
+            }
             this.positionX -= this.speed;
             verticalSpeed += (Math.random() - 0.5) * 0.1;
             if (verticalSpeed > maxVerticalSpeed)

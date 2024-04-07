@@ -293,7 +293,7 @@ class Character extends MovableObject {
     shootBubble(type) {
         if (!this.isGameOver) {
             let xOffset = this.otherDirection ? -30 : this.width;
-            let bubble = new AttackObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type, 200);
+            let bubble = new AttackObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type, 250);
             world.attackObjects.push(bubble);
         }
     }

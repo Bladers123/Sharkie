@@ -74,10 +74,8 @@ class MovableObject extends DrawableObject {
             this.positionY + this.height > other.positionY;
     }
 
-
-
     damageTaken(damage) {
-        if (this.isInvincible) {
+        if (this.isInvincible || this.immobilized) {
             return;
         }
         if (world && !world.endBossDefeated) {
@@ -116,6 +114,7 @@ class MovableObject extends DrawableObject {
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
+                if (this.immobilized) return;
                 this.positionY -= this.speedY;
                 this.speedY -= this.acceleration;
             }
@@ -127,8 +126,7 @@ class MovableObject extends DrawableObject {
             let followSpeed = 0.05;
             let inertia = 0.1;
             setInterval(() => {
-                if (this.immobilized || world.endBossDefeated)
-                    return;
+                if (this.immobilized || world.endBossDefeated) return;
                 let charPos = getCharacter().positionX;
                 let fishPos = this.positionX;
                 this.otherDirection = charPos > fishPos;
