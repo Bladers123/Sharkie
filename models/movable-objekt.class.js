@@ -78,20 +78,22 @@ class MovableObject extends DrawableObject {
         if (this.isInvincible || this.immobilized) {
             return;
         }
+        this.becomeInvincible(2000); 
         if (world && !world.endBossDefeated) {
             this.life -= damage;
-            if (this.life < 0) {
+            console.log(this.life);
+            if (this.life <= 0) {
                 this.life = 0;
             } else {
-                this.lastHit = new Date().getTime();
+                this.lastHit = new Date().getTime(); 
             }
         }
     }
-
-
+    
 
     isHurt() {
         if (this.life < this.totalLife) {
+           
             let timeSpan = new Date().getTime() - this.lastHit;
             timeSpan = timeSpan / 1000;
             return timeSpan < 1;
