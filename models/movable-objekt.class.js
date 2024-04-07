@@ -10,6 +10,7 @@ class MovableObject extends DrawableObject {
     isDying;
     isRemoved;
     immobilized = false;
+    isInvincible = false;
 
     movementIntervalIds = [];
     animationIntervalId = null;
