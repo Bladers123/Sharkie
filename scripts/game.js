@@ -25,7 +25,6 @@ function createWorld() {
     keyboard = new Keyboard();
     character = new Character(keyboard);
     world = new World(canvas, character);
-    soundManager.play('background', true);
 }
 
 function getCharacter() {

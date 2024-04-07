@@ -25,6 +25,7 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.character = character;
+        soundManager.play('background', true);
         character.becomeInvincible(1000);
         this.draw();
         this.checkCollisions();
