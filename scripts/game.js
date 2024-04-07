@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider) {
     introductionsContainer.innerHTML = getIntroductionsTemplate();
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
-    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer));
+    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer, character, canvas));
     startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas));
     tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
@@ -137,59 +137,76 @@ function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgain
     volumeSlider.addEventListener('input', () => onVolumeSlider(volumeSlider));
 }
 
+//#region handle Introductions
+
 function onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer) {
     let areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
     if (!gameWin) {
-        if (inGame) {
-            if (areIntroductionsVisible && !character.isGameOver) {
-                introductionsContainer.classList.remove('display-block');
-                canvas.classList.add('display-block');
-            }
-            else {
-                if (character.isGameOver) {
-                    if (areIntroductionsVisible) {
-                        gameOverContainer.classList.remove('display-none');
-                        introductionsContainer.classList.remove('display-block')
-                    }
-                    else {
-                        gameOverContainer.classList.add('display-none');
-                        introductionsContainer.classList.add('display-block')
-                    }
-                }
-                else {
-                    introductionsContainer.classList.add('display-block');
-                    canvas.classList.remove('display-block');
-                    canvas.classList.add('display-none');
-                }
-            }
+        if (inGame)
+            handleIntroductionIfInGame(areIntroductionsVisible, introductionsContainer, gameOverContainer);
+        else
+            handleIntroductionIfNotInGame(areIntroductionsVisible, introductionsContainer, startscreenContainer);
+    }
+    else
+        handleIntroductionIfGameWon(areIntroductionsVisible, introductionsContainer, winContainer, startscreenContainer);
+}
+
+function handleIntroductionIfGameWon(areIntroductionsVisible, introductionsContainer, winContainer, startscreenContainer) {
+    if (areIntroductionsVisible) {
+        introductionsContainer.classList.remove('display-block');
+        introductionsContainer.classList.add('display-none');
+        winContainer.classList.remove('display-none');
+    }
+    else {
+        introductionsContainer.classList.add('display-block');
+        introductionsContainer.classList.remove('display-none');
+        winContainer.classList.remove('display-block');
+        winContainer.classList.add('display-none');
+        startscreenContainer.classList.add('display-none');
+        canvas.classList.add('display-none');
+    }
+}
+
+function handleIntroductionIfInGame(areIntroductionsVisible, introductionsContainer, gameOverContainer) {
+    if (areIntroductionsVisible && !character.isGameOver) {
+        introductionsContainer.classList.remove('display-block');
+        canvas.classList.add('display-block');
+    }
+    else 
+        handleIntroductionIfCharacterIsGameOverOrNot(areIntroductionsVisible, gameOverContainer, introductionsContainer);
+}
+
+
+function handleIntroductionIfNotInGame(areIntroductionsVisible, introductionsContainer, startscreenContainer) {
+    if (areIntroductionsVisible) {
+        introductionsContainer.classList.remove('display-block');
+        startscreenContainer.classList.remove('display-none');
+    }
+    else {
+        introductionsContainer.classList.add('display-block');
+        startscreenContainer.classList.add('display-none');
+    }
+}
+
+function handleIntroductionIfCharacterIsGameOverOrNot(areIntroductionsVisible, gameOverContainer, introductionsContainer) {
+    if (character.isGameOver) {
+        if (areIntroductionsVisible) {
+            gameOverContainer.classList.remove('display-none');
+            introductionsContainer.classList.remove('display-block');
         }
         else {
-            if (areIntroductionsVisible) {
-                introductionsContainer.classList.remove('display-block');
-                startscreenContainer.classList.remove('display-none');
-            }
-            else {
-                introductionsContainer.classList.add('display-block');
-                startscreenContainer.classList.add('display-none');
-            }
+            gameOverContainer.classList.add('display-none');
+            introductionsContainer.classList.add('display-block');
         }
     }
     else {
-        if (areIntroductionsVisible) {
-            introductionsContainer.classList.remove('display-block');
-            introductionsContainer.classList.add('display-none');
-            winContainer.classList.remove('display-none');
-        }
-        else {
-            introductionsContainer.classList.add('display-block');
-            introductionsContainer.classList.remove('display-none');
-            winContainer.classList.remove('display-block');
-            winContainer.classList.add('display-none');
-            startscreenContainer.classList.add('display-none');
-            canvas.classList.add('display-none');
-        }
+        introductionsContainer.classList.add('display-block');
+        canvas.classList.remove('display-block');
+        canvas.classList.add('display-none');
     }
 }
+
+//#endregion
 
 
 function onStartButton(startscreenContainer, fullscreenButton, canvas) {
