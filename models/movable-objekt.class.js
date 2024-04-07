@@ -1,7 +1,6 @@
 class MovableObject extends DrawableObject {
     speed = 5;
     otherDirection = false;
-    animationIntervalId;
     life = 100;
     lastHit;
     damage;
@@ -11,6 +10,11 @@ class MovableObject extends DrawableObject {
     isDying;
     isRemoved;
     immobilized = false;
+
+    movementIntervalIds = [];
+    animationIntervalId = null;
+    animationFrameId = null;
+    checkStatesIntervalId = null;
 
     playAnimation(imagesOfAnimation, repeatLastFour = false, runOnce = false) {
         this.stopAnimation();
@@ -37,18 +41,44 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    stopIntervals() {
+        if (this.animationIntervalId) {
+            clearInterval(this.animationIntervalId);
+            this.animationIntervalId = null;
+        }
+
+        if (this.movementIntervalIds) {
+            this.movementIntervalIds.forEach(intervalId => clearInterval(intervalId));
+            this.movementIntervalIds = [];
+        }
+
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+
+        if (this.checkStatesIntervalId) {
+            clearInterval(this.checkStatesIntervalId);
+            this.checkStatesIntervalId = null;
+        }
+    }
+
+    addMovementInterval(interval) {
+        this.movementIntervalIds.push(interval);
+    }
+
     isColliding(other) {
         return this.positionX < other.positionX + other.width &&
-               this.positionX + this.width > other.positionX &&
-               this.positionY < other.positionY + other.height &&
-               this.positionY + this.height > other.positionY;
+            this.positionX + this.width > other.positionX &&
+            this.positionY < other.positionY + other.height &&
+            this.positionY + this.height > other.positionY;
     }
-    
-    
+
+
 
     damageTaken(damage) {
         if (this.isInvincible) {
-            return; 
+            return;
         }
         if (world && !world.endBossDefeated) {
             this.life -= damage;
@@ -59,7 +89,7 @@ class MovableObject extends DrawableObject {
             }
         }
     }
-    
+
 
 
     isHurt() {

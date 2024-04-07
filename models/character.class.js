@@ -143,7 +143,7 @@ class Character extends MovableObject {
 
     checkStatesOfSharkie() {
         let standingTimeoutId = null;
-        setInterval(() => {
+        this.checkStatesIntervalId = setInterval(() => {
             if (!this.isGameOver) {
                 if (this.isDead()) {
                     if (this.currentAnimation !== "dead") {

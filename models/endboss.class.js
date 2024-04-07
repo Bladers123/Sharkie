@@ -93,9 +93,9 @@ class Endboss extends MovableObject {
                     this.moveToCharacter();
                 }, 1500);
             }
-            requestAnimationFrame(animateFrame);
+            this.animationFrameId = requestAnimationFrame(animateFrame);
         };
-        requestAnimationFrame(animateFrame);
+        this.animationFrameId = requestAnimationFrame(animateFrame);
     }
 
     startAttackInterval() {

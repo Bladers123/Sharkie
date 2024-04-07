@@ -20,6 +20,10 @@ class World {
     collectedObjects = level1.collectedObjects;
     collectedAnimationObjects = level1.collectedAnimationObjects;
 
+    gameOverCheckIntervalId = null;
+    fireIntervalId = null;
+    animationFrameId = null;
+
     constructor(canvas, character) {
         this.context = canvas.getContext('2d');
         this.canvas = canvas;
@@ -35,7 +39,7 @@ class World {
 
     checkIsGameOver() {
         let gameOver = true;
-        setInterval(() => {
+        this.gameOverCheckIntervalId = setInterval(() => {
             if (this.character.isGameOver && gameOver) {
                 setTimeout(() => {
                     let gameOverContainer = document.getElementById('game-over-container');
@@ -61,7 +65,7 @@ class World {
     }
 
     fire() {
-        setInterval(() => {
+        this.fireIntervalId = setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
         }, 200);
@@ -192,7 +196,7 @@ class World {
         this.addObjectToMap(this.toxicBubbleBar);
 
         let self = this;
-        requestAnimationFrame(function () {
+        this.animationFrameId = requestAnimationFrame(function () {
             self.draw();
         });
     }
@@ -238,6 +242,22 @@ class World {
                 this.cameraX = -2160;
                 this.bossZoneReached = true;
             }
+        }
+    }
+
+    stopIntervalsAndAnimations() {
+        if (this.gameOverCheckIntervalId) {
+            clearInterval(this.gameOverCheckIntervalId);
+            this.gameOverCheckIntervalId = null;
+        }
+        if (this.fireIntervalId) {
+            clearInterval(this.fireIntervalId);
+            this.fireIntervalId = null;
+        }
+
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
         }
     }
 }

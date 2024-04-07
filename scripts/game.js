@@ -19,16 +19,28 @@ function init() {
     soundManager.addSound('coin', 'audio/coin.mp3');
     soundManager.addSound('potion', 'audio/potion.mp3');
     soundManager.addSound('gameover', 'audio/gameover.wav');
+    keyboard = new Keyboard();
 }
 
 function createWorld() {
-    keyboard = new Keyboard();
     character = new Character(keyboard);
     world = new World(canvas, character);
 }
 
-function getCharacter() {
-    return character;
+function resetWorld() {
+    world.character.stopIntervals();
+    world.enemies.forEach(enemy => enemy.stopIntervals());
+    world.throwableObjects.forEach(object => object.stopIntervals());
+    world.endBosses.forEach(endBoss => endBoss.stopIntervals());
+    world.stopIntervalsAndAnimations();
+    world.enemies = [];
+    world.throwableObjects = [];
+    soundManager.stopAll();
+    world.lifeBar.setPercentage(100);
+    world.coinBar.setPercentage(0);
+    world.toxicBubbleBar.setPercentage(0);
+    gameWin = false;
+    world.endBossDefeated = false;
 }
 
 window.addEventListener('keydown', event => {
@@ -94,7 +106,6 @@ window.addEventListener('keypress', (event) => {
         }
     }
 });
-
 
 document.addEventListener('DOMContentLoaded', function () {
     let fullscreenButton = document.getElementById('fullscreen');
@@ -187,9 +198,7 @@ function onTryAgainButton(winContainer, canvas, gameOverContainer) {
     winContainer.classList.remove('display-block');
     gameOverContainer.classList.add('display-none');
     canvas.classList.remove('display-none');
-    gameWin = false;
-    world.endBossDefeated = false;
-    soundManager.stopAll();
+    resetWorld();
     initLevel();
     createWorld();
 }
@@ -221,6 +230,10 @@ function setVolumeOfSlider() {
         document.getElementById('volume').src = "img/Additional/volume.png";
         isMuted = false;
     }
+}
+
+function getCharacter() {
+    return character;
 }
 
 function getIntroductionsTemplate() {

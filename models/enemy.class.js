@@ -119,12 +119,12 @@ class Enemy extends MovableObject {
         this.type = type;
         this.isDying = false;
         this.isRemoved = false;
-        this.loadEnemy(positionX, positionY); 
+        this.loadEnemy(positionX, positionY);
     }
 
     die() {
         if (!this.isDying) {
-            this.isDying = true; 
+            this.isDying = true;
             let dyingAnimation = this.selectDyingAnimation();
             this.playAnimation(dyingAnimation, false, true);
             setTimeout(() => {
@@ -148,7 +148,7 @@ class Enemy extends MovableObject {
             case 'puffer-follow':
                 return this.imagesOfDyingFollowingCharacter;
             default:
-                return []; 
+                return [];
         }
     }
 
@@ -205,7 +205,7 @@ class Enemy extends MovableObject {
         }
     }
 
-    setDamage(damage){
+    setDamage(damage) {
         this.damage = damage;
     }
 
@@ -223,26 +223,28 @@ class Enemy extends MovableObject {
     }
 
     moveLeft() {
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             this.positionX -= this.speed;
         }, 1000 / 60);
+        this.addMovementInterval(intervalId);
     }
 
     moveUpAndDown() {
         this.direction = 1;
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             this.positionY += this.speed * this.direction;
             if (this.positionY <= 0)
                 this.direction = 1;
             else if (this.positionY >= 400)
                 this.direction = -1;
         }, 1000 / 60);
+        this.addMovementInterval(intervalId);
     }
 
     moveLeftAndRandomlyUpDown() {
         let verticalSpeed = 0;
         let maxVerticalSpeed = 2;
-        setInterval(() => {
+        const intervalId = setInterval(() => {
             this.positionX -= this.speed;
             verticalSpeed += (Math.random() - 0.5) * 0.1;
             if (verticalSpeed > maxVerticalSpeed)
@@ -258,5 +260,6 @@ class Enemy extends MovableObject {
                 verticalSpeed = 0;
             }
         }, 1000 / 60);
+        this.addMovementInterval(intervalId);
     }
 }
