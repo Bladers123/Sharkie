@@ -6,7 +6,7 @@ class AttackObject extends MovableObject {
     range;
     travelDistance = 0;
 
-    constructor(positionX, positionY, otherDirection, type, range = 0) {
+    constructor(positionX, positionY, otherDirection, type, range) {
         super();
         this.positionX = positionX;
         this.positionY = positionY;
@@ -17,15 +17,13 @@ class AttackObject extends MovableObject {
     }
 
     checkTypeOfAttack() {
-        if (this.type === 'poison' || this.type === 'normal') {
+        if (this.type === 'poison' || this.type === 'normal')
             this.attackWithBubble();
-        } else if (this.type === 'finSlap') {
-            this.attackWithFinSlap();
-        }
     }
 
     attackWithFinSlap() {
         this.damage = 100;
+        this.onReachMaxRange();
     }
 
     attackWithBubble() {

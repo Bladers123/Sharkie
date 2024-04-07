@@ -78,23 +78,7 @@ class World {
         this.checkCollisionBubbleWithEndboss();
         this.checkCollisionCharacterWithCoinsAndPoisons();
         this.checkCollisionCharacterWithAnimationPoisons();
-        this.checkCollisionFinSlapWithEnemy();
     }
-
-    checkCollisionFinSlapWithEnemy() {
-        this.attackObjects.forEach(finSlap => {
-            this.level.enemies.forEach(enemy => {
-                if (finSlap.isColliding(enemy)) {
-                    enemy.life -= finSlap.damage;
-                    if (enemy.life <= 0 && !enemy.isDying) {
-                        enemy.die();
-                    }
-                }
-            });
-        });
-        this.level.enemies = this.level.enemies.filter(enemy => !enemy.isRemoved);
-    }
-    
 
     checkCollisionCharacterWithEndboss() {
         this.level.endBoss.forEach(endBoss => {

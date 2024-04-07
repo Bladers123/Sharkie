@@ -129,6 +129,8 @@ class Character extends MovableObject {
 
     level = level1;
 
+    finSlapDamage = 150;
+
     constructor(keyboard) {
         super();
         this.loadImages(this.imagesOfMoving);
@@ -255,8 +257,8 @@ class Character extends MovableObject {
     initiateAttack(type) {
         if (!this.isAttacking && !this.isGameOver && this.mayMove) {
             this.mayMove = false;
+            this.becomeInvincible(2000);
             if (type === 'poison' && world.toxicBubbleBar.percentage > 0) {
-                console.log(type);
                 this.isAttacking = true;
                 this.playAnimation(this.imagesOfAttackWithBubble, false, true);
                 setTimeout(() => {
@@ -267,7 +269,6 @@ class Character extends MovableObject {
                 }, 1000);
             }
             else if (type === 'normal') {
-                console.log(type);
                 this.isAttacking = true;
                 this.playAnimation(this.imagesOfAttackWithBubble, false, true);
                 setTimeout(() => {
@@ -278,7 +279,6 @@ class Character extends MovableObject {
             }
 
             else if (type === 'finSlap') {
-                console.log(type);
                 this.isAttacking = true;
                 this.playAnimation(this.imgaesOfAttackWithFinSlap, false, true);
                 this.finSlap();
@@ -294,17 +294,31 @@ class Character extends MovableObject {
         if (!this.isGameOver) {
             let xOffset = this.otherDirection ? -30 : this.width;
             let bubble = new AttackObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type, 200);
-            this.becomeInvincible(2000);
             world.attackObjects.push(bubble);
         }
     }
 
-    finSlap(){
+    finSlap() {
         if (!this.isGameOver) {
-            this.becomeInvincible(2000);
-            let finSlap = new AttackObject(this.positionX, this.positionY, this.otherDirection, 'finSlap');
-            world.attackObjects.push(finSlap);
+            this.isAttacking = true;
+            world.enemies.forEach(enemy => {
+                if (this.isInRangeForFinSlap(enemy)) {
+                    enemy.life -= this.finSlapDamage;
+                    if (enemy.life <= 0 && !enemy.isDying) {
+                        enemy.die();
+                    }
+                }
+            });
+            setTimeout(() => {
+                this.isAttacking = false;
+            }, 1000); 
         }
     }
-
+    
+    isInRangeForFinSlap(enemy) {
+        const range = 200; 
+        const distance = Math.hypot(enemy.positionX - this.positionX, enemy.positionY - this.positionY);
+        return distance <= range;
+    }
+    
 }
