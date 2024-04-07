@@ -34,11 +34,11 @@ function createWorld() {
 function resetWorld() {
     world.character.stopIntervals();
     world.enemies.forEach(enemy => enemy.stopIntervals());
-    world.throwableObjects.forEach(object => object.stopIntervals());
+    world.attackObjects.forEach(object => object.stopIntervals());
     world.endBosses.forEach(endBoss => endBoss.stopIntervals());
     world.stopIntervalsAndAnimations();
     world.enemies = [];
-    world.throwableObjects = [];
+    world.attackObjects = [];
     soundManager.stopAll();
     world.lifeBar.setPercentage(100);
     world.coinBar.setPercentage(0);

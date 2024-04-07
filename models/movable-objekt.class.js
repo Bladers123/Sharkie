@@ -15,6 +15,8 @@ class MovableObject extends DrawableObject {
     animationIntervalId = null;
     animationFrameId = null;
     checkStatesIntervalId = null;
+    gravityIntervalId = null;
+    moveIntervalIds = null;
 
     playAnimation(imagesOfAnimation, repeatLastFour = false, runOnce = false) {
         this.stopAnimation();
@@ -77,21 +79,20 @@ class MovableObject extends DrawableObject {
     damageTaken(damage) {
         if (this.isInvincible || this.immobilized)
             return;
-        this.becomeInvincible(2000); 
+        this.becomeInvincible(2000);
         if (world && !world.endBossDefeated) {
             this.life -= damage;
             if (this.life <= 0) {
                 this.life = 0;
             } else {
-                this.lastHit = new Date().getTime(); 
+                this.lastHit = new Date().getTime();
             }
         }
     }
-    
 
     isHurt() {
         if (this.life < this.totalLife) {
-           
+
             let timeSpan = new Date().getTime() - this.lastHit;
             timeSpan = timeSpan / 1000;
             return timeSpan < 1;
@@ -112,7 +113,7 @@ class MovableObject extends DrawableObject {
     }
 
     applyGravity() {
-        setInterval(() => {
+      this.gravityIntervalId = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 if (this.immobilized) return;
                 this.positionY -= this.speedY;
@@ -125,7 +126,7 @@ class MovableObject extends DrawableObject {
         if (getCharacter()) {
             let followSpeed = 0.05;
             let inertia = 0.1;
-            setInterval(() => {
+            this.moveIntervalIds = setInterval(() => {
                 if (this.immobilized || world.endBossDefeated) return;
                 let charPos = getCharacter().positionX;
                 let fishPos = this.positionX;
