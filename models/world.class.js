@@ -11,7 +11,7 @@ class World {
     coinBar = new CoinBar();
     toxicBubbleBar = new ToxicBubbleBar();
 
-    throwableObjects = [];
+    attackObjects = [];
 
     level = level1;
     enemies = level1.enemies;
@@ -82,27 +82,17 @@ class World {
     }
 
     checkCollisionFinSlapWithEnemy() {
-        // Überprüfe, ob der Charakter gerade angreift und der Angriffstyp 'finSlap' ist
-        if (this.character.isAttacking && this.character.currentAttackType === 'finSlap') {
-            // Bestimme die Reichweite des Fin Slap-Angriffs
-            const attackRange = 100; // Beispielwert, anpassbar je nach Spiel
-    
-            this.enemies.forEach(enemy => {
-                // Berechne den Abstand zwischen dem Charakter und dem Feind
-                let distance = Math.abs(this.character.positionX - enemy.positionX);
-                if (distance < attackRange && !enemy.isDying) {
-                    // Feind trifft, füge Schaden zu
-                    enemy.takeDamage(this.character.finSlapDamage);
-                    
-                    // Optional: Feind zurückstoßen
-                    let pushBack = this.character.positionX < enemy.positionX ? 50 : -50; // Beispielwert
-                    enemy.positionX += pushBack;
-    
-                    // Spiele Soundeffekte und Animationen ab
-                    // Zum Beispiel: soundManager.play('finSlapHit', false);
+        this.attackObjects.forEach(finSlap => {
+            this.level.enemies.forEach(enemy => {
+                if (finSlap.isColliding(enemy)) {
+                    enemy.life -= finSlap.damage;
+                    if (enemy.life <= 0 && !enemy.isDying) {
+                        enemy.die();
+                    }
                 }
             });
-        }
+        });
+        this.level.enemies = this.level.enemies.filter(enemy => !enemy.isRemoved);
     }
     
 
@@ -133,16 +123,16 @@ class World {
     }
 
     checkCollisionBubbleWithEnemy() {
-        this.throwableObjects.forEach(bubble => {
+        this.attackObjects.forEach(bubble => {
             this.level.enemies.forEach(enemy => {
                 if (bubble.isColliding(enemy)) {
                     enemy.life -= bubble.damage;
                     if (enemy.life <= 0 && !enemy.isDying) {
                         enemy.die();
                     }
-                    let bubbleIndex = this.throwableObjects.indexOf(bubble);
+                    let bubbleIndex = this.attackObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
-                        this.throwableObjects.splice(bubbleIndex, 1);
+                        this.attackObjects.splice(bubbleIndex, 1);
                     }
                 }
             });
@@ -151,13 +141,13 @@ class World {
     }
 
     checkCollisionBubbleWithEndboss() {
-        this.throwableObjects.forEach(bubble => {
+        this.attackObjects.forEach(bubble => {
             this.level.endBoss.forEach((endBoss) => {
                 if (bubble.isColliding(endBoss)) {
                     endBoss.hit(bubble.damage);
-                    let bubbleIndex = this.throwableObjects.indexOf(bubble);
+                    let bubbleIndex = this.attackObjects.indexOf(bubble);
                     if (bubbleIndex > -1) {
-                        this.throwableObjects.splice(bubbleIndex, 1);
+                        this.attackObjects.splice(bubbleIndex, 1);
                     }
                 }
             });
@@ -212,7 +202,7 @@ class World {
         this.addObjectToMap(this.character);
         this.addObjectsToMap(this.level.endBoss);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.attackObjects);
         this.addObjectsToMap(this.level.collectedObjects);
         this.addObjectsToMap(this.level.collectedAnimationObjects);
 

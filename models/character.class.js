@@ -106,7 +106,8 @@ class Character extends MovableObject {
         'img/1.Sharkie/4.Attack/Fin slap/5.png',
         'img/1.Sharkie/4.Attack/Fin slap/6.png',
         'img/1.Sharkie/4.Attack/Fin slap/7.png',
-        'img/1.Sharkie/4.Attack/Fin slap/8.png'
+        'img/1.Sharkie/4.Attack/Fin slap/8.png',
+        'img/1.Sharkie/4.Attack/Fin slap/1.png'
     ];
 
     height = 150;
@@ -255,8 +256,9 @@ class Character extends MovableObject {
         if (!this.isAttacking && !this.isGameOver && this.mayMove) {
             this.mayMove = false;
             if (type === 'poison' && world.toxicBubbleBar.percentage > 0) {
+                console.log(type);
                 this.isAttacking = true;
-                this.playAnimation(this.imagesOfAttackWithBubble, false, false);
+                this.playAnimation(this.imagesOfAttackWithBubble, false, true);
                 setTimeout(() => {
                     this.shootBubble(type);
                     this.isAttacking = false;
@@ -265,8 +267,9 @@ class Character extends MovableObject {
                 }, 1000);
             }
             else if (type === 'normal') {
+                console.log(type);
                 this.isAttacking = true;
-                this.playAnimation(this.imagesOfAttackWithBubble, false, false);
+                this.playAnimation(this.imagesOfAttackWithBubble, false, true);
                 setTimeout(() => {
                     this.shootBubble(type);
                     this.isAttacking = false;
@@ -275,8 +278,9 @@ class Character extends MovableObject {
             }
 
             else if (type === 'finSlap') {
+                console.log(type);
                 this.isAttacking = true;
-                this.playAnimation(this.imgaesOfAttackWithFinSlap, false, false);
+                this.playAnimation(this.imgaesOfAttackWithFinSlap, false, true);
                 this.finSlap();
                 this.isAttacking = false;
                 this.mayMove = true;
@@ -286,17 +290,20 @@ class Character extends MovableObject {
         }
     }
 
-    shootBubble(type = 'normal') {
+    shootBubble(type) {
         if (!this.isGameOver) {
             let xOffset = this.otherDirection ? -30 : this.width;
-            let bubble = new AttackObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type);
-            world.throwableObjects.push(bubble);
+            let bubble = new AttackObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type, 200);
+            this.becomeInvincible(2000);
+            world.attackObjects.push(bubble);
         }
     }
 
     finSlap(){
         if (!this.isGameOver) {
             this.becomeInvincible(2000);
+            let finSlap = new AttackObject(this.positionX, this.positionY, this.otherDirection, 'finSlap');
+            world.attackObjects.push(finSlap);
         }
     }
 
