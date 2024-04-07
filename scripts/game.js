@@ -14,7 +14,8 @@ function init() {
     canvas = document.getElementById('canvas');
     keyboard = new Keyboard();
     soundManager = new SoundManager();
-    addSounds();  
+    addSounds();
+    onVolumeSlider();
 }
 
 function addSounds() {
@@ -122,16 +123,20 @@ document.addEventListener('DOMContentLoaded', function () {
     let startscreenContainer = document.getElementById('startscreen-container');
     let winContainer = document.getElementById('win-container');
     let gameOverContainer = document.getElementById('game-over-container');
+    let volumeSlider = document.getElementById('volumeSlider');
+    loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider);
+});
 
+function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider) {
     introductionsContainer.innerHTML = getIntroductionsTemplate();
-
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
     introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer));
     startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas));
     tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
-    toggleVolumeButton.addEventListener('click', () => onToggleVolumeButton());
-});
+    toggleVolumeButton.addEventListener('click', () => onToggleVolumeButton(volumeSlider));
+    volumeSlider.addEventListener('input', () => onVolumeSlider(volumeSlider));
+}
 
 function onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer) {
     let areIntroductionsVisible = introductionsContainer.classList.contains('display-block');
@@ -207,8 +212,7 @@ function onTryAgainButton(winContainer, canvas, gameOverContainer) {
     createWorld();
 }
 
-function onToggleVolumeButton() {
-    let volumeSlider = document.getElementById('volume1');
+function onToggleVolumeButton(volumeSlider) {
     if (!isMuted) {
         soundManager.setVolumeForAll(0);
         oldVolume = parseFloat(volumeSlider.value);
@@ -223,16 +227,18 @@ function onToggleVolumeButton() {
     }
 }
 
-function setVolumeOfSlider() {
-    const volume = parseFloat(document.getElementById('volume1').value);
-    soundManager.setVolumeForAll(volume);
-    if (volume === 0) {
-        document.getElementById('volume').src = "img/Additional/mute.png";
-        isMuted = true;
-    }
-    else {
-        document.getElementById('volume').src = "img/Additional/volume.png";
-        isMuted = false;
+function onVolumeSlider(volumeSlider) {
+    if (volumeSlider) {
+        let volume = parseFloat(volumeSlider.value);
+        soundManager.setVolumeForAll(volume);
+        if (volume === 0) {
+            document.getElementById('volume').src = "img/Additional/mute.png";
+            isMuted = true;
+        }
+        else {
+            document.getElementById('volume').src = "img/Additional/volume.png";
+            isMuted = false;
+        }
     }
 }
 
@@ -240,24 +246,7 @@ function getCharacter() {
     return character;
 }
 
-function getIntroductionsTemplate() {
-    return /*html*/`
-    <div class="introductions-content">
-        <div class="move">
-            <img class="introductions-move-with-arrows-img" src="img/6.Botones/Key/arrow keys.png" alt="arrow-keys">
-            <img class="arrows-text" src="img/6.Botones/Tittles/Move title.png" alt="move">
-        </div>
-        <div class="attack">
-            <img class="introductions-attack-with-d-img" src="img/6.Botones/Key/D key.png" alt="d-key">
-            <img class="attack-with-d-text" src="img/6.Botones/Tittles/Attack tittle.png" alt="attack">
-        </div>
-        <div class="attack">
-            <img class="introductions-attack-with-space-img" src="img/6.Botones/Key/Space Bar key.png" alt="space-key">
-            <img class="attack-with-space-text" src="img/6.Botones/Tittles/Attack tittle.png" alt="attack">
-        </div>
-    </div>
-    `;
-}
+
 
 
 
