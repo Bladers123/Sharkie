@@ -15,7 +15,6 @@ function init() {
     keyboard = new Keyboard();
     soundManager = new SoundManager();
     addSounds();
-    onVolumeSlider();
 }
 
 function addSounds() {
@@ -240,6 +239,8 @@ function onVolumeSlider(volumeSlider) {
             isMuted = false;
         }
     }
+    else
+        soundManager.setVolumeForAll(0.01);
 }
 
 function getCharacter() {
