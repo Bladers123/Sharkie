@@ -75,13 +75,11 @@ class MovableObject extends DrawableObject {
     }
 
     damageTaken(damage) {
-        if (this.isInvincible || this.immobilized) {
+        if (this.isInvincible || this.immobilized)
             return;
-        }
         this.becomeInvincible(2000); 
         if (world && !world.endBossDefeated) {
             this.life -= damage;
-            console.log(this.life);
             if (this.life <= 0) {
                 this.life = 0;
             } else {
