@@ -12,14 +12,18 @@ let gameWin = false;
 
 function init() {
     canvas = document.getElementById('canvas');
+    keyboard = new Keyboard();
     soundManager = new SoundManager();
+    addSounds();  
+}
+
+function addSounds() {
     soundManager.addSound('bossfight', 'audio/bossfight.mp3');
     soundManager.addSound('win', 'audio/win.mp3');
     soundManager.addSound('background', 'audio/background.mp3');
     soundManager.addSound('coin', 'audio/coin.mp3');
     soundManager.addSound('potion', 'audio/potion.mp3');
     soundManager.addSound('gameover', 'audio/gameover.wav');
-    keyboard = new Keyboard();
 }
 
 function createWorld() {
