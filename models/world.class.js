@@ -78,7 +78,33 @@ class World {
         this.checkCollisionBubbleWithEndboss();
         this.checkCollisionCharacterWithCoinsAndPoisons();
         this.checkCollisionCharacterWithAnimationPoisons();
+        this.checkCollisionFinSlapWithEnemy();
     }
+
+    checkCollisionFinSlapWithEnemy() {
+        // Überprüfe, ob der Charakter gerade angreift und der Angriffstyp 'finSlap' ist
+        if (this.character.isAttacking && this.character.currentAttackType === 'finSlap') {
+            // Bestimme die Reichweite des Fin Slap-Angriffs
+            const attackRange = 100; // Beispielwert, anpassbar je nach Spiel
+    
+            this.enemies.forEach(enemy => {
+                // Berechne den Abstand zwischen dem Charakter und dem Feind
+                let distance = Math.abs(this.character.positionX - enemy.positionX);
+                if (distance < attackRange && !enemy.isDying) {
+                    // Feind trifft, füge Schaden zu
+                    enemy.takeDamage(this.character.finSlapDamage);
+                    
+                    // Optional: Feind zurückstoßen
+                    let pushBack = this.character.positionX < enemy.positionX ? 50 : -50; // Beispielwert
+                    enemy.positionX += pushBack;
+    
+                    // Spiele Soundeffekte und Animationen ab
+                    // Zum Beispiel: soundManager.play('finSlapHit', false);
+                }
+            });
+        }
+    }
+    
 
     checkCollisionCharacterWithEndboss() {
         this.level.endBoss.forEach(endBoss => {

@@ -99,7 +99,7 @@ window.addEventListener('keyup', event => {
 window.addEventListener('keypress', (event) => {
     if (event.key === ' ') {
         keyboard.fire = true;
-        character.initiateAttack('melee');
+        character.initiateAttack('finSlap');
     }
     else if (event.key === 'd') {
         keyboard.fire = true;

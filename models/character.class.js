@@ -98,6 +98,17 @@ class Character extends MovableObject {
         'img/1.Sharkie/6.dead/2.Electro_shock/10.png'
     ];
 
+    imgaesOfAttackWithFinSlap = [
+        'img/1.Sharkie/4.Attack/Fin slap/1.png',
+        'img/1.Sharkie/4.Attack/Fin slap/2.png',
+        'img/1.Sharkie/4.Attack/Fin slap/3.png',
+        'img/1.Sharkie/4.Attack/Fin slap/4.png',
+        'img/1.Sharkie/4.Attack/Fin slap/5.png',
+        'img/1.Sharkie/4.Attack/Fin slap/6.png',
+        'img/1.Sharkie/4.Attack/Fin slap/7.png',
+        'img/1.Sharkie/4.Attack/Fin slap/8.png'
+    ];
+
     height = 150;
     width = 150;
     positionY = 150;
@@ -112,7 +123,6 @@ class Character extends MovableObject {
     lastDamageSource = 'normal';
     isInvincible = false;
 
-    animationFrameId = null;
     isCharacterMoving = false;
     currentAnimation = "";
 
@@ -128,6 +138,7 @@ class Character extends MovableObject {
         this.loadImages(this.imagesOfAttackWithBubble);
         this.loadImages(this.imagesOfHurtWithElectric);
         this.loadImages(this.imagesOfDeadWithElectric);
+        this.loadImages(this.imgaesOfAttackWithFinSlap);
         this.playAnimation(this.imagesOfStanding);
         this.keyboard = keyboard;
         this.checkStatesOfSharkie();
@@ -239,7 +250,7 @@ class Character extends MovableObject {
             this.move();
         }
     }
-    
+
     initiateAttack(type) {
         if (!this.isAttacking && !this.isGameOver && this.mayMove) {
             this.mayMove = false;
@@ -262,6 +273,14 @@ class Character extends MovableObject {
                     this.mayMove = true;
                 }, 1000);
             }
+
+            else if (type === 'finSlap') {
+                this.isAttacking = true;
+                this.playAnimation(this.imgaesOfAttackWithFinSlap, false, false);
+                this.finSlap();
+                this.isAttacking = false;
+                this.mayMove = true;
+            }
             else
                 this.mayMove = true;
         }
@@ -270,8 +289,14 @@ class Character extends MovableObject {
     shootBubble(type = 'normal') {
         if (!this.isGameOver) {
             let xOffset = this.otherDirection ? -30 : this.width;
-            let bubble = new ThrowableObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type);
+            let bubble = new AttackObject(this.positionX + xOffset, this.positionY + 70, this.otherDirection, type);
             world.throwableObjects.push(bubble);
+        }
+    }
+
+    finSlap(){
+        if (!this.isGameOver) {
+            this.becomeInvincible(2000);
         }
     }
 

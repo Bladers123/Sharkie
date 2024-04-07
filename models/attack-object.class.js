@@ -1,4 +1,4 @@
-class ThrowableObject extends MovableObject {
+class AttackObject extends MovableObject {
     damage;
     firedDirection = "";
     otherDirection;
