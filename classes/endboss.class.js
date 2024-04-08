@@ -55,7 +55,7 @@ class Endboss extends MovableObject {
 
     firstContactWithEndboss = false;
     endBossIsDead = false;
-   
+
 
     constructor() {
         super();
@@ -80,22 +80,25 @@ class Endboss extends MovableObject {
     bossSpawning() {
         let animateFrame = () => {
             let character = getCharacter();
-            if (character && character.positionX > 2500 && !this.firstContactWithEndboss) {
-                soundManager.stop('background');
-                soundManager.play('bossfight', true);
-                character.becomeInvincible(2000);
-                this.playAnimation(this.imagesOfSpawning, false, true);
-                this.firstContactWithEndboss = true;
-                character.bossZoneReached = true;
-                setTimeout(() => {
-                    this.playAnimation(this.imagesOfSwimming, false, false);
-                    this.startAttackInterval();
-                    this.moveToCharacter();
-                }, 1500);
-            }
+            if (character && character.positionX > 2500 && !this.firstContactWithEndboss)
+                this.startBossBattleSequence(character);
             this.animationFrameId = requestAnimationFrame(animateFrame);
         };
         this.animationFrameId = requestAnimationFrame(animateFrame);
+    }
+
+    startBossBattleSequence() {
+        soundManager.stop('background');
+        soundManager.play('bossfight', true);
+        character.becomeInvincible(2000);
+        this.playAnimation(this.imagesOfSpawning, false, true);
+        this.firstContactWithEndboss = true;
+        character.bossZoneReached = true;
+        setTimeout(() => {
+            this.playAnimation(this.imagesOfSwimming, false, false);
+            this.startAttackInterval();
+            this.moveToCharacter();
+        }, 1500);
     }
 
     startAttackInterval() {
@@ -110,37 +113,45 @@ class Endboss extends MovableObject {
             this.playAnimation(this.imagesOfDyingNormalEndBoss, false, true);
             world.endBossDefeated = true;
             setTimeout(() => {
-                soundManager.stop('bossfight');
-                soundManager.play('win', false);
-                document.getElementById('win-container').classList.remove('display-none');
-                canvas.classList.remove('display-block');
-                canvas.classList.add('display-none');
-                gameWin = true;
-                character.becomeInvincible(5000);
+                this.finalizeBossDefeat();
             }, 1200);
             clearInterval(this.attackInterval);
         }
     }
 
+    finalizeBossDefeat() {
+        soundManager.stop('bossfight');
+        soundManager.play('win', false);
+        document.getElementById('win-container').classList.remove('display-none');
+        canvas.classList.remove('display-block');
+        canvas.classList.add('display-none');
+        gameWin = true;
+        character.becomeInvincible(5000);
+    }
+
+
     hit(damage) {
         if (!this.isDying) {
             this.life -= damage;
-            if (this.life > 0) {
-                this.immobilized = true; 
-                this.playAnimation(this.imagesOfHurt, false, true);
-                setTimeout(() => {
-                    if (!this.firstContactWithEndboss)
-                        this.playAnimation(this.imagesOfSpawning, false, false);
-                    else
-                        this.playAnimation(this.imagesOfSwimming, false, false);
-                    this.immobilized = false; 
-                }, 2000);
-            } else {
+            if (this.life > 0)
+                this.processHitAndRecover();
+            else
                 this.die();
-            }
         }
     }
-    
+
+    processHitAndRecover() {
+        this.immobilized = true;
+        this.playAnimation(this.imagesOfHurt, false, true);
+        setTimeout(() => {
+            if (!this.firstContactWithEndboss)
+                this.playAnimation(this.imagesOfSpawning, false, false);
+            else
+                this.playAnimation(this.imagesOfSwimming, false, false);
+            this.immobilized = false;
+        }, 2000);
+    }
+
 
     attack() {
         if (!this.isDying && !this.endBossIsDead && !this.immobilized) {
@@ -150,5 +161,4 @@ class Endboss extends MovableObject {
             }, 1500);
         }
     }
-
 }
