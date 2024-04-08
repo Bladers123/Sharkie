@@ -120,7 +120,7 @@ class Character extends MovableObject {
     keyboard;
     mayMove = true;
     bossZoneReached = false;
-    life = 100;
+    life = 5;
     lastDamageSource = 'normal';
     isInvincible = false;
 
@@ -173,7 +173,6 @@ class Character extends MovableObject {
             }
         }, 16);
     }
-
 
     handleDeathState() {
         if (this.currentAnimation !== "dead") {

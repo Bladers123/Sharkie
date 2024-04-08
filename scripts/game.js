@@ -106,11 +106,10 @@ window.addEventListener('keypress', (event) => {
     }
     else if (event.key === 'd') {
         keyboard.fire = true;
-        if (world.toxicBubbleBar && world.toxicBubbleBar.percentage > 0) {
+        if (world.toxicBubbleBar && world.toxicBubbleBar.percentage > 0)
             character.initiateAttack('poison');
-        } else {
+        else
             character.initiateAttack('normal');
-        }
     }
 });
 
@@ -192,7 +191,7 @@ function handleIntroductionIfNotInGame(areIntroductionsVisible, introductionsCon
 }
 
 function handleIntroductionIfCharacterIsGameOverOrNot(areIntroductionsVisible, gameOverContainer, introductionsContainer) {
-    if (character.isGameOver) 
+    if (character.isGameOver)
         handleIntroductionIfCharacterIsGameOver(areIntroductionsVisible, gameOverContainer, introductionsContainer);
     else {
         introductionsContainer.classList.add('display-block');
@@ -201,7 +200,7 @@ function handleIntroductionIfCharacterIsGameOverOrNot(areIntroductionsVisible, g
     }
 }
 
-function handleIntroductionIfCharacterIsGameOver(areIntroductionsVisible, gameOverContainer, introductionsContainer){
+function handleIntroductionIfCharacterIsGameOver(areIntroductionsVisible, gameOverContainer, introductionsContainer) {
     if (areIntroductionsVisible) {
         gameOverContainer.classList.remove('display-none');
         introductionsContainer.classList.remove('display-block');
@@ -213,7 +212,6 @@ function handleIntroductionIfCharacterIsGameOver(areIntroductionsVisible, gameOv
 }
 
 //#endregion
-
 
 function onStartButton(startscreenContainer, fullscreenButton, canvas) {
     startscreenContainer.classList.add('display-none');
