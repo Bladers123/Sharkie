@@ -131,6 +131,8 @@ class Character extends MovableObject {
 
     finSlapDamage = 150;
 
+    standingTimeoutId = null;
+
     constructor(keyboard) {
         super();
         this.loadImages(this.imagesOfMoving);
@@ -156,90 +158,114 @@ class Character extends MovableObject {
 
 
     checkStatesOfSharkie() {
-        let standingTimeoutId = null;
         this.checkStatesIntervalId = setInterval(() => {
             if (!this.isGameOver) {
-                if (this.isDead()) {
-                    if (this.currentAnimation !== "dead") {
-                        let animationToPlay;
-                        if (this.lastDamageSource === 'electric')
-                            animationToPlay = this.imagesOfDeadWithElectric;
-                        else
-                            animationToPlay = this.imagesOfDead;
-                        this.playAnimation(animationToPlay, false, true);
-                        this.currentAnimation = "dead";
-                        this.isGameOver = true;
-                        clearTimeout(standingTimeoutId);
-                    }
-                }
-                else if (this.isHurt()) {
-                    if (this.currentAnimation !== "hurt") {
-                        let animationToPlay;
-                        if (this.lastDamageSource === 'electric') {
-                            animationToPlay = this.imagesOfHurtWithElectric;
-                        } else {
-                            animationToPlay = this.imagesOfHurt;
-                        }
-                        this.playAnimation(animationToPlay, false, true);
-                        this.currentAnimation = "hurt";
-                        clearTimeout(standingTimeoutId);
-                    }
-                }
-
-                else if (this.isCharacterMoving) {
-                    if (this.currentAnimation !== "moving") {
-                        this.playAnimation(this.imagesOfMoving, false, false);
-                        this.currentAnimation = "moving";
-                        clearTimeout(standingTimeoutId);
-                    }
-                }
-                else if (this.isAttacking) {
-                    if (this.currentAnimation !== "attacking") {
-                        this.currentAnimation = "attacking";
-                        clearTimeout(standingTimeoutId);
-                    }
-                }
-                else if (this.currentAnimation !== "standing") {
-                    this.playAnimation(this.imagesOfStanding);
-                    this.currentAnimation = "standing";
-                    clearTimeout(standingTimeoutId);
-                    standingTimeoutId = setTimeout(() => {
-                        if (!this.isCharacterMoving && !this.isDead() && !this.isHurt()) {
-                            this.playAnimation(this.imagesOfLongStanding, true, false);
-                        }
-                    }, 8000);
-                }
+                if (this.isDead())
+                    this.handleDeathState();
+                else if (this.isHurt())
+                    this.handleHurtState();
+                else if (this.isCharacterMoving)
+                    this.handleMovingState();
+                else if (this.isAttacking)
+                    this.handleAttackingState();
+                else
+                    this.handleStandingState();
             }
         }, 16);
     }
 
+
+    handleDeathState() {
+        if (this.currentAnimation !== "dead") {
+            let animationToPlay;
+            if (this.lastDamageSource === 'electric')
+                animationToPlay = this.imagesOfDeadWithElectric;
+            else
+                animationToPlay = this.imagesOfDead;
+            this.playAnimation(animationToPlay, false, true);
+            this.currentAnimation = "dead";
+            this.isGameOver = true;
+        }
+    }
+
+    handleHurtState() {
+        if (this.currentAnimation !== "hurt") {
+            let animationToPlay;
+            if (this.lastDamageSource === 'electric')
+                animationToPlay = this.imagesOfHurtWithElectric;
+            else
+                animationToPlay = this.imagesOfHurt;
+            this.playAnimation(animationToPlay, false, true);
+            this.currentAnimation = "hurt";
+        }
+    }
+
+    handleMovingState() {
+        if (this.currentAnimation !== "moving") {
+            this.playAnimation(this.imagesOfMoving, false, false);
+            this.currentAnimation = "moving";
+        }
+    }
+
+    handleAttackingState() {
+        if (this.currentAnimation !== "attacking")
+            this.currentAnimation = "attacking";
+    }
+
+
+    handleStandingState() {
+        if (this.currentAnimation !== "standing") {
+            clearTimeout(this.standingTimeoutId);
+            this.playAnimation(this.imagesOfStanding);
+            this.currentAnimation = "standing";
+            this.standingTimeoutId = setTimeout(() => {
+                if (!this.isCharacterMoving && !this.isDead() && !this.isHurt())
+                    this.playAnimation(this.imagesOfLongStanding, true, false);
+            }, 8000);
+        }
+    }
+
     move() {
         if (!this.isGameOver && this.mayMove) {
-            if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
-                this.positionX += this.movementSpeed;
-                this.otherDirection = false;
-                this.isCharacterMoving = true;
-            }
-            if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
-                if (!this.bossZoneReached || (this.bossZoneReached && this.positionX > 2140)) {
-                    this.positionX -= this.movementSpeed;
-                    this.otherDirection = true;
-                    this.isCharacterMoving = true;
-                }
-            }
-            if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
-                this.positionY -= this.movementSpeed;
-                this.isCharacterMoving = true;
-            }
-            if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
-                this.positionY += this.movementSpeed;
-                this.isCharacterMoving = true;
-            }
+            this.moveRight();
+            this.moveLeft();
+            this.moveUp();
+            this.moveDown();
         }
-
         this.animationFrameId = requestAnimationFrame(this.move.bind(this));
     }
 
+    moveRight() {
+        if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
+            this.positionX += this.movementSpeed;
+            this.otherDirection = false;
+            this.isCharacterMoving = true;
+        }
+    }
+
+    moveLeft() {
+        if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
+            if (!this.bossZoneReached || (this.bossZoneReached && this.positionX > 2140)) {
+                this.positionX -= this.movementSpeed;
+                this.otherDirection = true;
+                this.isCharacterMoving = true;
+            }
+        }
+    }
+
+    moveUp() {
+        if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
+            this.positionY -= this.movementSpeed;
+            this.isCharacterMoving = true;
+        }
+    }
+
+    moveDown() {
+        if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
+            this.positionY += this.movementSpeed;
+            this.isCharacterMoving = true;
+        }
+    }
 
     startMovingAnimation() {
         if (!this.animationFrameId)
@@ -258,36 +284,44 @@ class Character extends MovableObject {
         if (!this.isAttacking && !this.isGameOver && this.mayMove) {
             this.mayMove = false;
             this.becomeInvincible(2000);
-            if (type === 'poison' && world.toxicBubbleBar.percentage > 0) {
-                this.isAttacking = true;
-                this.playAnimation(this.imagesOfAttackWithBubble, false, true);
-                setTimeout(() => {
-                    this.shootBubble(type);
-                    this.isAttacking = false;
-                    world.toxicBubbleBar.decreasePercentage(20);
-                    this.mayMove = true;
-                }, 1000);
-            }
-            else if (type === 'normal') {
-                this.isAttacking = true;
-                this.playAnimation(this.imagesOfAttackWithBubble, false, true);
-                setTimeout(() => {
-                    this.shootBubble(type);
-                    this.isAttacking = false;
-                    this.mayMove = true;
-                }, 1000);
-            }
-
-            else if (type === 'finSlap') {
-                this.isAttacking = true;
-                this.playAnimation(this.imgaesOfAttackWithFinSlap, false, true);
-                this.finSlap();
-                this.isAttacking = false;
-                this.mayMove = true;
-            }
+            if (type === 'poison' && world.toxicBubbleBar.percentage > 0)
+                this.initiatePoisonAttack(type);
+            else if (type === 'normal')
+                this.initiateNormalAttack(type);
+            else if (type === 'finSlap')
+                this.initiateFinSlapAttack();
             else
                 this.mayMove = true;
         }
+    }
+
+    initiatePoisonAttack(type) {
+        this.isAttacking = true;
+        this.playAnimation(this.imagesOfAttackWithBubble, false, true);
+        setTimeout(() => {
+            this.shootBubble(type);
+            this.isAttacking = false;
+            world.toxicBubbleBar.decreasePercentage(20);
+            this.mayMove = true;
+        }, 1000);
+    }
+
+    initiateNormalAttack(type) {
+        this.isAttacking = true;
+        this.playAnimation(this.imagesOfAttackWithBubble, false, true);
+        setTimeout(() => {
+            this.shootBubble(type);
+            this.isAttacking = false;
+            this.mayMove = true;
+        }, 1000);
+    }
+
+    initiateFinSlapAttack() {
+        this.isAttacking = true;
+        this.playAnimation(this.imgaesOfAttackWithFinSlap, false, true);
+        this.finSlap();
+        this.isAttacking = false;
+        this.mayMove = true;
     }
 
     shootBubble(type) {
@@ -311,14 +345,13 @@ class Character extends MovableObject {
             });
             setTimeout(() => {
                 this.isAttacking = false;
-            }, 1000); 
+            }, 1000);
         }
     }
-    
+
     isInRangeForFinSlap(enemy) {
-        const range = 200; 
+        const range = 200;
         const distance = Math.hypot(enemy.positionX - this.positionX, enemy.positionY - this.positionY);
         return distance <= range;
     }
-    
 }

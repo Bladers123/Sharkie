@@ -61,15 +61,8 @@ window.addEventListener('keydown', event => {
         case 'ArrowUp':
             keyboard.up = true;
             break;
-        default:
-            break;
     }
-
-    if (keyboard.left || keyboard.right || keyboard.up || keyboard.down) {
-        event.preventDefault();
-        character.isCharacterMoving = true;
-        character.startMovingAnimation();
-    }
+    startAnimation(event);
 });
 
 window.addEventListener('keyup', event => {
@@ -86,15 +79,25 @@ window.addEventListener('keyup', event => {
         case 'ArrowUp':
             keyboard.up = false;
             break;
-        default:
-            break;
     }
+    stopAnimation();
+});
 
+
+function startAnimation(event) {
+    if (keyboard.left || keyboard.right || keyboard.up || keyboard.down) {
+        event.preventDefault();
+        character.isCharacterMoving = true;
+        character.startMovingAnimation();
+    }
+}
+
+function stopAnimation() {
     if (!keyboard.left && !keyboard.right && !keyboard.up && !keyboard.down) {
         character.isCharacterMoving = false;
         character.stopMovingAnimation();
     }
-});
+}
 
 window.addEventListener('keypress', (event) => {
     if (event.key === ' ') {
@@ -172,7 +175,7 @@ function handleIntroductionIfInGame(areIntroductionsVisible, introductionsContai
         introductionsContainer.classList.remove('display-block');
         canvas.classList.add('display-block');
     }
-    else 
+    else
         handleIntroductionIfCharacterIsGameOverOrNot(areIntroductionsVisible, gameOverContainer, introductionsContainer);
 }
 
@@ -189,20 +192,23 @@ function handleIntroductionIfNotInGame(areIntroductionsVisible, introductionsCon
 }
 
 function handleIntroductionIfCharacterIsGameOverOrNot(areIntroductionsVisible, gameOverContainer, introductionsContainer) {
-    if (character.isGameOver) {
-        if (areIntroductionsVisible) {
-            gameOverContainer.classList.remove('display-none');
-            introductionsContainer.classList.remove('display-block');
-        }
-        else {
-            gameOverContainer.classList.add('display-none');
-            introductionsContainer.classList.add('display-block');
-        }
-    }
+    if (character.isGameOver) 
+        handleIntroductionIfCharacterIsGameOver(areIntroductionsVisible, gameOverContainer, introductionsContainer);
     else {
         introductionsContainer.classList.add('display-block');
         canvas.classList.remove('display-block');
         canvas.classList.add('display-none');
+    }
+}
+
+function handleIntroductionIfCharacterIsGameOver(areIntroductionsVisible, gameOverContainer, introductionsContainer){
+    if (areIntroductionsVisible) {
+        gameOverContainer.classList.remove('display-none');
+        introductionsContainer.classList.remove('display-block');
+    }
+    else {
+        gameOverContainer.classList.add('display-none');
+        introductionsContainer.classList.add('display-block');
     }
 }
 
@@ -263,8 +269,3 @@ function onVolumeSlider(volumeSlider) {
 function getCharacter() {
     return character;
 }
-
-
-
-
-
