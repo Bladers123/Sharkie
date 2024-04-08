@@ -44,20 +44,20 @@ class World {
                 setTimeout(() => {
                     let gameOverContainer = document.getElementById('game-over-container');
                     let introductionButton = document.getElementById('introductions');
+                    gameOver = false;
                     if (gameOverContainer) 
-                        this.showGameOver(gameOverContainer, introductionButton, gameOver);
+                        this.showGameOver(gameOverContainer, introductionButton);
                 }, 2000);
             }
         }, 10);
     }
 
-    showGameOver(gameOverContainer, introductionButton, gameOver) {
+    showGameOver(gameOverContainer, introductionButton) {
         gameOverContainer.classList.add('disabled-image');
         introductionButton.classList.add('disabled-image');
         gameOverContainer.classList.remove('display-none');
         this.canvas.classList.remove('display-block');
         this.canvas.classList.add('display-none');
-        gameOver = false;
         soundManager.stop('background');
         soundManager.stop('bossfight');
         soundManager.play('gameover', false);
