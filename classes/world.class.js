@@ -44,24 +44,27 @@ class World {
                 setTimeout(() => {
                     let gameOverContainer = document.getElementById('game-over-container');
                     let introductionButton = document.getElementById('introductions');
-                    if (gameOverContainer) {
-                        gameOverContainer.classList.add('disabled-image');
-                        introductionButton.classList.add('disabled-image');
-                        gameOverContainer.classList.remove('display-none');
-                        this.canvas.classList.remove('display-block');
-                        this.canvas.classList.add('display-none');
-                        gameOver = false;
-                        soundManager.stop('background');
-                        soundManager.stop('bossfight');
-                        soundManager.play('gameover', false);
-                        setTimeout(() => {
-                            gameOverContainer.classList.remove('disabled-image');
-                            introductionButton.classList.remove('disabled-image');
-                        }, 3000);
-                    }
+                    if (gameOverContainer) 
+                        this.showGameOver(gameOverContainer, introductionButton, gameOver);
                 }, 2000);
             }
         }, 10);
+    }
+
+    showGameOver(gameOverContainer, introductionButton, gameOver) {
+        gameOverContainer.classList.add('disabled-image');
+        introductionButton.classList.add('disabled-image');
+        gameOverContainer.classList.remove('display-none');
+        this.canvas.classList.remove('display-block');
+        this.canvas.classList.add('display-none');
+        gameOver = false;
+        soundManager.stop('background');
+        soundManager.stop('bossfight');
+        soundManager.play('gameover', false);
+        setTimeout(() => {
+            gameOverContainer.classList.remove('disabled-image');
+            introductionButton.classList.remove('disabled-image');
+        }, 3000);
     }
 
     fire() {
@@ -95,11 +98,10 @@ class World {
     checkCollisionCharacterWithEnemy() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
-                if (enemy.type.startsWith('jelly')) {
+                if (enemy.type.startsWith('jelly'))
                     this.character.lastDamageSource = 'electric';
-                } else {
+                else
                     this.character.lastDamageSource = 'normal';
-                }
                 this.character.damageTaken(enemy.damage);
                 this.lifeBar.setPercentage(this.character.life);
             }
@@ -111,13 +113,11 @@ class World {
             this.level.enemies.forEach(enemy => {
                 if (bubble.isColliding(enemy)) {
                     enemy.life -= bubble.damage;
-                    if (enemy.life <= 0 && !enemy.isDying) {
+                    if (enemy.life <= 0 && !enemy.isDying)
                         enemy.die();
-                    }
                     let bubbleIndex = this.attackObjects.indexOf(bubble);
-                    if (bubbleIndex > -1) {
+                    if (bubbleIndex > -1)
                         this.attackObjects.splice(bubbleIndex, 1);
-                    }
                 }
             });
         });
@@ -144,7 +144,7 @@ class World {
                 if (collectedObject.type === 'coin') {
                     this.coinBar.increasePercentage(9);
                     soundManager.play('coin', true);
-                } 
+                }
                 else if (collectedObject.type === 'poison') {
                     this.toxicBubbleBar.increasePercentage(20);
                     soundManager.play('potion', false);
