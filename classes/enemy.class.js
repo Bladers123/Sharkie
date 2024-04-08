@@ -103,6 +103,14 @@ class Enemy extends MovableObject {
 
     constructor(positionX, positionY, type) {
         super();
+        this.loadingImages();
+        this.type = type;
+        this.isDying = false;
+        this.isRemoved = false;
+        this.loadEnemy(positionX, positionY);
+    }
+
+    loadingImages() {
         this.loadImages(this.imagesOfNormalPuffer);
         this.loadImages(this.imagesOfTransitionPuffer);
         this.loadImages(this.imagesOfNormalJelly);
@@ -115,11 +123,6 @@ class Enemy extends MovableObject {
         this.loadImages(this.imagesOfDyingTransitionJelly);
         this.loadImages(this.imagesOfDyingDangerousJelly);
         this.loadImages(this.imagesOfDyingFollowingCharacter);
-
-        this.type = type;
-        this.isDying = false;
-        this.isRemoved = false;
-        this.loadEnemy(positionX, positionY);
     }
 
     die() {
@@ -128,7 +131,7 @@ class Enemy extends MovableObject {
             this.isDying = true;
             let dyingAnimation = this.selectDyingAnimation();
             this.playAnimation(dyingAnimation, false, true);
-            setTimeout(() => {     
+            setTimeout(() => {
                 this.isRemoved = true;
             }, 700);
         }
@@ -224,21 +227,20 @@ class Enemy extends MovableObject {
     }
 
     moveLeft() {
-        const intervalId = setInterval(() => {
-            if (this.immobilized) {
+        let intervalId = setInterval(() => {
+            if (this.immobilized)
                 return;
-            }
-            this.positionX -= this.speed;
+            else
+                this.positionX -= this.speed;
         }, 1000 / 60);
         this.addMovementInterval(intervalId);
     }
 
     moveUpAndDown() {
         this.direction = 1;
-        const intervalId = setInterval(() => {
-            if (this.immobilized) {
+        let intervalId = setInterval(() => {
+            if (this.immobilized)
                 return;
-            }
             this.positionY += this.speed * this.direction;
             if (this.positionY <= 0)
                 this.direction = 1;
@@ -250,26 +252,32 @@ class Enemy extends MovableObject {
 
     moveLeftAndRandomlyUpDown() {
         let verticalSpeed = 0;
-        let maxVerticalSpeed = 2;
-        const intervalId = setInterval(() => {
-            if (this.immobilized) {
-                return;
-            }
+        const maxVerticalSpeed = 2;
+        let intervalId = setInterval(() => {
+            if (this.immobilized) return;
             this.positionX -= this.speed;
-            verticalSpeed += (Math.random() - 0.5) * 0.1;
-            if (verticalSpeed > maxVerticalSpeed)
-                verticalSpeed = maxVerticalSpeed;
-            else if (verticalSpeed < -maxVerticalSpeed)
-                verticalSpeed = -maxVerticalSpeed;
-            this.positionY += verticalSpeed;
-            if (this.positionY < 0) {
-                this.positionY = 0;
-                verticalSpeed = 0;
-            } else if (this.positionY > 400) {
-                this.positionY = 400;
-                verticalSpeed = 0;
-            }
+            verticalSpeed = this.adjustVerticalSpeed(verticalSpeed, maxVerticalSpeed);
+            this.adjustPositionY(verticalSpeed);
         }, 1000 / 60);
         this.addMovementInterval(intervalId);
     }
+    
+    adjustVerticalSpeed(verticalSpeed, maxVerticalSpeed) {
+        verticalSpeed += (Math.random() - 0.5) * 0.1;
+        if (verticalSpeed > maxVerticalSpeed) verticalSpeed = maxVerticalSpeed;
+        else if (verticalSpeed < -maxVerticalSpeed) verticalSpeed = -maxVerticalSpeed;
+        return verticalSpeed;
+    }
+    
+    adjustPositionY(verticalSpeed) {
+        this.positionY += verticalSpeed;
+        if (this.positionY < 0) {
+            this.positionY = 0;
+            return 0;
+        } else if (this.positionY > 400) {
+            this.positionY = 400;
+            return 0;
+        }
+        return verticalSpeed;
+    } 
 }
