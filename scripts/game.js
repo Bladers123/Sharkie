@@ -125,10 +125,13 @@ document.addEventListener('DOMContentLoaded', function () {
     let winContainer = document.getElementById('win-container');
     let gameOverContainer = document.getElementById('game-over-container');
     let volumeSlider = document.getElementById('volumeSlider');
-    loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider);
+    let gameIntroductionContainer = document.getElementById('game-introduction-container');
+    let gameIntroduction = document.getElementById('game-introduction');
+    let gameIntroductionClose = document.getElementById('close-game-introduction');
+    loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider, gameIntroductionContainer, gameIntroduction, gameIntroductionClose);
 });
 
-function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider) {
+function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider, gameIntroductionContainer, gameIntroduction, gameIntroductionClose) {
     introductionsContainer.innerHTML = getIntroductionsTemplate();
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
     introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer, character, canvas));
@@ -137,6 +140,16 @@ function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgain
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     toggleVolumeButton.addEventListener('click', () => onToggleVolumeButton(volumeSlider));
     volumeSlider.addEventListener('input', () => onVolumeSlider(volumeSlider));
+    gameIntroduction.addEventListener('click', () => onGameIntroduction(gameIntroductionContainer));
+    gameIntroductionClose.addEventListener('click', () => onCloseGameIntroduction(gameIntroductionContainer));
+}
+
+function onGameIntroduction(gameIntroductionContainer){
+     gameIntroductionContainer.classList.remove('display-none');
+}
+
+function onCloseGameIntroduction(gameIntroductionContainer){
+    gameIntroductionContainer.classList.add('display-none');
 }
 
 //#region handle Introductions
