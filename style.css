@@ -4,14 +4,19 @@ body {
     align-items: center;
     font-family: cursive;
     margin: 0;
+    background-image: url('img/Additional/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 h1 {
     font-size: 56px;
+    text-align: center;
 }
 
 h2 {
     font-size: 32px;
+    text-align: center;
 }
 
 .game-section {
