@@ -175,7 +175,7 @@ class Enemy extends MovableObject {
         this.setSpawnPoint(positionX, positionY);
         this.setSpeed(0.15 + Math.random());
         this.setLife(50);
-        this.setDamage(1);
+        this.setDamage(5);
         this.playAnimation(this.imagesOfNormalPuffer, false, false);
         this.moveLeft();
     }
@@ -184,7 +184,7 @@ class Enemy extends MovableObject {
         this.setSpawnPoint(positionX, positionY);
         this.setSpeed(2);
         this.setLife(50);
-        this.setDamage(2);
+        this.setDamage(10);
         this.playAnimation(this.imagesOfTransitionPuffer, true, false);
         this.moveLeftAndRandomlyUpDown();
     }
@@ -193,7 +193,7 @@ class Enemy extends MovableObject {
         this.setSpawnPoint(positionX, positionY);
         this.setSpeed(2);
         this.setLife(50);
-        this.setDamage(2);
+        this.setDamage(10);
         this.playAnimation(this.imagesOfNormalJelly, true, false);
         this.moveUpAndDown();
     }
@@ -202,7 +202,7 @@ class Enemy extends MovableObject {
         this.setSpawnPoint(positionX, positionY);
         this.setSpeed(4);
         this.setLife(100);
-        this.setDamage(3);
+        this.setDamage(15);
         this.playAnimation(this.imagesOfTransitionJelly, true, false);
         this.moveUpAndDown();
     }
@@ -211,7 +211,7 @@ class Enemy extends MovableObject {
         this.setSpawnPoint(positionX, positionY);
         this.setSpeed(8);
         this.setLife(150);
-        this.setDamage(4);
+        this.setDamage(20);
         this.playAnimation(this.imagesOfDangerousJelly, true, false);
         this.moveUpAndDown();
     }
@@ -220,7 +220,7 @@ class Enemy extends MovableObject {
         this.setSpawnPoint(positionX, positionY);
         this.setSpeed(2);
         this.setLife(100);
-        this.setDamage(3);
+        this.setDamage(15);
         this.playAnimation(this.imagesOfFollowingCharacter, true, false);
         setTimeout(() => {
             this.moveToCharacter();
