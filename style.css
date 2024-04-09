@@ -169,7 +169,7 @@ h2 {
 }
 
 .display-none {
-    display: none !important;
+    display: none;
 }
 
 .display-block {
@@ -188,7 +188,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: column; 
     position: fixed; 
     z-index: 1000; 
     top: 23%;
@@ -199,6 +199,10 @@ h2 {
     background-color: grey;
     border-radius: 50px;
     opacity: 0.97;
+}
+
+#game-introduction-container.display-none {
+    display: none;
 }
 
 .game-instruction-header{
@@ -246,7 +250,7 @@ h2 {
     }
 
     .turn-device{
-        display: block !important;
+        display: block;
     }
 
     .turn-device-text{

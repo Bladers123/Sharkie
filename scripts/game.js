@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgainButton, tryAgainButtonInGameOverContainer, toggleVolumeButton, introductionsContainer, startscreenContainer, winContainer, gameOverContainer, volumeSlider, gameIntroductionContainer, gameIntroduction, gameIntroductionClose) {
     introductionsContainer.innerHTML = getIntroductionsTemplate();
     fullscreenButton.addEventListener('click', () => canvas.requestFullscreen());
-    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer, character, canvas));
+    introductionsButton.addEventListener('click', () => onIntroductionsButton(introductionsContainer, startscreenContainer, winContainer, gameOverContainer));
     startButton.addEventListener('click', () => onStartButton(startscreenContainer, fullscreenButton, canvas));
     tryAgainButton.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
     tryAgainButtonInGameOverContainer.addEventListener('click', () => onTryAgainButton(winContainer, canvas, gameOverContainer));
