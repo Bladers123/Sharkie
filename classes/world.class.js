@@ -45,7 +45,7 @@ class World {
                     let gameOverContainer = document.getElementById('game-over-container');
                     let introductionButton = document.getElementById('introductions');
                     gameOver = false;
-                    if (gameOverContainer) 
+                    if (gameOverContainer)
                         this.showGameOver(gameOverContainer, introductionButton);
                 }, 2000);
             }
@@ -181,6 +181,15 @@ class World {
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.cameraOnCharacter();
+        this.drawObjectsThisRunningWithoutCamera();
+        this.drawObjectsThisRunningWithCamera();
+        let self = this;
+        this.animationFrameId = requestAnimationFrame(function () {
+            self.draw();
+        });
+    }
+
+    drawObjectsThisRunningWithoutCamera() {
         this.context.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectToMap(this.character);
@@ -189,16 +198,13 @@ class World {
         this.addObjectsToMap(this.attackObjects);
         this.addObjectsToMap(this.level.collectedObjects);
         this.addObjectsToMap(this.level.collectedAnimationObjects);
+    }
 
+    drawObjectsThisRunningWithCamera() {
         this.context.translate(-this.cameraX, 0);
         this.addObjectToMap(this.lifeBar);
         this.addObjectToMap(this.coinBar);
         this.addObjectToMap(this.toxicBubbleBar);
-
-        let self = this;
-        this.animationFrameId = requestAnimationFrame(function () {
-            self.draw();
-        });
     }
 
     addObjectsToMap(objects) {
@@ -254,7 +260,6 @@ class World {
             clearInterval(this.fireIntervalId);
             this.fireIntervalId = null;
         }
-
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
