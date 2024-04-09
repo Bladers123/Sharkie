@@ -120,7 +120,7 @@ class Character extends MovableObject {
     keyboard;
     mayMove = true;
     bossZoneReached = false;
-    life = 5;
+    life = 100;
     lastDamageSource = 'normal';
     isInvincible = false;
 
