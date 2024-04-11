@@ -293,6 +293,10 @@ h2 {
         overflow-y: hidden;
     }
 
+    .menu-container{
+        display: none;
+    }
+
     .turn-device {
         display: block;
     }
