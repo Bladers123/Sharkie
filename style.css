@@ -57,15 +57,32 @@ h2 {
     cursor: pointer;
 }
 
-.menu {
+.menu-container {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
     width: 720px;
     border: 2px solid grey;
     border-radius: 25px;
     background-color: #26b8d6;
+
+}
+
+.menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     padding: 8px;
+}
+
+.impressum-and-data-police {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.impressum-and-data-police img {
+    width: 200px;
+    cursor: pointer;
 }
 
 .introductions {
@@ -106,7 +123,7 @@ h2 {
     align-items: center;
     justify-content: space-around;
     height: 100%;
-    
+
 }
 
 .introductions-move-with-arrows-img {
@@ -261,6 +278,7 @@ h2 {
 }
 
 @media only screen and (max-width: 720px) {
+
     .game-section,
     .startscreen,
     .win-container,
