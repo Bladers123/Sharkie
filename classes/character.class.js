@@ -282,7 +282,6 @@ class Character extends MovableObject {
     initiateAttack(type) {
         if (!this.isAttacking && !this.isGameOver && this.mayMove) {
             this.mayMove = false;
-            this.becomeInvincible(3000);
             if (type === 'poison' && world.toxicBubbleBar.percentage > 0)
                 this.initiatePoisonAttack(type);
             else if (type === 'normal')
@@ -323,7 +322,6 @@ class Character extends MovableObject {
             this.isAttacking = false;
             this.mayMove = true;
         }, 1000);
-
     }
 
     shootBubble(type) {
@@ -338,11 +336,10 @@ class Character extends MovableObject {
         if (!this.isGameOver) {
             this.isAttacking = true;
             world.enemies.forEach(enemy => {
-                if (this.isInRangeForFinSlap(enemy)) {
-                    enemy.life -= this.finSlapDamage;
-                    if (enemy.life <= 0 && !enemy.isDying) {
-                        enemy.die();
-                    }
+                if (this.isColliding(enemy, 50, 50)) {
+                        enemy.life -= this.finSlapDamage;
+                        if (enemy.life <= 0 && !enemy.isDying)
+                            enemy.die();
                 }
             });
             setTimeout(() => {
@@ -350,22 +347,4 @@ class Character extends MovableObject {
             }, 1000);
         }
     }
-
-    isInRangeForFinSlap(enemy) {
-        const range = 200;
-        const verticalThreshold = 50; // Angenommen, wir wählen einen kleineren Wert für präzisere Kollisionserkennung
-
-        const deltaX = enemy.positionX - this.positionX;
-        const deltaY = enemy.positionY - this.positionY;
-
-        const isWithinRange = Math.hypot(deltaX, deltaY) <= range;
-        const isVerticallyAligned = Math.abs(deltaY) <= verticalThreshold;
-
-        let isInFrontOfPlayer = this.otherDirection ? deltaX < 0 : deltaX > 0;
-
-        return isWithinRange && isVerticallyAligned && isInFrontOfPlayer;
-    }
-
-
-
 }

@@ -71,11 +71,11 @@ class MovableObject extends DrawableObject {
         this.movementIntervalIds.push(interval);
     }
 
-    isColliding(other) {
-        return this.positionX < other.positionX + other.width &&
-            this.positionX + this.width > other.positionX &&
-            this.positionY < other.positionY + other.height &&
-            this.positionY + this.height > other.positionY;
+    isColliding(object, additionalRange = 0, characterIsCollidingY = 0 ) {
+        return this.positionX < object.positionX + object.width + additionalRange &&
+            this.positionX + this.width + additionalRange > object.positionX &&
+            this.positionY < object.positionY + object.height - characterIsCollidingY &&
+            this.positionY + this.height > object.positionY;
     }
 
     damageTaken(damage) {

@@ -75,12 +75,14 @@ class World {
     }
 
     checkCollisions() {
-        this.checkCollisionCharacterWithEndboss();
-        this.checkCollisionCharacterWithEnemy();
-        this.checkCollisionBubbleWithEnemy();
-        this.checkCollisionBubbleWithEndboss();
-        this.checkCollisionCharacterWithCoinsAndPoisons();
-        this.checkCollisionCharacterWithAnimationPoisons();
+        if (!this.character.isAttacking) {
+            this.checkCollisionCharacterWithEndboss();
+            this.checkCollisionCharacterWithEnemy();
+            this.checkCollisionBubbleWithEnemy();
+            this.checkCollisionBubbleWithEndboss();
+            this.checkCollisionCharacterWithCoinsAndPoisons();
+            this.checkCollisionCharacterWithAnimationPoisons();
+        }
     }
 
     checkCollisionCharacterWithEndboss() {
@@ -217,7 +219,7 @@ class World {
         if (object.img && object.img.complete && object.img.naturalHeight !== 0) {
             this.flipImage(object);
             this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
-            // object.drawFrame(this.context);
+             object.drawFrame(this.context);
             this.flipImageBack(object);
         }
     }
