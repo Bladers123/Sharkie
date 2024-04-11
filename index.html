@@ -26,15 +26,36 @@
     <script src="classes/attack-object.class.js"></script>
     <script src="classes/level.class.js"></script>
     <script src="levels/level1.js"></script>
-    <script src="scripts/templates.js"></script>
     <script src="scripts/game.js"></script>
 </head>
 
 <body onload="init(); onVolumeSlider()">
-    <div id="game-introduction-container" class="game-introduction-container display-none"> 
+    <div id="introductions-container" class="introductions-container display-none">
+        <img id="close-introduction" class="close-game-introduction" src="img/Additional/close.png" alt="close">
+        <div class="introductions-content">
+            <div class="move">
+                <img class="introductions-move-with-arrows-img" src="img/6.Botones/Key/arrow keys.png" alt="arrow-keys">
+                <img class="arrows-text" src="img/6.Botones/Tittles/Move title.png" alt="move">
+            </div>
+            <div class="attack">
+                <img class="introductions-attack-with-d-img" src="img/6.Botones/Key/D key.png" alt="d-key">
+                <img class="attack-with-d-text" src="img/6.Botones/Tittles/Attack tittle.png" alt="attack">
+            </div>
+            <div class="attack">
+                <img class="introductions-attack-with-space-img" src="img/6.Botones/Key/Space Bar key.png"
+                    alt="space-key">
+                <img class="attack-with-space-text" src="img/6.Botones/Tittles/Attack tittle.png" alt="attack">
+            </div>
+        </div>
+    </div>
+    <div id="game-introduction-container" class="game-introduction-container display-none">
         <img id="close-game-introduction" class="close-game-introduction" src="img/Additional/close.png" alt="close">
         <h1 class="game-instruction-header">Game Instruction</h1>
-        <p class="game-instruction--text">In this game, you control Sharkie the fish, whose mission is to navigate through the underwater world to defeat the boss, Vortexia. To win the game, guide Sharkie past obstacles and enemies, collect power-ups to strengthen your abilities, and ultimately confront and defeat Vortexia in the final battle. Victory over Vortexia means victory in the game. Swim carefully, attack wisely, and good luck on your quest!</p>
+        <p class="game-instruction--text">In this game, you control Sharkie the fish, whose mission is to navigate
+            through the underwater world to defeat the boss, Vortexia. To win the game, guide Sharkie past obstacles and
+            enemies, collect power-ups to strengthen your abilities, and ultimately confront and defeat Vortexia in the
+            final battle. Victory over Vortexia means victory in the game. Swim carefully, attack wisely, and good luck
+            on your quest!</p>
     </div>
     <div class="display-none turn-device">
         <h1 class="turn-device-text">Turn your Device to play!</h1>
@@ -50,7 +71,6 @@
             <div id="win-container" class="win-container display-none">
                 <img id="try-again" class="try-again" src="img/6.Botones/Try again/Recurso 16.png" alt="try again">
             </div>
-            <div id="introductions-container" class="introductions-container display-none"></div>
             <div id="startscreen-container" class="startscreen">
                 <img id="startscreen" class="start-img" src="img/6.Botones/Start/1.png" alt="start">
             </div>
@@ -58,7 +78,8 @@
         </div>
         <img id="menu-title" class="menu-title" src="img/Additional/menu.png" alt="menu">
         <div class="menu">
-            <img id="game-introduction" class="game-introduction" src="img/Additional/game-instructions.png" alt="game-introduction">
+            <img id="game-introduction" class="game-introduction" src="img/Additional/game-instructions.png"
+                alt="game-introduction">
             <img id="introductions" class="introductions" src="img/Additional/keyboard.png" alt="introductions">
             <img id="volume" class="volume" src="img/Additional/volume.png" alt="volume">
             <input class="volume-slider" type="range" id='volumeSlider' min=0 max=1 step=0.01 value='0.01'>

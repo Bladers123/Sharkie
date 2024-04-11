@@ -65,11 +65,12 @@ h2 {
     border: 2px solid grey;
     border-radius: 25px;
     background-color: #26b8d6;
+    padding: 8px;
 }
 
 .introductions {
     cursor: pointer;
-    width: 128px;
+    width: 60px;
 }
 
 .volume {
@@ -87,20 +88,25 @@ h2 {
 }
 
 .introductions-container {
-    width: 100%;
-    height: 100%;
-    background-color: rgb(141, 222, 175);
-    border: 2px solid grey;
-    border-radius: 25px;
+    position: fixed;
+    z-index: 1000;
+    top: 23%;
+    left: 14%;
+    width: 70%;
+    height: 50vh;
+    border: 2px solid black;
+    background-color: #b476fb;
+    border-radius: 50px;
+    opacity: 0.97;
 }
 
 .introductions-content {
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    margin: 0 32px;
+    height: 100%;
+    
 }
 
 .introductions-move-with-arrows-img {
@@ -121,14 +127,14 @@ h2 {
 .move {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
 }
 
 .attack {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 100%;
 }
 
@@ -212,7 +218,7 @@ h2 {
     width: 70%;
     height: 50vh;
     border: 2px solid black;
-    background-color: grey;
+    background-color: #b476fb;
     border-radius: 50px;
     opacity: 0.97;
 }
