@@ -5,12 +5,12 @@ let level1;
 function initLevel() {
     level1 = new Level(
         [
-            new Enemy(200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
-            new Enemy(100 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
-            new Enemy(200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
-            new Enemy(300 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
-            new Enemy(400 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
-            new Enemy(500 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+            new Enemy(600 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+            new Enemy(650 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+            new Enemy(600 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
+            new Enemy(650 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+            new Enemy(700 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+            new Enemy(800 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
             new Enemy(600, 400, 'jelly-normal'),
             new Enemy(800, 400, 'jelly-normal'),
             new Enemy(1000, 400, 'jelly-normal'),
@@ -21,13 +21,16 @@ function initLevel() {
             new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
             new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-normal'),
             new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
-            new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
-            new Enemy(1200 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
-            new Enemy(1000 + Math.random() * 500, 100 + Math.random() * 200, 'puffer-follow'),
-            new Enemy(2200 + Math.random() * 500, 300 + Math.random() * 200, 'puffer-follow'),
+            new Enemy(1900 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+            new Enemy(1400 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+            new Enemy(1600 + Math.random() * 500, 100 + Math.random() * 200, 'puffer-follow'),
+            new Enemy(2800 + Math.random() * 500, 300 + Math.random() * 200, 'puffer-follow'),
             new Enemy(1600, 200, 'jelly-dangerous'),
             new Enemy(1700, 100, 'jelly-dangerous'),
-            new Enemy(1800, 300, 'jelly-dangerous')
+            new Enemy(1800, 300, 'jelly-dangerous'),
+            new Enemy(2000 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+            new Enemy(2500 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition'),
+            new Enemy(2800 + Math.random() * 500, 200 + Math.random() * 200, 'puffer-transition')
         ],
         [
             new BackgroundObject('../img/3. Background/Layers/5. Water/D1.png', 0),
