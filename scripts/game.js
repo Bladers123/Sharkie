@@ -274,15 +274,20 @@ function createJoystick() {
             character.stopMovingAnimation();
         });
 
-        document.getElementById('attackButton').addEventListener('click', function () {
+        document.getElementById('bubble-attack-button').addEventListener('click', function () {
             if (character) {
-                character.initiateAttack('normal');
+                keyboard.fire = true;
+                if (world.toxicBubbleBar && world.toxicBubbleBar.percentage > 0)
+                    character.initiateAttack('poison');
+                else
+                    character.initiateAttack('normal');
             }
         });
 
-        document.getElementById('specialButton').addEventListener('click', function () {
+        document.getElementById('finslap-attack-button').addEventListener('click', function () {
             if (character) {
-                character.initiateAttack('special');
+                keyboard.fire = true;
+                character.initiateAttack('finSlap');
             }
         });
     } else {

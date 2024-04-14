@@ -71,7 +71,6 @@ class World {
     fire() {
         this.fireIntervalId = setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
         }, 200);
     }
 
@@ -172,13 +171,6 @@ class World {
             }
             return true;
         });
-    }
-
-    checkThrowObjects() {
-        if (this.keyboard.fire) {
-            this.character.initiateAttack();
-            this.keyboard.fire = false;
-        }
     }
 
     draw() {
