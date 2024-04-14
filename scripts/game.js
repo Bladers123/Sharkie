@@ -15,7 +15,6 @@ function init() {
     keyboard = new Keyboard();
     soundManager = new SoundManager();
     addSounds();
-    createJoystick();
 }
 
 function addSounds() {
@@ -30,6 +29,7 @@ function addSounds() {
 function createWorld() {
     character = new Character(keyboard);
     world = new World(canvas, character);
+    createJoystick();
 }
 
 function resetWorld() {
@@ -219,12 +219,15 @@ function getCharacter() {
 
 function createJoystick() {
     if (document.getElementById('joystick')) {
-        var joystick = nipplejs.create({
-            zone: document.getElementById('joystick'),
+        let joystickElement = document.getElementById('joystick');
+        joystickElement.style.display = 'block'
+        let joystick = nipplejs.create({
+            zone: joystickElement,
             mode: 'static',
             position: { left: '50%', top: '50%' },
-            color: 'red'
+            color: 'white'
         });
+
 
         joystick.on('move', function (event, data) {
             let angle = data.angle.degree;

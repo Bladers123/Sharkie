@@ -61,6 +61,7 @@ class World {
         soundManager.stop('background');
         soundManager.stop('bossfight');
         soundManager.play('gameover', false);
+        document.getElementById('joystick').style.display = 'none'
         setTimeout(() => {
             gameOverContainer.classList.remove('disabled-image');
             introductionButton.classList.remove('disabled-image');

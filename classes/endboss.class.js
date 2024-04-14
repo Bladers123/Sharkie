@@ -125,6 +125,7 @@ class Endboss extends MovableObject {
         document.getElementById('win-container').classList.remove('display-none');
         canvas.classList.remove('display-block');
         canvas.classList.add('display-none');
+        document.getElementById('joystick').style.display = 'none'
         gameWin = true;
         character.becomeInvincible(5000);
     }
