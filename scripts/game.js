@@ -15,6 +15,7 @@ function init() {
     keyboard = new Keyboard();
     soundManager = new SoundManager();
     addSounds();
+    createJoystick();
 }
 
 function addSounds() {
@@ -145,15 +146,15 @@ function loadEvents(fullscreenButton, introductionsButton, startButton, tryAgain
     gameIntroductionCloseButton.addEventListener('click', () => onCloseGameIntroduction(gameIntroductionContainer));
 }
 
-function onGameIntroduction(gameIntroductionContainer){
-     gameIntroductionContainer.classList.remove('display-none');
+function onGameIntroduction(gameIntroductionContainer) {
+    gameIntroductionContainer.classList.remove('display-none');
 }
 
-function onCloseGameIntroduction(gameIntroductionContainer){
+function onCloseGameIntroduction(gameIntroductionContainer) {
     gameIntroductionContainer.classList.add('display-none');
 }
 
-function onIntroductionsButton(introductionsContainer){
+function onIntroductionsButton(introductionsContainer) {
     introductionsContainer.classList.remove('display-none');
 }
 
@@ -214,4 +215,74 @@ function onVolumeSlider(volumeSlider) {
 
 function getCharacter() {
     return character;
+}
+
+function createJoystick() {
+    if (document.getElementById('joystick')) {
+        var joystick = nipplejs.create({
+            zone: document.getElementById('joystick'),
+            mode: 'static',
+            position: { left: '50%', top: '50%' },
+            color: 'red'
+        });
+
+        joystick.on('move', function (event, data) {
+            let angle = data.angle.degree;
+            keyboard.left = false;
+            keyboard.right = false;
+            keyboard.up = false;
+            keyboard.down = false;
+            moveInDirection(angle);
+            character.isCharacterMoving = true;
+            character.startMovingAnimation();
+        });
+
+        function moveInDirection(angle) {
+            if (angle >= 337.5 || angle < 22.5) {
+                keyboard.right = true;
+            } else if (angle >= 22.5 && angle < 67.5) {
+                keyboard.right = true;
+                keyboard.up = true;
+            } else if (angle >= 67.5 && angle < 112.5) {
+                keyboard.up = true;
+            } else if (angle >= 112.5 && angle < 157.5) {
+                keyboard.up = true;
+                keyboard.left = true;
+            } else if (angle >= 157.5 && angle < 202.5) {
+                keyboard.left = true;
+            } else if (angle >= 202.5 && angle < 247.5) {
+                keyboard.left = true;
+                keyboard.down = true;
+            } else if (angle >= 247.5 && angle < 292.5) {
+                keyboard.down = true;
+            } else if (angle >= 292.5 && angle < 337.5) {
+                keyboard.down = true;
+                keyboard.right = true;
+            }
+        }
+
+
+        joystick.on('end', function () {
+            keyboard.left = false;
+            keyboard.right = false;
+            keyboard.up = false;
+            keyboard.down = false;
+            character.isCharacterMoving = false;
+            character.stopMovingAnimation();
+        });
+
+        document.getElementById('attackButton').addEventListener('click', function () {
+            if (character) {
+                character.initiateAttack('normal');
+            }
+        });
+
+        document.getElementById('specialButton').addEventListener('click', function () {
+            if (character) {
+                character.initiateAttack('special');
+            }
+        });
+    } else {
+        console.log('Joystick container not found.');
+    }
 }

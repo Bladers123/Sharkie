@@ -26,10 +26,15 @@
     <script src="classes/attack-object.class.js"></script>
     <script src="classes/level.class.js"></script>
     <script src="levels/level1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nipplejs@latest/dist/nipplejs.min.js"></script>
     <script src="scripts/game.js"></script>
+    
 </head>
 
 <body onload="init(); onVolumeSlider()">
+    <div id="joystick"></div>
+    <button id="attackButton">Angriff</button>
+    <button id="specialButton">Spezial</button>
     <div id="introductions-container" class="introductions-container display-none">
         <img id="close-introduction" class="close-game-introduction" src="img/Additional/close.png" alt="close">
         <div class="introductions-content">
