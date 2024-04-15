@@ -1,6 +1,15 @@
 // mobileGameProperties.js
 
 /**
+ * Creates mobile controls, including attack buttons and a joystick.
+ */
+function createControlsForMobile() {
+    createAttackButtons();
+    createJoystick();
+    checkOrientation();
+}
+
+/**
  * Creates attack buttons for mobile controls and attaches event listeners for these buttons.
  */
 function createAttackButtons() {
@@ -51,8 +60,6 @@ function createFinsSlapButton(finslapButton) {
     finslapButton.id = 'finslap-attack-button';
     finslapButton.classList.add('finslap-attack-button');
     finslapButton.textContent = 'FS';
-    finslapButton.style.display = 'none';
-    finslapButton.style.display = 'block';
 }
 
 /**
@@ -63,8 +70,6 @@ function createBubbleButton(bubbleButton) {
     bubbleButton.id = 'bubble-attack-button';
     bubbleButton.classList.add('bubble-attack-button');
     bubbleButton.textContent = 'BL';
-    bubbleButton.style.display = 'none';
-    bubbleButton.style.display = 'block';
 }
 
 /**
@@ -92,7 +97,6 @@ function initializeJoystick(joystickElement) {
         color: 'white'
     });
 
-    joystickElement.style.display = 'block';
     return joystick;
 }
 
@@ -160,20 +164,31 @@ function moveInDirection(angle) {
  * Adjusts the display of mobile controls based on screen orientation.
  */
 function checkOrientation() {
-    if (window.innerWidth > window.innerHeight) {
+    if (window.innerWidth > window.innerHeight && window.innerWidth < 700) {
         if (document.getElementById('joystick') && document.getElementById('finslap-attack-button') && document.getElementById('bubble-attack-button')) {
             document.getElementById('joystick').style.display = 'block';
             document.getElementById('finslap-attack-button').style.display = 'block';
             document.getElementById('bubble-attack-button').style.display = 'block';
         }
     } else {
-        if (document.getElementById('joystick') && document.getElementById('finslap-attack-button') && document.getElementById('bubble-attack-button')) {
-            document.getElementById('joystick').style.display = 'none';
-            document.getElementById('finslap-attack-button').style.display = 'none';
-            document.getElementById('bubble-attack-button').style.display = 'none';
-        }
+        if (document.getElementById('joystick') && document.getElementById('finslap-attack-button') && document.getElementById('bubble-attack-button'))
+            switchOffControls();
     }
 }
 
 window.addEventListener('load', checkOrientation);
 window.addEventListener('resize', checkOrientation);
+
+function switchOffControls() {
+    removeGameControls();
+}
+
+function removeGameControls() {
+    let joystick = document.getElementById('joystick');
+    let finslapButton = document.getElementById('finslap-attack-button');
+    let bubbleButton = document.getElementById('bubble-attack-button');
+
+    if (joystick) joystick.parentNode.removeChild(joystick);
+    if (finslapButton) finslapButton.parentNode.removeChild(finslapButton);
+    if (bubbleButton) bubbleButton.parentNode.removeChild(bubbleButton);
+}

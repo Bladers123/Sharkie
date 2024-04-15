@@ -61,14 +61,6 @@ function resetWorld() {
 }
 
 /**
- * Creates mobile controls, including attack buttons and a joystick.
- */
-function createControlsForMobile() {
-    createAttackButtons();
-    createJoystick();
-}
-
-/**
  * Event handler for 'keypress' events to manage special attacks based on key inputs.
  * ' ' (spacebar) triggers a fin slap attack.
  * 'd' triggers a poison attack if the toxic bubble bar is filled, otherwise a normal attack.

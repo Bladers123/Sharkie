@@ -309,6 +309,14 @@ h2 {
     right: 10%;
 }
 
+@media (min-width: 1200px) {
+    .joystick,
+    .finslap-attack-button,
+    .bubble-attack-button {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 720px) {
 
     .game-section,
