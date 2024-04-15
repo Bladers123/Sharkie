@@ -114,7 +114,7 @@ class World {
     checkCollisionCharacterWithEndboss() {
         this.level.endBoss.forEach(endBoss => {
             if (endBoss && !endBoss.isDying && !endBoss.endBossIsDead) {
-                if (this.character.isColliding(endBoss)) {
+                if (this.character.isColliding(endBoss, -30, 100)) {
                     this.character.lastDamageSource = 'normal';
                     this.character.damageTaken(endBoss.damage);
                     this.lifeBar.setPercentage(this.character.life);
