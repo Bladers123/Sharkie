@@ -128,7 +128,7 @@ class World {
      */
     checkCollisionCharacterWithEnemy() {
         this.level.enemies.forEach(enemy => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy, -30, 60)) {
                 if (enemy.type.startsWith('jelly'))
                     this.character.lastDamageSource = 'electric';
                 else
@@ -270,7 +270,7 @@ class World {
         if (object.img && object.img.complete && object.img.naturalHeight !== 0) {
             this.flipImage(object);
             this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
-            //object.drawFrame(this.context);
+            object.drawFrame(this.context);
             this.flipImageBack(object);
         }
     }
