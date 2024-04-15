@@ -1,5 +1,8 @@
+/**
+ * Represents the final boss in the game with complex behaviors such as spawning, attacking, taking damage, and dying animations.
+ * Extends MovableObject to utilize its movement capabilities and methods.
+ */
 class Endboss extends MovableObject {
-
     imagesOfSpawning = [
         'img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
         'img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
@@ -56,7 +59,9 @@ class Endboss extends MovableObject {
     firstContactWithEndboss = false;
     endBossIsDead = false;
 
-
+    /**
+    * Constructor for the Endboss class, which initializes the boss with various animation states and sets initial properties.
+    */
     constructor() {
         super();
         this.loadImages(this.imagesOfSpawning);
@@ -72,11 +77,17 @@ class Endboss extends MovableObject {
         this.damage = 25;
     }
 
+    /**
+    * Sets the initial spawn point for the endboss.
+    */
     spawnPoint() {
         this.positionX = 2650;
         this.positionY = 120;
     }
 
+    /**
+     * Initiates the spawning sequence which includes checking the player's position and starting the boss battle if conditions are met.
+     */
     bossSpawning() {
         let animateFrame = () => {
             let character = getCharacter();
@@ -87,6 +98,9 @@ class Endboss extends MovableObject {
         this.animationFrameId = requestAnimationFrame(animateFrame);
     }
 
+    /**
+    * Starts the sequence for the boss battle including stopping background music, playing boss fight music, and handling initial animations and invincibility.
+    */
     startBossBattleSequence() {
         soundManager.stop('background');
         soundManager.play('bossfight', true);
@@ -101,12 +115,18 @@ class Endboss extends MovableObject {
         }, 1500);
     }
 
+    /**
+    * Sets up an interval for the boss to perform attacks at regular intervals.
+    */
     startAttackInterval() {
         this.attackInterval = setInterval(() => {
             this.attack();
         }, 5000);
     }
 
+    /**
+    * Handles the dying animation and sequence for the endboss, including stopping the attack interval and playing the victory sequence.
+    */
     die() {
         if (!this.isDying) {
             this.isDying = true;
@@ -119,6 +139,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * Finalizes the boss defeat by updating the game state, stopping the boss music, and updating UI elements to reflect the victory.
+     */
     finalizeBossDefeat() {
         soundManager.stop('bossfight');
         soundManager.play('win', false);
@@ -132,7 +155,10 @@ class Endboss extends MovableObject {
         character.becomeInvincible(5000);
     }
 
-
+    /**
+    * Processes a hit received by the boss, updating health, playing hurt animations, and potentially triggering death.
+    * @param {number} damage - The amount of damage to apply to the boss.
+    */
     hit(damage) {
         if (!this.isDying) {
             this.life -= damage;
@@ -143,6 +169,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+    * Manages the recovery animation and behavior after taking damage.
+    */
     processHitAndRecover() {
         this.immobilized = true;
         this.playAnimation(this.imagesOfHurt, false, true);
@@ -155,7 +184,9 @@ class Endboss extends MovableObject {
         }, 2000);
     }
 
-
+    /**
+     * Handles the boss's attack action, including playing the attack animation and reverting to the swimming animation.
+     */
     attack() {
         if (!this.isDying && !this.endBossIsDead && !this.immobilized) {
             this.playAnimation(this.imagesOfAttack, false, true);

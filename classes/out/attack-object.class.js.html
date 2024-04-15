@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: attack-object.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: attack-object.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+/**
+ * Represents an attack projectile or object in the game. This could be a bubble, fin slap, or any other form of attack.
+ * Extends MovableObject to utilize movement capabilities and additional properties.
+ */
+class AttackObject extends MovableObject {
+    damage;
+    firedDirection = "";
+    otherDirection;
+    type;
+    range;
+    travelDistance = 0;
+
+    /**
+ * Constructs an attack object with specified parameters, setting initial position, attack type, and range.
+ * @param {number} positionX - The x-coordinate of the attack object's starting position.
+ * @param {number} positionY - The y-coordinate of the attack object's starting position.
+ * @param {string} otherDirection - The initial direction if not yet fired, typically left or right.
+ * @param {string} type - The type of attack, e.g., 'poison' or 'normal'.
+ * @param {number} range - The maximum distance the attack object can travel.
+ */
+    constructor(positionX, positionY, otherDirection, type, range) {
+        super();
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.type = type;
+        this.otherDirection = otherDirection;
+        this.range = range;
+        this.checkTypeOfAttack();
+    }
+
+    /**
+ * Determines the type of attack based on the attack object's type attribute and executes the appropriate method.
+ */
+    checkTypeOfAttack() {
+        if (this.type === 'poison' || this.type === 'normal')
+            this.attackWithBubble();
+    }
+
+    /**
+ * Defines the behavior for a fin slap attack including setting damage and handling when max range is reached.
+ */
+    attackWithFinSlap() {
+        this.damage = 100;
+        this.onReachMaxRange();
+    }
+
+    /**
+ * Defines the behavior for a bubble type attack, sets damage, loads appropriate image, and starts the throw action.
+ */
+    attackWithBubble() {
+        this.damage = this.type === 'poison' ? 50 * 3 : 50;
+        let bubbleImage = this.type === 'poison' ? 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png' : 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png';
+        this.loadImage(bubbleImage);
+        this.width = 40;
+        this.height = 40;
+        this.throw();
+    }
+
+    /**
+ * Handles the movement of the attack object over time, adjusting its position according to its fired direction until it reaches its maximum range.
+ */
+    throw() {
+        this.speedY = 30;
+        let interval = setInterval(() => {
+            if (!this.firedDirection)
+                this.firedDirection = this.otherDirection ? "left" : "right";
+            if (this.firedDirection === "right")
+                this.positionX += 10;
+            else
+                this.positionX -= 10;
+            this.travelDistance += 10;
+            if (this.travelDistance >= this.range) {
+                clearInterval(interval);
+                this.onReachMaxRange();
+            }
+        }, 25);
+    }
+
+    /**
+ * Removes the attack object from the world's attack objects array when it reaches its maximum travel range.
+ */
+    onReachMaxRange() {
+        const index = world.attackObjects.findIndex(obj => obj === this);
+        if (index !== -1)
+            world.attackObjects.splice(index, 1);
+    }
+} 
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AttackObject.html">AttackObject</a></li><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Character.html">Character</a></li><li><a href="CoinBar.html">CoinBar</a></li><li><a href="CollectedAnimationObject.html">CollectedAnimationObject</a></li><li><a href="CollectedObject.html">CollectedObject</a></li><li><a href="DrawableObject.html">DrawableObject</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="Enemy.html">Enemy</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="LifeBar.html">LifeBar</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="SoundManager.html">SoundManager</a></li><li><a href="ToxicBubbleBar.html">ToxicBubbleBar</a></li><li><a href="World.html">World</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Apr 15 2024 21:00:49 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

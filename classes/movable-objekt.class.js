@@ -1,3 +1,7 @@
+/**
+ * Represents a basic movable object in the game, providing common functionality for movement, animations, and handling game mechanics like collisions and gravity.
+ * Extends DrawableObject to add movement and animation capabilities.
+ */
 class MovableObject extends DrawableObject {
     speed = 5;
     otherDirection = false;
@@ -19,12 +23,25 @@ class MovableObject extends DrawableObject {
     gravityIntervalId = null;
     moveIntervalIds = null;
 
+    /**
+     * Plays an animation sequence from the given images, with options to repeat the last few frames or run only once.
+     * @param {string[]} imagesOfAnimation - Array of image paths for the animation sequence.
+     * @param {boolean} repeatLastFour - Whether to loop the last four frames of the animation.
+     * @param {boolean} runOnce - Whether to run the animation only once.
+     */
     playAnimation(imagesOfAnimation, repeatLastFour = false, runOnce = false) {
         this.stopAnimation();
         let index = 0;
         this.handleAnimationProgress(imagesOfAnimation, repeatLastFour, runOnce, index);
     }
 
+    /**
+     * Handles the progress of the animation, updating the image according to the animation logic.
+     * @param {string[]} imagesOfAnimation - Array of image paths for the animation sequence.
+     * @param {boolean} repeatLastFour - Whether to loop the last four frames of the animation.
+     * @param {boolean} runOnce - Whether to run the animation only once.
+     * @param {number} index - Current index in the animation sequence.
+     */
     handleAnimationProgress(imagesOfAnimation, repeatLastFour, runOnce, index) {
         this.animationIntervalId = setInterval(() => {
             if (index < imagesOfAnimation.length) {
@@ -41,6 +58,9 @@ class MovableObject extends DrawableObject {
         }, 150);
     }
 
+    /**
+     * Stops any ongoing animation.
+     */
     stopAnimation() {
         if (this.animationIntervalId !== null) {
             clearInterval(this.animationIntervalId);
@@ -48,6 +68,9 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * Stops all intervals associated with the object, including movement and animation timers.
+     */
     stopIntervals() {
         if (this.animationIntervalId) {
             clearInterval(this.animationIntervalId);
@@ -67,17 +90,32 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * Adds a movement interval ID to the list for management.
+     * @param {number} interval - The interval ID to be stored.
+     */
     addMovementInterval(interval) {
         this.movementIntervalIds.push(interval);
     }
 
-    isColliding(object, additionalRange = 0, characterIsCollidingY = 0 ) {
+    /**
+     * Checks if the object is colliding with another object within the game world.
+     * @param {DrawableObject} object - The other object to check for collision.
+     * @param {number} additionalRange - Additional range to consider for the collision detection.
+     * @param {number} characterIsCollidingY - Additional vertical range to consider.
+     * @returns {boolean} True if colliding, false otherwise.
+     */
+    isColliding(object, additionalRange = 0, characterIsCollidingY = 0) {
         return this.positionX < object.positionX + object.width + additionalRange &&
             this.positionX + this.width + additionalRange > object.positionX &&
             this.positionY < object.positionY + object.height - characterIsCollidingY &&
             this.positionY + this.height > object.positionY;
     }
 
+    /**
+    * Handles the event when damage is taken by the object, considering invincibility and immobilization states.
+    * @param {number} damage - The amount of damage taken.
+    */
     damageTaken(damage) {
         if (this.isInvincible || this.immobilized)
             return;
@@ -93,6 +131,10 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+    * Checks if the object is currently hurt.
+    * @returns {boolean} True if hurt, false otherwise.
+    */
     isHurt() {
         if (this.life < this.totalLife) {
             let timeSpan = new Date().getTime() - this.lastHit;
@@ -103,10 +145,18 @@ class MovableObject extends DrawableObject {
             return false;
     }
 
+    /**
+     * Checks if the object is dead.
+     * @returns {boolean} True if dead, false otherwise.
+     */
     isDead() {
         return this.life == 0;
     }
 
+    /**
+     * Checks if the object is above the ground, useful for objects affected by gravity.
+     * @returns {boolean} True if above ground, false otherwise.
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject)
             return true;
@@ -114,6 +164,9 @@ class MovableObject extends DrawableObject {
             return this.positionY < 180;
     }
 
+    /**
+     * Applies gravity to the object, affecting its vertical position.
+     */
     applyGravity() {
         this.gravityIntervalId = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -124,6 +177,9 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+    /**
+     * Initiates the behavior to move towards the character, usually used by enemy objects.
+     */
     moveToCharacter() {
         if (getCharacter()) {
             let followSpeed = 0.05;
@@ -137,6 +193,11 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    /**
+     * Continuously adjusts the position towards the character based on calculated differences and speed factors.
+     * @param {number} followSpeed - Speed factor for following the character.
+     * @param {number} inertia - Inertia factor affecting movement smoothness.
+     */
     followCharacter(followSpeed, inertia) {
         let charPos = getCharacter().positionX;
         let fishPos = this.positionX;

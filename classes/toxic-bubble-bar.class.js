@@ -1,5 +1,8 @@
-class ToxicBubbleBar extends DrawableObject{
-
+/**
+ * Represents a progress bar specifically for toxic bubbles in the game, showing how much capacity or charge is available for using toxic bubbles.
+ * Extends DrawableObject to visually represent this capacity on the game screen.
+ */
+class ToxicBubbleBar extends DrawableObject {
     imagesOfToxicBubbleBar = [
         'img/4. Marcadores/Purple/0_.png',
         'img/4. Marcadores/Purple/20_.png',
@@ -11,6 +14,9 @@ class ToxicBubbleBar extends DrawableObject{
 
     percentage = 0;
 
+    /**
+     * Initializes a new instance of ToxicBubbleBar, loading the necessary images and setting initial properties.
+     */
     constructor() {
         super().loadImages(this.imagesOfToxicBubbleBar);
         this.positionX = 20;
@@ -18,19 +24,30 @@ class ToxicBubbleBar extends DrawableObject{
         this.width = 200;
         this.height = 50;
         this.setPercentage(this.percentage);
-    }       
+    }
 
+    /**
+     * Sets the current percentage of the toxic bubble bar and updates the image accordingly.
+     * @param {number} percentage - The current capacity of toxic bubbles as a percentage (0 to 100).
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
-        let imagePath = this.imagesOfToxicBubbleBar[this.getImageIndex()]; 
+        let imagePath = this.imagesOfToxicBubbleBar[this.getImageIndex()];
         this.img = this.imageCache[imagePath];
     }
 
+    /**
+     * Decreases the percentage of the toxic bubble bar by a specified amount.
+     * @param {number} amount - The amount by which to decrease the bar's percentage.
+     */
     decreasePercentage(amount) {
         this.setPercentage(Math.max(this.percentage - amount, 0));
     }
-    
 
+    /**
+     * Determines the index of the image to use based on the current percentage.
+     * @returns {number} The index of the image corresponding to the current percentage.
+     */
     getImageIndex() {
         if (this.percentage == 100)
             return 5;
@@ -46,6 +63,10 @@ class ToxicBubbleBar extends DrawableObject{
             return 0;
     }
 
+    /**
+     * Increases the percentage of the toxic bubble bar by a specified amount.
+     * @param {number} amount - The amount by which to increase the bar's percentage.
+     */
     increasePercentage(amount) {
         this.setPercentage(Math.min(this.percentage + amount, 100));
     }

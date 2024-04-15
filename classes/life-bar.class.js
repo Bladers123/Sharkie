@@ -1,5 +1,8 @@
+/**
+ * Represents the life bar for a character or entity in the game, visually indicating health as a percentage.
+ * Extends DrawableObject for graphical representation on a canvas.
+ */
 class LifeBar extends DrawableObject {
-
     imagesOfLifeBar = [
         'img/4. Marcadores/orange/0_  copia.png',
         'img/4. Marcadores/orange/20_ copia 2.png',
@@ -11,6 +14,9 @@ class LifeBar extends DrawableObject {
 
     percentage;
 
+    /**
+     * Initializes a new instance of LifeBar, loading the necessary images and setting initial properties.
+     */
     constructor() {
         super().loadImages(this.imagesOfLifeBar);
         this.positionX = 20;
@@ -20,12 +26,20 @@ class LifeBar extends DrawableObject {
         this.setPercentage(100);
     }
 
+    /**
+     * Sets the current life percentage and updates the life bar's image accordingly.
+     * @param {number} percentage - The current health of the entity as a percentage (0 to 100).
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
-        let imagePath = this.imagesOfLifeBar[this.getImageIndex()]; 
+        let imagePath = this.imagesOfLifeBar[this.getImageIndex()];
         this.img = this.imageCache[imagePath];
     }
 
+    /**
+     * Determines the index of the image to use based on the current health percentage.
+     * @returns {number} The index of the image corresponding to the current percentage.
+     */
     getImageIndex() {
         if (this.percentage == 100)
             return 5;

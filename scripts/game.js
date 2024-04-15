@@ -306,7 +306,6 @@ function onVolumeSlider(volumeSlider) {
  * Retrieves the current character instance from the game.
  * @returns {Character} The current character object.
  */
-funct
 function getCharacter() {
     return character;
 }

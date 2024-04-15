@@ -1,5 +1,7 @@
+/**
+ * Manages the entire game world, including all characters, enemies, objects, and interactions within the game environment.
+ */
 class World {
-
     context;
     canvas;
     cameraX = 0;
@@ -24,6 +26,11 @@ class World {
     fireIntervalId = null;
     animationFrameId = null;
 
+    /**
+     * Constructs a new World instance, setting up the game environment and initializing all necessary components.
+     * @param {HTMLCanvasElement} canvas - The canvas element where the game is drawn.
+     * @param {Character} character - The main character of the game.
+     */
     constructor(canvas, character) {
         this.context = canvas.getContext('2d');
         this.canvas = canvas;
@@ -37,6 +44,9 @@ class World {
         this.checkIsGameOver();
     }
 
+    /**
+     * Checks the game over condition at intervals and handles the game over sequence if the character is defeated.
+     */
     checkIsGameOver() {
         let gameOver = true;
         this.gameOverCheckIntervalId = setInterval(() => {
@@ -52,6 +62,11 @@ class World {
         }, 10);
     }
 
+    /**
+    * Displays the game over screen and updates the UI accordingly.
+    * @param {HTMLElement} gameOverContainer - The container element for the game over screen.
+    * @param {HTMLElement} introductionButton - The button that starts the game over.
+    */
     showGameOver(gameOverContainer, introductionButton) {
         gameOverContainer.classList.add('disabled-image');
         introductionButton.classList.add('disabled-image');
@@ -70,12 +85,18 @@ class World {
         }, 3000);
     }
 
+    /**
+     * Initiates continuous collision detection between game elements.
+     */
     fire() {
         this.fireIntervalId = setInterval(() => {
             this.checkCollisions();
         }, 200);
     }
 
+    /**
+     * Checks for collisions between different types of objects in the game world.
+     */
     checkCollisions() {
         if (!this.character.isAttacking) {
             this.checkCollisionCharacterWithEndboss();
@@ -87,6 +108,9 @@ class World {
         }
     }
 
+    /**
+     * Checks for collisions between the character and the end boss.
+     */
     checkCollisionCharacterWithEndboss() {
         this.level.endBoss.forEach(endBoss => {
             if (endBoss && !endBoss.isDying && !endBoss.endBossIsDead) {
@@ -99,6 +123,9 @@ class World {
         });
     }
 
+    /**
+     * Checks for collisions between the character and enemies.
+     */
     checkCollisionCharacterWithEnemy() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
@@ -112,6 +139,9 @@ class World {
         });
     }
 
+    /**
+     * Checks for collisions between bubbles and enemies.
+     */
     checkCollisionBubbleWithEnemy() {
         this.attackObjects.forEach(bubble => {
             this.level.enemies.forEach(enemy => {
@@ -128,6 +158,9 @@ class World {
         this.level.enemies = this.level.enemies.filter(enemy => !enemy.isRemoved);
     }
 
+    /**
+     * Checks for collisions between bubbles and the end boss.
+     */
     checkCollisionBubbleWithEndboss() {
         this.attackObjects.forEach(bubble => {
             this.level.endBoss.forEach((endBoss) => {
@@ -142,6 +175,9 @@ class World {
         });
     }
 
+    /**
+     * Checks for collisions between the character and non-animated collectible objects.
+     */
     checkCollisionCharacterWithCoinsAndPoisons() {
         this.level.collectedObjects = this.level.collectedObjects.filter(collectedObject => {
             if (this.character.isColliding(collectedObject)) {
@@ -159,6 +195,9 @@ class World {
         });
     }
 
+    /**
+    * Checks for collisions between the character and animated collectible objects.
+    */
     checkCollisionCharacterWithAnimationPoisons() {
         this.level.collectedAnimationObjects = this.level.collectedAnimationObjects.filter(collectedObject => {
             if (this.character.isColliding(collectedObject)) {
@@ -175,6 +214,9 @@ class World {
         });
     }
 
+    /**
+     * Main drawing loop that updates the canvas with all game elements.
+     */
     draw() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.cameraOnCharacter();
@@ -186,6 +228,9 @@ class World {
         });
     }
 
+    /**
+     * Draws objects that should move with the camera as the character moves through the world.
+     */
     drawObjectsThisRunningWithoutCamera() {
         this.context.translate(this.cameraX, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
@@ -197,6 +242,9 @@ class World {
         this.addObjectsToMap(this.level.collectedAnimationObjects);
     }
 
+    /**
+     * Draws static objects that do not move with the camera, such as the user interface elements.
+     */
     drawObjectsThisRunningWithCamera() {
         this.context.translate(-this.cameraX, 0);
         this.addObjectToMap(this.lifeBar);
@@ -204,21 +252,33 @@ class World {
         this.addObjectToMap(this.toxicBubbleBar);
     }
 
+    /**
+     * Helper function to add multiple objects to the canvas.
+     * @param {DrawableObject[]} objects - An array of objects to be drawn.
+     */
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addObjectToMap(object);
         });
     }
 
+    /**
+     * Helper function to add a single object to the canvas.
+     * @param {DrawableObject} object - The object to be drawn.
+     */
     addObjectToMap(object) {
         if (object.img && object.img.complete && object.img.naturalHeight !== 0) {
             this.flipImage(object);
             this.context.drawImage(object.img, object.positionX, object.positionY, object.width, object.height);
-             //object.drawFrame(this.context);
+            //object.drawFrame(this.context);
             this.flipImageBack(object);
         }
     }
 
+    /**
+     * Applies transformations to the canvas to flip an image horizontally.
+     * @param {DrawableObject} object - The object whose image is to be flipped.
+     */
     flipImage(object) {
         if (object.otherDirection) {
             this.context.save();
@@ -228,6 +288,10 @@ class World {
         }
     }
 
+    /**
+     * Restores the canvas state after flipping an image.
+     * @param {DrawableObject} object - The object whose image was flipped.
+     */
     flipImageBack(object) {
         if (object.otherDirection) {
             object.positionX = object.positionX * - 1;
@@ -235,6 +299,9 @@ class World {
         }
     }
 
+    /**
+     * Adjusts the camera position based on the character's movement, particularly when entering the boss zone.
+     */
     cameraOnCharacter() {
         let cameraStartMovingRightX = this.canvas.width / 2.5;
         let maxCameraX = -(this.level.levelEndRightX + 140 - this.canvas.width);
@@ -248,6 +315,9 @@ class World {
         }
     }
 
+    /**
+     * Stops all intervals and animations when the game is over or when navigating away from the game view.
+     */
     stopIntervalsAndAnimations() {
         if (this.gameOverCheckIntervalId) {
             clearInterval(this.gameOverCheckIntervalId);

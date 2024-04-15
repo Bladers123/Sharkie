@@ -1,5 +1,8 @@
+/**
+ * Represents the main character in the game, managing states such as movement, attacks, and animations.
+ * Extends MovableObject to utilize movement and animation functionalities.
+ */
 class Character extends MovableObject {
-
     imagesOfMoving = [
         'img/1.Sharkie/3.Swim/1.png',
         'img/1.Sharkie/3.Swim/2.png',
@@ -123,16 +126,16 @@ class Character extends MovableObject {
     life = 10000000;
     lastDamageSource = 'normal';
     isInvincible = false;
-
     isCharacterMoving = false;
     currentAnimation = "";
-
     level = level1;
-
     finSlapDamage = 150;
-
     standingTimeoutId = null;
 
+    /**
+ * Constructor for the Character class. Initializes character images for various states, sets initial animation, and sets up keyboard controls.
+ * @param {Object} keyboard - The keyboard input handler for controlling the character.
+ */
     constructor(keyboard) {
         super();
         this.loadImages(this.imagesOfMoving);
@@ -149,6 +152,10 @@ class Character extends MovableObject {
         this.checkStatesOfSharkie();
     }
 
+    /**
+ * Makes the character temporarily invincible for a specified duration.
+ * @param {number} duration - Time in milliseconds for which the character is invincible.
+ */
     becomeInvincible(duration) {
         this.isInvincible = true;
         setTimeout(() => {
@@ -156,7 +163,9 @@ class Character extends MovableObject {
         }, duration);
     }
 
-
+    /**
+ * Regularly checks the current state of the character and triggers the appropriate behavior based on the state.
+ */
     checkStatesOfSharkie() {
         this.checkStatesIntervalId = setInterval(() => {
             if (!this.isGameOver) {
@@ -174,6 +183,9 @@ class Character extends MovableObject {
         }, 16);
     }
 
+    /**
+ * Handles the character's behavior when in a dead state.
+ */
     handleDeathState() {
         if (this.currentAnimation !== "dead") {
             let animationToPlay;
@@ -187,6 +199,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Handles the character's behavior when in a hurt state.
+ */
     handleHurtState() {
         if (this.currentAnimation !== "hurt") {
             let animationToPlay;
@@ -199,6 +214,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Handles the character's behavior when moving.
+ */
     handleMovingState() {
         if (this.currentAnimation !== "moving") {
             this.playAnimation(this.imagesOfMoving, false, false);
@@ -206,12 +224,17 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Handles the character's behavior when attacking.
+ */
     handleAttackingState() {
         if (this.currentAnimation !== "attacking")
             this.currentAnimation = "attacking";
     }
 
-
+    /**
+     * Handles the character's behavior when standing.
+     */
     handleStandingState() {
         if (this.currentAnimation !== "standing") {
             clearTimeout(this.standingTimeoutId);
@@ -224,6 +247,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Main movement method, updates character's position based on keyboard input.
+ */
     move() {
         if (!this.isGameOver && this.mayMove) {
             this.moveRight();
@@ -234,6 +260,9 @@ class Character extends MovableObject {
         this.animationFrameId = requestAnimationFrame(this.move.bind(this));
     }
 
+    /**
+ * Moves the character to the right if possible.
+ */
     moveRight() {
         if (this.keyboard.right && this.positionX < this.level.levelEndRightX) {
             this.positionX += this.movementSpeed;
@@ -242,6 +271,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Moves the character to the left if possible.
+ */
     moveLeft() {
         if (this.keyboard.left && this.positionX > this.level.levelEndLeftX) {
             if (!this.bossZoneReached || (this.bossZoneReached && this.positionX > 2140)) {
@@ -252,6 +284,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Moves the character upward if possible.
+ */
     moveUp() {
         if (this.keyboard.up && this.positionY > this.level.levelEndUpY) {
             this.positionY -= this.movementSpeed;
@@ -259,6 +294,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Moves the character downward if possible.
+ */
     moveDown() {
         if (this.keyboard.down && this.positionY < this.level.levelEndDownY) {
             this.positionY += this.movementSpeed;
@@ -266,11 +304,17 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Starts the movement animation loop for the character.
+ */
     startMovingAnimation() {
         if (!this.animationFrameId)
             this.move();
     }
 
+    /**
+ * Stops the movement animation loop for the character.
+ */
     stopMovingAnimation() {
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
@@ -279,6 +323,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Initiates an attack based on the specified type.
+ * @param {string} type - The type of attack to initiate ('poison', 'normal', 'finSlap').
+ */
     initiateAttack(type) {
         if (!this.isAttacking && !this.isGameOver && this.mayMove) {
             this.mayMove = false;
@@ -293,6 +341,10 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Handles the specifics of initiating a poison attack.
+ * @param {string} type - The type of attack, used to configure the attack behavior.
+ */
     initiatePoisonAttack(type) {
         this.isAttacking = true;
         this.playAnimation(this.imagesOfAttackWithBubble, false, true);
@@ -304,6 +356,10 @@ class Character extends MovableObject {
         }, 1000);
     }
 
+    /**
+ * Handles the specifics of initiating a normal bubble attack.
+ * @param {string} type - The type of attack, used to configure the attack behavior.
+ */
     initiateNormalAttack(type) {
         this.isAttacking = true;
         this.playAnimation(this.imagesOfAttackWithBubble, false, true);
@@ -314,6 +370,9 @@ class Character extends MovableObject {
         }, 1000);
     }
 
+    /**
+ * Handles the specifics of initiating a fin slap attack.
+ */
     initiateFinSlapAttack() {
         this.isAttacking = true;
         this.playAnimation(this.imgaesOfAttackWithFinSlap, false, true);
@@ -324,6 +383,10 @@ class Character extends MovableObject {
         }, 1000);
     }
 
+    /**
+ * Creates and fires a bubble as part of an attack.
+ * @param {string} type - The type of bubble attack ('poison' or 'normal').
+ */
     shootBubble(type) {
         if (!this.isGameOver) {
             let xOffset = this.otherDirection ? -30 : this.width;
@@ -332,14 +395,17 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+ * Performs a fin slap attack, affecting enemies within a certain range.
+ */
     finSlap() {
         if (!this.isGameOver) {
             this.isAttacking = true;
             world.enemies.forEach(enemy => {
                 if (this.isColliding(enemy, 50, 50)) {
-                        enemy.life -= this.finSlapDamage;
-                        if (enemy.life <= 0 && !enemy.isDying)
-                            enemy.die();
+                    enemy.life -= this.finSlapDamage;
+                    if (enemy.life <= 0 && !enemy.isDying)
+                        enemy.die();
                 }
             });
             setTimeout(() => {
