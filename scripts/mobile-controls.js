@@ -77,7 +77,13 @@ function createBubbleButton(bubbleButton) {
  */
 function createJoystick() {
     let joystickElement = document.getElementById('joystick');
-    if (joystickElement) {
+    if (joystickElement)
+        return;
+    else {
+        joystickElement = document.createElement('div');
+        joystickElement.id = 'joystick';
+        joystickElement.classList.add('joystick');
+        document.body.appendChild(joystickElement);
         let joystick = initializeJoystick(joystickElement);
         movingWithJoystick(joystick);
         resetMovingWithJoystick(joystick);
@@ -164,10 +170,9 @@ function moveInDirection(angle) {
  * Adjusts the display of mobile controls based on screen orientation.
  */
 function checkOrientation() {
-    var isLandscape = window.innerWidth > window.innerHeight;
-    var isWidthUnder1000 = window.innerWidth < 1000;
-    var hasAllControls = document.getElementById('joystick') && document.getElementById('finslap-attack-button') && document.getElementById('bubble-attack-button');
-    console.log('check');
+    let isLandscape = window.innerWidth > window.innerHeight;
+    let isWidthUnder1000 = window.innerWidth < 1000;
+    let hasAllControls = document.getElementById('joystick') && document.getElementById('finslap-attack-button') && document.getElementById('bubble-attack-button');
     if (isLandscape && isWidthUnder1000 && hasAllControls) {
         document.getElementById('joystick').style.display = 'block';
         document.getElementById('finslap-attack-button').style.display = 'block';
@@ -182,6 +187,10 @@ function checkOrientation() {
 window.addEventListener('load', checkOrientation);
 window.addEventListener('resize', checkOrientation);
 
+
+/**
+ * Remove the mobile controls.
+ */
 function removeGameControls() {
     let joystick = document.getElementById('joystick');
     let finslapButton = document.getElementById('finslap-attack-button');
