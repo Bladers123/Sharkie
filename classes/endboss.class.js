@@ -151,6 +151,7 @@ class Endboss extends MovableObject {
         document.getElementById('joystick').style.display = 'none';
         document.getElementById('finslap-attack-button').style.display = 'none';
         document.getElementById('bubble-attack-button').style.display = 'none';
+        removeGameControls();
         gameWin = true;
         character.becomeInvincible(5000);
     }
