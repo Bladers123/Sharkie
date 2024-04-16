@@ -23,6 +23,7 @@ body {
 h1 {
     font-size: 56px;
     text-align: center;
+    margin-top: 50%;
 }
 
 h2 {
@@ -309,6 +310,7 @@ h2 {
 }
 
 @media (min-width: 1200px) {
+
     .joystick,
     .finslap-attack-button,
     .bubble-attack-button {
@@ -316,115 +318,45 @@ h2 {
     }
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (orientation: landscape) and (max-height: 480px) {
 
-    .game-section,
-    .startscreen,
-    .win-container,
-    .introductions-container,
-    .canvas,
-    .game-over-container {
-        width: 100%;
-        height: 100%;
-        border: 0;
-        border-radius: 0;
-        overflow-y: hidden;
-    }
-
-    .joystick,
-    .finslap-attack-button,
-    .bubble-attack-button {
-        display: block;
-    }
-
+    .title,
+    .menu,
+    .impressum-and-data-police,
+    .menu-title,
     .menu-container {
         display: none;
+    }
+
+    .game-section,
+    .canvas,
+    .win-container,
+    .game-over-container,
+    .startscreen {
+        width: 100vw;
+        height: 100vh;
+        border: 0;
+        border-radius: 0;
+    }
+}
+
+@media only screen and (orientation: portrait) and (max-width: 768px)  {
+
+    .title,
+    .menu,
+    .impressum-and-data-police,
+    .menu-title,
+    .startscreen,
+    .menu-container,
+    .game-section {
+        display: none;
+    }
+
+    .game-section {
+        height: 100vh;
     }
 
     .turn-device {
         display: block;
     }
-
-    .turn-device-text {
-        margin: 200px 40px;
-    }
-
-    .content {
-        width: 100%;
-        display: none;
-    }
-
-    .game-section {
-        height: 420px;
-    }
-
-    .menu {
-        border: 0;
-        border-radius: 0;
-        width: 100%;
-        flex-direction: column;
-    }
-
-    .volume {
-        width: 50px;
-    }
-
-    .fullscreen {
-        display: none;
-    }
-
-    .introductions {
-        width: 100px;
-    }
-
-    .arrows-text {
-        width: 145px;
-    }
-
-    .attack-with-d-text {
-        width: 100px;
-    }
-
-    .attack-with-space-text {
-        width: 75px;
-    }
-
-    .start-img {
-        width: 165px;
-    }
-
-    .introductions-move-with-arrows-img {
-        width: 75px;
-    }
-
-    .introductions-attack-with-d-img {
-        width: 60px;
-    }
-
-    h1 {
-        font-size: 36px;
-    }
-
-    .try-again {
-        margin-top: 250px;
-    }
 }
-
-@media only screen and (max-height: 480px) {
-    .game-section,
-    .canvas {
-        height: 100vh;
-    }
-
-    .menu,
-    .title,
-    .menu-title,
-    h1 {
-        display: none;
-    }
-
-    .content {
-        display: block;
-    }
-}
-
